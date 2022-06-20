@@ -1,15 +1,15 @@
-import { BrowserRouter, Routes, Route, Link, Redirect  } from 'react-router-dom'
-import addUser from './pages/users/addUser';
-import editUser from './pages/users/editUser';
-import userList from './pages/users/userList';
+import { BrowserRouter, Routes, Route, Link, Redirect } from "react-router-dom";
+import AddUser from "./pages/users/AddUser";
+import EditUser from "./pages/users/EditUser";
+import UserList from "./pages/users/UserList";
 
 function App() {
   return (
     <BrowserRouter>
-       <Routes>
-        <Route path='/user' component={userList} />
-        <Route path='/user/edit' component={editUser} />
-        <Route path='/user/add' component={addUser} />
+      <Routes>
+        <Route path="/user" element={<UserList />} />
+        <Route path="/user/edit" element={<EditUser />} />
+        <Route path="/user/add" element={<AddUser />} />
       </Routes>
     </BrowserRouter>
   );
