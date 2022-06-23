@@ -1,89 +1,119 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { Button, IconButton } from '@material-tailwind/react';
+import React, { useMemo, useState } from 'react'
+import Banner from '../../partials/Banner';
+import Header from '../../partials/Header';
+import Sidebar from '../../partials/Sidebar';
+import UserListContent from '../../partials/users-items/UserListContent';
+import UserListContent2, { StatusPill } from '../../partials/users-items/UserListContent2';
+
+const getData = () => {
+  const data = [
+    {
+        id: '0',
+        fullname: 'M Afif Dalianda',
+        username: 'afif',
+        password: 'afif',
+        role: 'Administrator',
+        jabatan: 'IT',
+        contact: '01823646123',
+        email: 'afif@mail.com',
+        status: 'active',
+    },
+    {
+        id: '1',
+        fullname: 'Dennis Chiang',
+        username: 'denis',
+        password: 'denis',
+        role: 'Manager',
+        jabatan: 'HRD',
+        contact: '01823612343',
+        email: 'dennis@mail.com',
+        status: 'inactive',
+    },
+  ]
+  return [...data, ...data, ...data]  
+}
 
 function UserList() {
 
-    const [users, setUser] = useState([])
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    useEffect(() => {
-        getUsers();
-    }, []);
+    const columns = useMemo(
+      () => [
+          {
+              Header: 'ID',
+              accessor: 'id'
+          },
+          {
+              Header: 'Fullname',
+              accessor: 'fullname'
+          },
+          {
+              Header: 'Username',
+              accessor: 'username'
+          },
+          {
+              Header: 'Password',
+              accessor: 'password'
+          },
+          {
+              Header: 'Role',
+              accessor: 'role'
+          },
+          {
+              Header: 'Jabatan',
+              accessor: 'jabatan'
+          },
+          {
+              Header: 'Contact',
+              accessor: 'contact'
+          },
+          {
+              Header: 'Email',
+              accessor: 'email'
+          },
+          {
+              Header: 'Status',
+              accessor: 'status',
+              Cell: StatusPill,
+          },
+      ],
+      []
+  )
 
-    const getUsers = async () => {
-        // const response = await axios.get('http://localhost:5000/users')
-        // setUser(response.data);
-    }
+  const data = React.useMemo(() => getData(), [])
 
-    const deleteUsers = async (id) => {
-        // await axios.delete('http://localhost:5000/users/${id}')
-        // getUsers();
-    }
 
-    return (
-        <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-            <Button to='/add' className='blue md filled mt-2'>Tambah User
-            </Button>
-            <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400' id='users'>
-                <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
-                    <tr>
-                        <th scope='col' className='px-6 py-3'>
-                            id
-                        </th>
-                        <th scope='col' className='px-6 py-3'>
-                            Nama
-                        </th>
-                        <th scope='col' className='px-6 py-3'>
-                            Username
-                        </th>
-                        <th scope='col' className='px-6 py-3'>
-                            Password
-                        </th>
-                        <th scope='col' className='px-6 py-3'>
-                            Role
-                        </th>
-                        <th scope='col' className='px-6 py-3'>
-                            Jabatan
-                        </th>
-                        <th scope='col' className='px-6 py-3'>
-                            Kontak
-                        </th>
-                        <th scope='col' className='px-6 py-3'>
-                            Email
-                        </th>
-                        <th scope='col' className='px-6 py-3'>
-                            Action
-                            <span className='sr-only'>Edit</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((users, index) => (
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={users.id}>
-                            <td>{index + 1}</td>
-                            <td>{users.fullname}</td>
-                            <td>{users.username}</td>
-                            <td>{users.password}</td>
-                            <td>{users.role}</td>
-                            <td>{users.jabatan}</td>
-                            <td>{users.contact}</td>
-                            <td>{users.email}</td>
-                            <td className="px-6 py-4 text-right">
-                                <div className="inline-flex">
-                                    <button to={`/edit/${users.id}`} className="bg-blue-300 hover:bg-blue-400 text-gray-800 font-bold py-2 px-4 rounded-l">
-                                        Edit
-                                    </button>
-                                    <button onClick={() => deleteUsers(users.id)} className="bg-red-300 hover:bg-red-400 text-gray-800 font-bold py-2 px-4 rounded-r">
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    )
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+
+      {/* Sidebar */}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
+      {/* Content area */}
+      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+
+        {/*  Site header */}
+        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
+        <main>
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+
+            {/* Content */}
+            <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+
+              <UserListContent2 columns={columns} data={data} />
+
+            </div>
+
+          </div>
+        </main>
+
+        <Banner />
+
+      </div>
+    </div>
+  )
 }
 
 export default UserList
