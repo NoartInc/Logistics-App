@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 
-function UserModalForm() {
+function TeliModalForm() {
 
-  const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <button type="button" onClick={() => setShowModal(true)} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalLg">Tambah user</button>
+      <button type="button" onClick={() => setShowModal(true)} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalLg">Tambah Teli</button>
       {showModal ? (
         <>
           <div
@@ -17,8 +17,8 @@ function UserModalForm() {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-4 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-lg font-semibold uppercase">
-                    Tambah User
+                  <h3 className="text-xl font-semibold uppercase">
+                    Tambah Teli
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -38,37 +38,24 @@ function UserModalForm() {
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="username" className="block text-xs font-medium uppercase text-gray-500">Username<span className="text-red-600">*</span></label>
-                        <input type="text" name="username" id="username" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
-                      </div>
-
-                      <div className="col-span-9 sm:col-span-3">
-                        <label for="password" className="block text-xs font-medium uppercase text-gray-500">Password<span className="text-red-600">*</span></label>
-                        <input type="text" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
-                      </div>
-
-                      <div className="col-span-9 sm:col-span-3">
-                        <label for="role" className="block text-xs font-medium uppercase text-gray-500">Role<span className="text-red-600">*</span></label>
-                          <select id="role" name="role" autoComplete="role" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm">
-                            <option>Role 1</option>
-                            <option>Role 2</option>
-                            <option>Role 3</option>
-                          </select>                      
-                      </div>
-
-                      <div className="col-span-9 sm:col-span-3">
-                        <label for="jabatan" className="block text-xs font-medium uppercase text-gray-500">Jabatan</label>
-                        <input type="text" name="jabatan" id="jabatan" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
-                      </div>
-
-                      <div className="col-span-9 sm:col-span-3">
-                        <label for="email" className="block text-xs font-medium uppercase text-gray-500">Email</label>
-                        <input type="text" name="email" id="email" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
-                      </div>
-
-                      <div className="col-span-9 sm:col-span-3">
-                        <label for="contact" className="block text-xs font-medium uppercase text-gray-500">Contact<span className="text-red-600">*</span></label>
+                        <label for="contact" className="block text-xs font-medium uppercase text-gray-500">Contact</label>
                         <input type="text" name="contact" id="contact" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                      </div>
+
+                      <div className="col-span-9 sm:col-span-3">
+                        <label for="location" className="block text-xs font-medium uppercase text-gray-500">Location<span className="text-red-600">*</span></label>
+                        <select id="location" name="location" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm">
+                            <option>Genteng</option>
+                            <option>Deck</option>
+                        </select>
+                      </div>
+
+                      <div className="col-span-9 sm:col-span-3">
+                        <label for="status" className="block text-xs font-medium uppercase text-gray-500">Status<span className="text-red-600">*</span></label>
+                        <select id="status" name="status" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
                       </div>
 
                     </div>
@@ -101,4 +88,4 @@ function UserModalForm() {
   )
 }
 
-export default UserModalForm
+export default TeliModalForm

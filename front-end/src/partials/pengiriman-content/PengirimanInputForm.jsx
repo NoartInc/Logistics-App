@@ -77,7 +77,7 @@ function PengirimanInputForm() {
 
                 <div className="col-span-6 sm:col-span-5">
                   <label for="alamat" className="block text-sm font-medium text-gray-700">Alamat Pengiriman</label>
-                  <textarea type="text" name="alamat" id="alamat" autoComplete='customer' className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder='Alamat lengkap pengiriman'/>
+                  <textarea type="text" name="alamat" id="alamat" autoComplete='customer' rows="4" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder='Alamat lengkap pengiriman'/>
                 </div>
   
                 <div className="col-span-6 sm:col-span-3">
