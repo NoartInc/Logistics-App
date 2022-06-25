@@ -28,7 +28,7 @@ function PengirimanInputForm() {
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-3">
                   <label for="customer" className="block text-sm font-medium text-gray-700">Customer</label>
-                  <select id="customer" name="customer" autocomplete="customer" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm">
+                  <select id="customer" name="customer" autoComplete="customer" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm">
                     <option>Customer 1</option>
                     <option>Customer 2</option>
                     <option>Customer 3</option>
@@ -46,29 +46,29 @@ function PengirimanInputForm() {
                   <input type="text" name="no_surat_jalan" id="no_surat_jalan" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                 </div>
 
-                <div class="col-span-6 sm:col-span-3">
-                  <div class="form-check form-check-inline mr-3">
-                    <input class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-                    <label class="form-check-label inline-block text-sm font-medium text-gray-500" for="inlineRadio10">Toko</label>
+                <div className="col-span-6 sm:col-span-3">
+                  <div className="form-check form-check-inline mr-3">
+                    <input className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+                    <label className="form-check-label inline-block text-sm font-medium text-gray-500" for="inlineRadio10">Toko</label>
                   </div>
-                  <div class="form-check form-check-inline mr-3">
-                    <input class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
-                    <label class="form-check-label inline-block text-sm font-medium text-gray-500" for="inlineRadio20">PO</label>
+                  <div className="form-check form-check-inline mr-3">
+                    <input className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+                    <label className="form-check-label inline-block text-sm font-medium text-gray-500" for="inlineRadio20">PO</label>
                   </div>
-                  <div class="form-check form-check-inline mr-3">
-                    <input class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
-                    <label class="form-check-label inline-block text-sm font-medium text-gray-500" for="inlineRadio20">Lain-lain</label>
+                  <div className="form-check form-check-inline mr-3">
+                    <input className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+                    <label className="form-check-label inline-block text-sm font-medium text-gray-500" for="inlineRadio20">Lain-lain</label>
                   </div>
                 </div>
   
                 <div className="col-span-6 sm:col-span-3">
                   <label for="tujuan" className="block text-sm font-medium text-gray-700">Tujuan</label>
-                  <input type="text" name="tujuan" id="tujuan" autocomplete="customer" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                  <input type="text" name="tujuan" id="tujuan" autoComplete="customer" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
                   <label for="pengangkutan" className="block text-sm font-medium text-gray-700">Pengangkutan</label>
-                  <select id="pengangkutan" name="pengangkutan" autocomplete="pengangkutan" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <select id="pengangkutan" name="pengangkutan" autoComplete="pengangkutan" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option>Pengangkutan 1</option>
                     <option>pengangkutan 2</option>
                     <option>pengangkutan 3</option>
@@ -77,7 +77,7 @@ function PengirimanInputForm() {
 
                 <div className="col-span-6 sm:col-span-5">
                   <label for="alamat" className="block text-sm font-medium text-gray-700">Alamat Pengiriman</label>
-                  <textarea type="text" name="alamat" id="alamat" autocomplete='customer' className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder='Alamat lengkap pengiriman'/>
+                  <textarea type="text" name="alamat" id="alamat" autoComplete='customer' className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder='Alamat lengkap pengiriman'/>
                 </div>
   
                 <div className="col-span-6 sm:col-span-3">
@@ -98,7 +98,7 @@ function PengirimanInputForm() {
                 
                 <div className="col-span-6 sm:col-span-3">
                   <label for="Driver" className="block text-sm font-medium text-gray-700">Driver</label>
-                  <select id="Driver" name="Driver" autocomplete="Driver" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <select id="Driver" name="Driver" autoComplete="Driver" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option>Driver 1</option>
                     <option>Driver 2</option>
                     <option>Driver 3</option>
@@ -107,7 +107,7 @@ function PengirimanInputForm() {
 
                 <div className="col-span-6 sm:col-span-3">
                   <label for="Kendaraan" className="block text-sm font-medium text-gray-700">Kendaraan</label>
-                  <select id="Kendaraan" name="Kendaraan" autocomplete="Kendaraan" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <select id="Kendaraan" name="Kendaraan" autoComplete="Kendaraan" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option>Kendaraan 1</option>
                     <option>Kendaraan 2</option>
                     <option>Kendaraan 3</option>

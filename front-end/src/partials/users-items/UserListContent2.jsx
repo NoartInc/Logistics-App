@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useAsyncDebounce, useGlobalFilter, useTable, useFilters, useSortBy, usePagination } from 'react-table'
 import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDoubleRightIcon } from '@heroicons/react/solid'
 import { Button, PageButton } from '../actions/Button'
@@ -12,7 +12,7 @@ function GlobalFilter({
   setGlobalFilter,
 }) {
   const count = preGlobalFilteredRows.length
-  const [value, setValue] = React.useState(globalFilter)
+  const [value, setValue] = useState(globalFilter)
   const onChange = useAsyncDebounce(value => {
     setGlobalFilter(value || undefined)
   }, 200)
@@ -41,7 +41,7 @@ export function SelectColumnFilter({
 }) {
   // Calculate the options for filtering
   // using the preFilteredRows
-  const options = React.useMemo(() => {
+  const options = useMemo(() => {
     const options = new Set()
     preFilteredRows.forEach(row => {
       options.add(row.values[id])

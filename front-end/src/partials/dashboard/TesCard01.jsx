@@ -4,17 +4,15 @@ function TesCard01() {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
       <div className="px-5 pt-5">
-        <header className="flex justify-between items-start mb-2">A</header>
-        <h2 className="text-lg font-semibold text-slate-800 mb-2">Acme Plus</h2>
-        <div className="text-xs font-semibold text-slate-400 uppercase mb-1">
-          Sales
-        </div>
-        <div className="flex items-start">
-          <div className="text-3xl font-bold text-slate-800 mr-2">$24,780</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
-            +49%
+      {/* <!-- SMALL CARD ROUNDED --> */}
+        <div className="bg-gray-100 border-indigo-600 dark:bg-gray-800 bg-opacity-95 border-opacity-60 | p-4 border-solid rounded-3xl border-2 | flex justify-around cursor-pointer | hover:bg-indigo-400 dark:hover:bg-indigo-600 hover:border-transparent | transition-colors duration-500">
+          <img className="w-16 h-16 object-cover" src="https://milenyo.net/wp-content/uploads/2020/05/netflix-n-logo-png.png" alt="" />
+          <div className="flex flex-col justify-center">
+            <p className="text-gray-900 dark:text-gray-300 font-semibold">Netflix</p>
+            <p className="text-black dark:text-gray-100 text-justify font-semibold">$15 000,00</p>
           </div>
         </div>
+    {/* <!-- END SMALL CARD ROUNDED --> */}
       </div>
     </div>
   );

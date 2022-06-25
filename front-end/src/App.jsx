@@ -23,6 +23,7 @@ import MasterTeli from './pages/utillity/MasterTeli';
 import MasterPengangkutan from './pages/utillity/MasterPengangkutan';
 import Summary from './pages/utillity/Summary';
 import LoginForm from './pages/login/LoginForm';
+import DetailPengiriman from './pages/pengiriman/DetailPengiriman';
 
 function App() {
 
@@ -37,19 +38,20 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard />} />
-        <Route exact path="/userlist" element={<UserList />} />
-        <Route exact path="/userconfig" element={<UserConfig />} />
-        <Route exact path="/buatpengiriman" element={<BuatPengiriman />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/userlist" element={<UserList />} />
+        <Route path="/userconfig" element={<UserConfig />} />
+        <Route path="/buatpengiriman" element={<BuatPengiriman />} />
         <Route exact path="/listpengiriman" element={<ListPengiriman />} />
-        <Route exact path="/buatberita" element={<BuatBerita />} />
-        <Route exact path="/listberita" element={<ListBerita />} />
-        <Route exact path="/mastercustomer" element={<MasterCustomer />} />
-        <Route exact path="/masterkendaraan" element={<MasterKendaraan />} />
-        <Route exact path="/masterteli" element={<MasterTeli />} />
-        <Route exact path="/masterpengangkutan" element={<MasterPengangkutan />} />
-        <Route exact path="/summary" element={<Summary />} />
+        <Route path="/buatberita" element={<BuatBerita />} />
+        <Route path="/listberita" element={<ListBerita />} />
+        <Route path="/mastercustomer" element={<MasterCustomer />} />
+        <Route path="/masterkendaraan" element={<MasterKendaraan />} />
+        <Route path="/masterteli" element={<MasterTeli />} />
+        <Route path="/masterpengangkutan" element={<MasterPengangkutan />} />
+        <Route path="/summary" element={<Summary />} />
         <Route exact path="/login" element={<LoginForm />} />
+        <Route path="listpengiriman/detailpengiriman" element={<DetailPengiriman />} />
       </Routes>
     </>
   );
