@@ -1,12 +1,27 @@
 import React, { useState } from 'react'
 
-function CustomerModalForm() {
+function PengangkutanModalEditForm() {
 
     const [showModal, setShowModal] = useState(false);
-
   return (
     <>
-      <button type="button" onClick={() => setShowModal(true)} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalLg">Tambah Customer</button>
+    <svg
+        type="button"
+        onClick={() => setShowModal(true)}
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-6 h-6 text-blue-400 cursor-pointer"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+        />
+      </svg>
+      {/* <button type="button" onClick={() => setShowModal(true)} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalLg">Tambah Pengangkutan</button> */}
       {showModal ? (
         <>
           <div
@@ -18,7 +33,7 @@ function CustomerModalForm() {
                 {/*header*/}
                 <div className="flex items-start justify-between p-4 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-xl font-semibold uppercase">
-                    Tambah User
+                    Tambah Pengangkutan
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -33,12 +48,12 @@ function CustomerModalForm() {
                     <div className="grid grid-cols-9 gap-9 px-4 py-4">
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="customer" className="block text-xs font-medium uppercase text-gray-500">Customer<span className="text-red-600">*</span></label>
-                        <input type="text" name="customer" id="customer" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                        <label for="pengangkutan" className="block text-xs font-medium uppercase text-gray-500">Pengangkutan<span className="text-red-600">*</span></label>
+                        <input type="text" name="pengangkutan" id="pengangkutan" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="pic" className="block text-xs font-medium uppercase text-gray-500">PIC<span className="text-red-600">*</span></label>
+                        <label for="pic" className="block text-xs font-medium uppercase text-gray-500">Pic</label>
                         <input type="text" name="pic" id="pic" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
@@ -48,8 +63,8 @@ function CustomerModalForm() {
                       </div>
 
                       <div className="col-span-9 sm:col-span-6">
-                        <label for="alamat-customer" className="block text-xs font-medium uppercase text-gray-500">Alamat Customer</label>
-                        <textarea type="text" name="alamat-customer" id="alamat-customer" autoComplete='customer' rows='4' className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder='Alamat lengkap customer'/>
+                        <label for="alamat-pengangkutan" className="block text-xs font-medium uppercase text-gray-500">Alamat Pengangkutan<span className="text-red-600">*</span></label>
+                        <textarea type="text" name="alamat-pengangkutan" id="alamat-pengangkutan" rows='4' className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder='Alamat lengkap pengangkutan'/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
@@ -58,11 +73,6 @@ function CustomerModalForm() {
                             <option>Active</option>
                             <option>Inactive</option>
                         </select>
-                      </div>
-
-                      <div className="col-span-9 sm:col-span-3">
-                        <label for="sales" className="block text-xs font-medium uppercase text-gray-500">Sales<span className="text-red-600">*</span></label>
-                        <input type="text" name="sales" id="sales" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                     </div>
@@ -75,14 +85,14 @@ function CustomerModalForm() {
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Submit
+                    Edit
                   </button>
                   <button
                     className="text-gray-500 background-transparent hover:bg-gray-200 font-bold uppercase px-6 py-3 rounded text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Close
+                    Cancel
                   </button>
                 </div>
               </div>
@@ -95,4 +105,4 @@ function CustomerModalForm() {
   )
 }
 
-export default CustomerModalForm
+export default PengangkutanModalEditForm

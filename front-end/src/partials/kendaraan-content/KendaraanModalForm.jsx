@@ -45,8 +45,8 @@ function KendaraanModalForm() {
                       <div className="col-span-9 sm:col-span-3">
                         <label for="roda" className="block text-xs font-medium uppercase text-gray-500">Roda<span className="text-red-600">*</span></label>
                         <select id="roda" name="roda" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm">
-                            <option>Roda 4</option>
-                            <option>Roda 6</option>
+                            <option>Roda - 4</option>
+                            <option>Roda - 6</option>
                         </select>
                       </div>
 

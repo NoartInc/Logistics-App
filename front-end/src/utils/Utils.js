@@ -1,4 +1,5 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
+import regeneratorRuntime from "regenerator-runtime";
 
 export const tailwindConfig = () => {
   // Tailwind config

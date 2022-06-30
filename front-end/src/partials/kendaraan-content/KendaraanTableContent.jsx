@@ -16,8 +16,8 @@ import {
 import { Button, PageButton } from "../actions/Button";
 import { classNames } from "../../utils/Utils";
 import { SortIcon, SortUpIcon, SortDownIcon } from "../actions/Icons";
-import UserModalForm from "./UserModalForm";
-import { CSVLink } from "react-csv";
+import KendaraanModalForm from "./KendaraanModalForm";
+
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -104,8 +104,8 @@ export function StatusPill({ value }) {
   );
 }
 
-function UserListContent2({ columns, data }) {
-  // Use the state and functions returned from useTable to build your UI
+function KendaraanTableContent({ columns, data }) {
+    // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
     getTableBodyProps,
@@ -138,14 +138,13 @@ function UserListContent2({ columns, data }) {
     usePagination // new
   );
 
-
   // render the UI for your table
   return (
     <>
     <div className="shadow overflow-hidden sm:rounded-md">
             <div className="px-4 py-5 bg-white sm:p-6">
             <header className="px-0 mt-0 mb-4">
-              <h2 className="font-semibold text-slate-800 uppercase">User List</h2>
+              <h2 className="font-semibold text-slate-800 uppercase">Kendaraan List</h2>
             </header>
       <div className="sm:flex sm:gap-x-2 py-2">
         <GlobalFilter
@@ -163,11 +162,11 @@ function UserListContent2({ columns, data }) {
           )
         )}
         <div className="flex px-4">
-          <UserModalForm />
+          <KendaraanModalForm />
         </div>
-            <CSVLink data={data}>
+            {/* <CSVLink data={data}>
               <svg className="w-10 h-10" fill="none" stroke="#36454F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </CSVLink>
+            </CSVLink> */}
       </div>
       {/* table */}
       <div className="mt-4 flex flex-col">
@@ -330,7 +329,7 @@ function UserListContent2({ columns, data }) {
       </div>
       </div>
     </>
-  );
+  )
 }
 
-export default UserListContent2;
+export default KendaraanTableContent

@@ -3,7 +3,10 @@ import Banner from '../../partials/Banner';
 import Header from '../../partials/Header';
 import Sidebar from '../../partials/Sidebar';
 import UserListContent from '../../partials/users-items/UserListContent';
-import UserListContent2, { StatusPill } from '../../partials/users-items/UserListContent2';
+import UserListContent2, { SelectColumnFilter, StatusPill } from '../../partials/users-items/UserListContent2';
+// import { createTable, useTableInstance } from '@tanstack/react-table'
+
+// const table = createTable()
 
 const getData = () => {
   const data = [
@@ -30,12 +33,15 @@ const getData = () => {
         status: 'inactive',
     },
   ]
-  return [...data, ...data, ...data]  
+  return [...data]  
 }
+
 
 function UserList() {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    // const instance = useTableInstance(table, options)
 
     const columns = useMemo(
       () => [
@@ -57,6 +63,7 @@ function UserList() {
           },
           {
               Header: 'Role',
+              Filter: SelectColumnFilter,
               accessor: 'role'
           },
           {
@@ -76,13 +83,13 @@ function UserList() {
               accessor: 'status',
               Cell: StatusPill,
           },
-      ],
-      []
-  )
+          {
+              Header: 'Action',
+              accessor: 'action'
+          },
+      ],[])
 
-  const data = React.useMemo(() => getData(), [])
-
-
+  const data = useMemo(() => getData(), [])
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -100,7 +107,7 @@ function UserList() {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
             {/* Content */}
-            <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-6 mb-8 md:grid-cols-1 xl:grid-cols-1">
 
               <UserListContent2 columns={columns} data={data} />
 

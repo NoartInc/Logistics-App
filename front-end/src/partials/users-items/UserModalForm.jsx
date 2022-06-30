@@ -33,23 +33,23 @@ function UserModalForm() {
                     <div className="grid grid-cols-9 gap-9 px-4 py-4">
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="fullname" className="block text-xs font-medium uppercase text-gray-500">Fullname<span className="text-red-600">*</span></label>
+                        <label htmlFor="fullname" className="block text-xs font-medium uppercase text-gray-500">Fullname<span className="text-red-600">*</span></label>
                         <input type="text" name="fullname" id="fullname" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="username" className="block text-xs font-medium uppercase text-gray-500">Username<span className="text-red-600">*</span></label>
+                        <label htmlFor="username" className="block text-xs font-medium uppercase text-gray-500">Username<span className="text-red-600">*</span></label>
                         <input type="text" name="username" id="username" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="password" className="block text-xs font-medium uppercase text-gray-500">Password<span className="text-red-600">*</span></label>
+                        <label htmlFor="password" className="block text-xs font-medium uppercase text-gray-500">Password<span className="text-red-600">*</span></label>
                         <input type="text" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="role" className="block text-xs font-medium uppercase text-gray-500">Role<span className="text-red-600">*</span></label>
-                          <select id="role" name="role" autoComplete="role" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm">
+                        <label htmlFor="status" className="block text-xs font-medium uppercase text-gray-500">Role<span className="text-red-600">*</span></label>
+                          <select id="status" name="status" autoComplete="status" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option>Role 1</option>
                             <option>Role 2</option>
                             <option>Role 3</option>
@@ -57,18 +57,26 @@ function UserModalForm() {
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="jabatan" className="block text-xs font-medium uppercase text-gray-500">Jabatan</label>
+                        <label htmlFor="jabatan" className="block text-xs font-medium uppercase text-gray-500">Jabatan</label>
                         <input type="text" name="jabatan" id="jabatan" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="email" className="block text-xs font-medium uppercase text-gray-500">Email</label>
+                        <label htmlFor="email" className="block text-xs font-medium uppercase text-gray-500">Email</label>
                         <input type="text" name="email" id="email" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="contact" className="block text-xs font-medium uppercase text-gray-500">Contact<span className="text-red-600">*</span></label>
+                        <label htmlFor="contact" className="block text-xs font-medium uppercase text-gray-500">Contact<span className="text-red-600">*</span></label>
                         <input type="text" name="contact" id="contact" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                      </div>
+
+                      <div className="col-span-9 sm:col-span-3">
+                        <label htmlFor="status" className="block text-xs font-medium uppercase text-gray-500">Status<span className="text-red-600">*</span></label>
+                          <select id="status" name="status" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                          </select>                      
                       </div>
 
                     </div>
