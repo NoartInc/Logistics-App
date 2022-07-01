@@ -235,7 +235,7 @@ function PengirimanTableContent({ columns, data }) {
                         // new
                         prepareRow(row);
                         return (
-                          <tr {...row.getRowProps()}>
+                          <tr className="odd:bg-white even:bg-slate-100" {...row.getRowProps()}>
                             {row.cells.map((cell) => {
                               return (
                                 <td

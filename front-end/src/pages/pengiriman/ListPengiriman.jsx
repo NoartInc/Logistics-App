@@ -68,6 +68,7 @@ function ListPengiriman() {
           {
               Header: 'SuratJalan',
               accessor: 'surat_jalan',
+              Cell: e =><a href={e.value} className="hover:text-blue-700 font-semibold"> {e.value} </a>
           },
           {
               Header: 'Driver',

@@ -56,86 +56,30 @@ function PengirimanModalEditForm() {
                 {/*body*/}
                 <div className="mt-5 md:mt-0 md:col-span-4">
                   <form action="#" method="POST">
-                    <div className="grid grid-cols-9 gap-9 px-4 py-4">
-                      <div className="col-span-9 sm:col-span-3">
-                        <label
-                          for="customer"
-                          className="block text-xs font-medium uppercase text-gray-500"
-                        >
-                          Customer<span className="text-red-600">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="customer"
-                          id="customer"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
+                    <div className="grid grid-cols-6 px-4 py-4">
 
-                      <div className="col-span-9 sm:col-span-3">
+                      <div className="col-span-6 sm:col-span-6">
                         <label
-                          for="pic"
+                          for="update-progress-admin"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
-                          PIC<span className="text-red-600">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="pic"
-                          id="pic"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-
-                      <div className="col-span-9 sm:col-span-3">
-                        <label
-                          for="contact"
-                          className="block text-xs font-medium uppercase text-gray-500"
-                        >
-                          Contact<span className="text-red-600">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="contact"
-                          id="contact"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-
-                      <div className="col-span-9 sm:col-span-6">
-                        <label
-                          for="alamat-customer"
-                          className="block text-xs font-medium uppercase text-gray-500"
-                        >
-                          Alamat Customer
-                        </label>
-                        <textarea
-                          type="text"
-                          name="alamat-customer"
-                          id="alamat-customer"
-                          autoComplete="customer"
-                          rows="4"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                          placeholder="Alamat lengkap customer"
-                        />
-                      </div>
-
-                      <div className="col-span-9 sm:col-span-3">
-                        <label
-                          for="status"
-                          className="block text-xs font-medium uppercase text-gray-500"
-                        >
-                          Status<span className="text-red-600">*</span>
+                          Update Progress<span className="text-red-600">*</span>
                         </label>
                         <select
-                          id="status"
-                          name="status"
-                          className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
+                          id="update-progress-admin"
+                          name="update-progress-admin"
+                          className="mt-1 block w-96 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                         >
-                          <option>Active</option>
-                          <option>Inactive</option>
+                          <option>Diproses</option>
+                          <option>Dimuat</option>
+                          <option>Termuat</option>
+                          <option>Dikirim</option>
+                          <option>Terkirim</option>
+                          <option>Pending</option>
+                          <option>Cancel</option>
                         </select>
                       </div>
+
                     </div>
                   </form>
                 </div>
@@ -146,14 +90,14 @@ function PengirimanModalEditForm() {
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Submit
+                    Update
                   </button>
                   <button
                     className="text-gray-500 background-transparent hover:bg-gray-200 font-bold uppercase px-6 py-3 rounded text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Close
+                    Cancel
                   </button>
                 </div>
               </div>

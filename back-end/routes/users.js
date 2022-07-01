@@ -11,10 +11,10 @@ const {
 } = require('../controllers/User') 
 
 /* GET users listing. */
-router.get('/', getAllUsers);
-router.get('/:id', getUserById);
-router.post('/', createUser);
-router.patch('/:id', updateUser);
-router.delete('/:id', deleteUser);
+router.get('/users', getAllUsers);
+router.get('/users:id', getUserById);
+router.post('/users', createUser);
+router.patch('/users:id', updateUser);
+router.delete('/users:id', deleteUser);
 
 module.exports = router;

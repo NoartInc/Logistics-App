@@ -33,7 +33,7 @@ function PengangkutanModalEditForm() {
                 {/*header*/}
                 <div className="flex items-start justify-between p-4 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-xl font-semibold uppercase">
-                    Tambah Pengangkutan
+                    Edit Pengangkutan
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
