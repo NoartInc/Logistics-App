@@ -1,37 +1,37 @@
-const User = require('../models/users.js');
+const { Users } = require('../models/users');
 
-exports.findAll = async (req, res) => {
+exports.findAllUsers = async (req, res) => {
     try {
-        const users = await User.findAll()
-        res.json(users)
+        const data = await Users.findAll()
+        res.json(data)
     } catch (err) {
         res.json({ message: err.message})
     }
 }
 
-exports.findById = async (req, res) => {
+exports.findUserById = async (req, res) => {
     try {
-        const user = await User.findById({
+        const data = await Users.find({
             where: { id: req.params.id}
         })
-        res.json(user[0])
+        res.json(data[0])
     } catch (err) {
         res.json({ message: err.message})
     }
 }
 
-exports.create = async (req, res) => {
+exports.createUser = async (req, res) => {
     try {
-        await User.create(req.body)
+        await Users.create(req.body)
         res.json({ 'message': 'User Created successfully'})
     } catch (err) {
         res.json({ message: err.message })
     }
 }
 
-exports.update = async (req, res) => {
+exports.updateUser = async (req, res) => {
     try {
-        await User.update(req.body, {
+        await Users.update(req.body, {
             where: {id: req.params.id}
         })
         res.json({ 'message': 'User Updated successfully'})
@@ -40,9 +40,9 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.delete = async (req, res) => {
+exports.deleteUser = async (req, res) => {
     try {
-        await User.destroy({
+        await Users.destroy({
             where: { id: req.params.id}
         })
         res.json({ 'message': 'User Deleted successfully'})
@@ -51,9 +51,9 @@ exports.delete = async (req, res) => {
     }
 }
 
-exports.deleteAll = async (req, res) => {
+exports.deleteAllUsers = async (req, res) => {
     try {
-        await User.destroyAll({
+        await Users.destroy({
             where: { id: req.params.id}
         })
         res.json({ 'message': 'User All Deleted successfully'})

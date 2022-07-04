@@ -1,20 +1,23 @@
 var express = require('express');
 var router = express.Router();
-const db = require('../models');
 
 const {
-  getAllUsers,
-  getUserById,
+  findAllUsers,
+  findUserById,
   createUser,
   updateUser,
   deleteUser,
-} = require('../controllers/User') 
+  deleteAllUsers,
+} = require ('../controllers/User');
+
+
 
 /* GET users listing. */
-router.get('/users', getAllUsers);
-router.get('/users:id', getUserById);
-router.post('/users', createUser);
-router.patch('/users:id', updateUser);
-router.delete('/users:id', deleteUser);
+router.get('/', findAllUsers);
+router.get('/:id', findUserById);
+router.post('/', createUser);
+router.patch('/:id', updateUser);
+router.delete('/:id', deleteUser);
+router.delete('/:id', deleteAllUsers);
 
 module.exports = router;
