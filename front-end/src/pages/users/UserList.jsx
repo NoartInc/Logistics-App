@@ -9,10 +9,7 @@ import UserListContent2, { SelectColumnFilter, StatusPill } from '../../partials
 import UserModalEditForm from '../../partials/users-items/UserModalEditForm';
 // import { createTable, useTableInstance } from '@tanstack/react-table'
 
-const mapStateToProps = (state) => {
-  return {
-    users: state.users.users}
-}
+
 function UserList() {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -26,6 +23,7 @@ function UserList() {
     const getUsers = async () => {
       const response = await axios.get('http://localhost:5000/users');
       setUsers(response.data)
+      console.log(response.data);
     }
 
     const deleteUsers = async (id) => {
@@ -34,8 +32,6 @@ function UserList() {
     }
 
     
-    
-
     const columns = useMemo(
       () => [
           {
@@ -44,11 +40,11 @@ function UserList() {
           },
           {
               Header: 'Fullname',
-              accessor: 'fullname'
+              accessor: 'fullName'
           },
           {
               Header: 'Username',
-              accessor: 'username'
+              accessor: 'userName'
           },
           {
               Header: 'Password',
@@ -129,4 +125,4 @@ function UserList() {
   )
 }
 
-export default connect(mapStateToProps, null)(UserList);
+export default UserList
