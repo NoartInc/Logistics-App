@@ -11,7 +11,7 @@ import UserModalEditForm from '../../partials/users-items/UserModalEditForm';
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users.dataUsers}
+    users: state.users.users}
 }
 function UserList() {
 
@@ -114,7 +114,7 @@ function UserList() {
             {/* Content */}
             <div className="grid gap-6 mb-8 md:grid-cols-1 xl:grid-cols-1">
 
-              <UserListContent2 columns={columns} data={dataUsers}/>
+              <UserListContent2 columns={columns} data={users}/>
               
 
             </div>

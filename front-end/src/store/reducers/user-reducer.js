@@ -6,7 +6,7 @@ import {
   DELETE_ALL_USER,
 } from "../actions/types";
 
-let initialState = {
+const initialState = {
   dataUsers: [
     {
       id: "0",
