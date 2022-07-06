@@ -7,6 +7,10 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var kendaraanRouter = require('./routes/kendaraan');
+var teliRouter = require('./routes/teli');
+var customerRouter = require('./routes/customer');
+var pengangkutanRouter = require('./routes/pengangkutan');
 
 var app = express();
 app.use(cors())
@@ -23,6 +27,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/kendaraan', kendaraanRouter);
+app.use('/teli', teliRouter);
+app.use('/customer', customerRouter);
+app.use('/pengangkutan', pengangkutanRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,4 +1,4 @@
-const { Users } = require('../models/users');
+const { Users } = require('../models');
 
 exports.findAllUsers = async (req, res) => {
     try {
@@ -11,10 +11,9 @@ exports.findAllUsers = async (req, res) => {
 
 exports.findUserById = async (req, res) => {
     try {
-        const data = await Users.find({
-            where: { id: req.params.id}
-        })
-        res.json(data[0])
+        const data = await Users.findByPk(req.params.id
+        )
+        res.json(data)
     } catch (err) {
         res.json({ message: err.message})
     }
@@ -54,7 +53,7 @@ exports.deleteUser = async (req, res) => {
 exports.deleteAllUsers = async (req, res) => {
     try {
         await Users.destroy({
-            where: { id: req.params.id}
+            truncate: true
         })
         res.json({ 'message': 'User All Deleted successfully'})
     } catch (err) {
