@@ -6,7 +6,7 @@ import {
     DELETE_ALL_USER
 } from './actions/types';
 
-import UserDataService from './services/users.service';
+import UserDataService from '../../services/user.service';
 
 export const createUser = (fullname, username, password, email, contact, role, jabatan, status) => async (dispatch) => {
     try {
@@ -26,7 +26,9 @@ export const retrieveUsers = () => async (dispatch) => {
         const res = await UserDataService.getAll()
         dispatch({
             type: RETRIEVE_USER,
-            payload: res.data,
+            payload: {
+                users: res.data
+            },
         });
     } catch (err) {
         console.log(err)
