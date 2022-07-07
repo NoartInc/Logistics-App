@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useMemo, useState } from 'react'
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Banner from '../../partials/Banner';
 import Header from '../../partials/Header';
 import Sidebar from '../../partials/Sidebar';
@@ -11,10 +11,10 @@ import UserModalEditForm from '../../partials/users-items/UserModalEditForm';
 
 
 function UserList() {
-
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [users, setUsers] = useState([]);
     
+    const users = useSelector(state => state.users)
+    const dispatch = useDispatch()
 
     useEffect(() => {
       getUsers();
