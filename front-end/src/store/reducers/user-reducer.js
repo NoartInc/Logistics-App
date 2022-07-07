@@ -6,33 +6,30 @@ import {
   DELETE_ALL_USER,
 } from "../actions/types";
 
-const initialState = {
-  dataUsers: [
-    {
-      id: "0",
-      fullname: "M Afif Dalianda",
-      username: "afif",
-      password: "afif",
-      role: "Administrator",
-      jabatan: "IT",
-      contact: "01823646123",
-      email: "afif@mail.com",
-      status: "active",
-    },
-    {
-      id: "1",
-      fullname: "Dennis Chiang",
-      username: "denis",
-      password: "denis",
-      role: "Manager",
-      jabatan: "HRD",
-      contact: "01823612343",
-      email: "dennis@mail.com",
-      status: "inactive",
-    },
-  ],
-  error: false,
-};
+const initialState = [
+  {
+    id: "0",
+    fullname: "M Afif Dalianda",
+    username: "afif",
+    password: "afif",
+    role: "Administrator",
+    jabatan: "IT",
+    contact: "01823646123",
+    email: "afif@mail.com",
+    status: "active",
+  },
+  {
+    id: "1",
+    fullname: "Dennis Chiang",
+    username: "denis",
+    password: "denis",
+    role: "Manager",
+    jabatan: "HRD",
+    contact: "01823612343",
+    email: "dennis@mail.com",
+    status: "inactive",
+  },
+];
 
 function userReducer(users = initialState, action) {
   const { type, payload } = action;
@@ -42,7 +39,7 @@ function userReducer(users = initialState, action) {
       return [...users, payload.user];
 
     case RETRIEVE_USER:
-      return payload;
+      return [payload];
 
     case UPDATE_USER:
       return users.map((user) => {
