@@ -39,7 +39,7 @@ function userReducer(users = initialState, action) {
       return [...users, payload.user];
 
     case RETRIEVE_USER:
-      return [payload];
+      return payload.users
 
     case UPDATE_USER:
       return users.map((user) => {

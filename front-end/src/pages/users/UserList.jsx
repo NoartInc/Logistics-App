@@ -7,6 +7,7 @@ import Sidebar from '../../partials/Sidebar';
 
 import UserListContent2, { SelectColumnFilter, StatusPill } from '../../partials/users-items/UserListContent2';
 import UserModalEditForm from '../../partials/users-items/UserModalEditForm';
+import { retrieveUsers } from '../../store/actions/user-action';
 // import { createTable, useTableInstance } from '@tanstack/react-table'
 
 
@@ -17,14 +18,8 @@ function UserList() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-      getUsers();
+      dispatch(retrieveUsers())
     }, []);
-
-    const getUsers = async () => {
-      const response = await axios.get('http://localhost:5000/users');
-      setUsers(response.data)
-      console.log(response.data);
-    }
 
     const deleteUsers = async (id) => {
       await axios.delete('http://localhost:5000/users/${id}')
