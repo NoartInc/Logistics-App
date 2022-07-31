@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/actions/auth-action";
 
 function LoginForm() {
+
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({username:"", password:""});
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login(form))
+  }
+
+  const onInputChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  };
+
   return (
     <section className="h-screen">
       <div className="px-12 h-full text-gray-800">
@@ -13,7 +34,7 @@ function LoginForm() {
             />
           </div>
           <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-            <form>
+            <form onSubmit={onSubmit}>
               <div className="flex flex-row items-center justify-center lg:justify-start">
                 <p className="text-3xl text-gray-700 font-bold mb-0">Welcome to Logistic Apps</p>
                 {/* <button
@@ -85,20 +106,24 @@ function LoginForm() {
               {/* <!-- Email input --> */}
               <div className="mb-6">
                 <input
+                  onChange={onInputChange}
                   type="text"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  id="exampleFormControlInput2"
+                  id="username"
                   placeholder="Username"
+                  name="username"
                 />
               </div>
 
               {/* <!-- Password input --> */}
               <div className="mb-6">
                 <input
+                  onChange={onInputChange}
                   type="password"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  id="exampleFormControlInput2"
+                  id="password"
                   placeholder="Password"
+                  name="password"
                 />
               </div>
 
@@ -123,7 +148,7 @@ function LoginForm() {
 
               <div className="text-center lg:text-left">
                 <button
-                  type="button"
+                  type="submit"
                   className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                 >
                   Login
@@ -131,7 +156,7 @@ function LoginForm() {
                 <p className="text-sm font-semibold mt-2 pt-1 mb-0">
                   Tidak punya akun?
                   <a
-                    href="#!"
+                    href="https://wa.me/6282273017654"
                     className="ml-1 text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
                   >
                     Hubungi Administrator

@@ -2,7 +2,11 @@ const { Kendaraan } = require('../models');
 
 exports.findAllKendaraan = async (req, res) => {
     try {
-        const data = await Kendaraan.findAll()
+        const data = await Kendaraan.findAll({
+            order: [
+                ['kendaraan', 'ASC'],
+            ]
+        })
         res.json(data)
     } catch (err) {
         res.json({ message: err.message})
@@ -21,8 +25,8 @@ exports.findKendaraanById = async (req, res) => {
 
 exports.createKendaraan = async (req, res) => {
     try {
-        await Kendaraan.create(req.body)
-        res.json({ 'message': 'Kendaraan Created successfully'})
+        var data = await Kendaraan.create(req.body)
+        res.json({ 'message': 'Kendaraan Created successfully', data:data})
     } catch (err) {
         res.json({ message: err.message })
     }

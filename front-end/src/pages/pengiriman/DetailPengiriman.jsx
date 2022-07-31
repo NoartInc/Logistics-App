@@ -5,7 +5,6 @@ import DetailPengirimanContent from '../../partials/pengiriman-content/DetailPen
 import Sidebar from '../../partials/Sidebar';
 
 function DetailPengiriman() {
-
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

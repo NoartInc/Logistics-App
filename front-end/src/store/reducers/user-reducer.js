@@ -2,62 +2,67 @@ import {
   CREATE_USER,
   RETRIEVE_USER,
   UPDATE_USER,
+  EDIT_USER,
   DELETE_USER,
   DELETE_ALL_USER,
 } from "../actions/types";
 
-const initialState = [
-  {
-    id: "0",
-    fullname: "M Afif Dalianda",
-    username: "afif",
-    password: "afif",
-    role: "Administrator",
-    jabatan: "IT",
-    contact: "01823646123",
-    email: "afif@mail.com",
-    status: "active",
-  },
-  {
-    id: "1",
-    fullname: "Dennis Chiang",
-    username: "denis",
-    password: "denis",
-    role: "Manager",
-    jabatan: "HRD",
-    contact: "01823612343",
-    email: "dennis@mail.com",
-    status: "inactive",
-  },
-];
+const initialState = {
+  list: [],
+  selectedData: null
+}
 
 function userReducer(users = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
     case CREATE_USER:
-      return [...users, payload.user];
+      return {
+        ...users,
+        list: [...users.list, payload]
+      }
 
     case RETRIEVE_USER:
-      return payload.users
+      return {
+        ...users,
+        list: payload.users
+      }
+
+    case EDIT_USER:
+      const getEdit = users.list.find(item => item.id === payload)
+      return { 
+        ...users,
+        selectedData: getEdit
+      }
 
     case UPDATE_USER:
-      return users.map((user) => {
+      const updatedList = users.list.map((user) => {
         if (user.id === payload.id) {
           return {
             ...user,
             ...payload,
-          };
+          }
         } else {
           return user;
         }
       });
+      return {
+        ...users,
+        list: updatedList
+      }
 
     case DELETE_USER:
-      return users.filter(({ id }) => id !== payload.id);
+      const deletedItem = users.list.filter(({ id }) => id !== payload.id);
+      return {
+        ...users,
+        list: deletedItem
+      }
 
     case DELETE_ALL_USER:
-      return [];
+      return {
+        list: [],
+        selectedData: null
+      }
 
     default:
       return users;

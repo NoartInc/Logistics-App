@@ -1,0 +1,36 @@
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class TrackPengiriman extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      models.TrackPengiriman.belongsTo(models.Users, {
+        as: "proses_by",
+        foreignKey: "userId"
+      });
+
+      models.TrackPengiriman.hasMany(models.TeliPengiriman, {
+        as: "teli",
+        foreignKey: "pengirimanId"
+      });
+    }
+  }
+  TrackPengiriman.init({
+    status: DataTypes.STRING,
+    note: DataTypes.STRING,
+    pengirimanId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
+    teliId: DataTypes.INTEGER
+  }, {
+    sequelize,
+    modelName: 'TrackPengiriman',
+  });
+  return TrackPengiriman;
+};

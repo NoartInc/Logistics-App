@@ -2,7 +2,11 @@ const { Pengangkutan } = require('../models');
 
 exports.findAllPengangkutan = async (req, res) => {
     try {
-        const data = await Pengangkutan.findAll()
+        const data = await Pengangkutan.findAll({
+            order: [
+                ['pengangkutan', 'ASC'],
+            ]
+        })
         res.json(data)
     } catch (err) {
         res.json({ message: err.message})
@@ -21,8 +25,9 @@ exports.findPengangkutanById = async (req, res) => {
 
 exports.createPengangkutan = async (req, res) => {
     try {
-        await Pengangkutan.create(req.body)
-        res.json({ 'message': 'Pengangkutan Created successfully'})
+        var data = await Pengangkutan.create(req.body)
+        // data gak dibalikin ? mbuh ra paham mas, niki sama code nya kek di user.. tapi di user lancar aja
+        res.json( {'message': 'Pengangkutan Created successfully', data:data})
     } catch (err) {
         res.json({ message: err.message })
     }

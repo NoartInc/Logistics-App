@@ -28,7 +28,7 @@ function BuatPengiriman() {
           </div>
         </main>
 
-        <Banner />
+        {/* <Banner /> */}
 
       </div>
     </div>

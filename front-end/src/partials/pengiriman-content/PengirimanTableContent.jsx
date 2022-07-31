@@ -17,6 +17,7 @@ import { Button, PageButton } from "../actions/Button";
 import { classNames } from "../../utils/Utils";
 import { SortIcon, SortUpIcon, SortDownIcon } from "../actions/Icons";
 import { CSVLink } from "react-csv";
+import PengirimanModalExport from "./PengirimanModalExport";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -167,7 +168,8 @@ function PengirimanTableContent({ columns, data }) {
               )
             )}
             <div className="flex">
-            <CSVLink data={data}>
+              <PengirimanModalExport />
+            {/* <CSVLink data={data}>
               <svg
                 className="w-10 h-10"
                 fill="none"
@@ -182,7 +184,7 @@ function PengirimanTableContent({ columns, data }) {
                   d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                 ></path>
               </svg>
-            </CSVLink>
+            </CSVLink> */}
             </div>
           </div>
           {/* table */}

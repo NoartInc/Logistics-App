@@ -1,14 +1,46 @@
 import React, { useState } from 'react'
+import { createUser } from '../../store/actions/user-action';
+import { useDispatch } from 'react-redux';
 
 function UserModalForm() {
 
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
+  const [form, setForm] = useState({
+    fullName: '',
+    userName: '',
+    password: '',
+    role: '',
+    jabatan: '',
+    email: '',
+    contact: '',
+    status: '',
+  });
+
+  const onInputChange = (e) => {
+    const {name,value} = e.target;
+    setForm(prevState => {
+      
+      return{
+        ...prevState,
+        [name]: value
+      } 
+    });
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createUser(form))
+    setShowModal(false)
+  }
+
 
   return (
     <>
       <button type="button" onClick={() => setShowModal(true)} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalLg">Tambah user</button>
       {showModal ? (
         <>
+        <form onSubmit={onSubmit}>
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
@@ -29,65 +61,69 @@ function UserModalForm() {
                 </div>
                 {/*body*/}
                 <div className="mt-5 md:mt-0 md:col-span-4">
-                  <form action="#" method="POST">
+                  
                     <div className="grid grid-cols-9 gap-9 px-4 py-4">
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label htmlFor="fullname" className="block text-xs font-medium uppercase text-gray-500">Fullname<span className="text-red-600">*</span></label>
-                        <input type="text" name="fullname" id="fullname" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                        <label htmlFor="fullName" className="block text-xs font-medium uppercase text-gray-500">Fullname<span className="text-red-600">*</span></label>
+                        <input onChange={onInputChange} type="text" name="fullName" id="fullName" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label htmlFor="username" className="block text-xs font-medium uppercase text-gray-500">Username<span className="text-red-600">*</span></label>
-                        <input type="text" name="username" id="username" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                        <label htmlFor="userName" className="block text-xs font-medium uppercase text-gray-500">Username<span className="text-red-600">*</span></label>
+                        <input onChange={onInputChange} type="text" name="userName" id="userName" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
                         <label htmlFor="password" className="block text-xs font-medium uppercase text-gray-500">Password<span className="text-red-600">*</span></label>
-                        <input type="text" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                        <input onChange={onInputChange} type="text" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label htmlFor="status" className="block text-xs font-medium uppercase text-gray-500">Role<span className="text-red-600">*</span></label>
-                          <select id="status" name="status" autoComplete="status" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option>Role 1</option>
-                            <option>Role 2</option>
-                            <option>Role 3</option>
+                        <label htmlFor="role" className="block text-xs font-medium uppercase text-gray-500">Role<span className="text-red-600">*</span></label>
+                          <select onChange={onInputChange} id="role" name="role"  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value=''>--Pilih role--</option>
+                            <option value='administrator'>Administrator</option>
+                            <option value='driver'>Driver</option>
+                            <option value='logistics'>Logistics</option>
+                            <option value='teli'>Teli</option>
+                            <option value='marketing'>Marketing</option>
+                            <option value='sales'>Sales</option>
+                            <option value='manager'>Manager</option>
                           </select>                      
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
                         <label htmlFor="jabatan" className="block text-xs font-medium uppercase text-gray-500">Jabatan</label>
-                        <input type="text" name="jabatan" id="jabatan" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                        <input onChange={onInputChange} type="text" name="jabatan" id="jabatan" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
                         <label htmlFor="email" className="block text-xs font-medium uppercase text-gray-500">Email</label>
-                        <input type="text" name="email" id="email" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                        <input onChange={onInputChange} type="text" name="email" id="email" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
                         <label htmlFor="contact" className="block text-xs font-medium uppercase text-gray-500">Contact<span className="text-red-600">*</span></label>
-                        <input type="text" name="contact" id="contact" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                        <input onChange={onInputChange} type="text" name="contact" id="contact" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
                         <label htmlFor="status" className="block text-xs font-medium uppercase text-gray-500">Status<span className="text-red-600">*</span></label>
-                          <select id="status" name="status" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option>Active</option>
-                            <option>Inactive</option>
+                          <select onChange={onInputChange} id="status" name="status" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="">--Pilih Status--</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
                           </select>                      
                       </div>
 
                     </div>
-                  </form>
                 </div>  
                 {/*footer*/}
                 <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 hover:bg-emerald-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
+                    type="submit"
                   >
                     Submit
                   </button>
@@ -103,6 +139,7 @@ function UserModalForm() {
             </div>
           </div>
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </form>
         </>
       ) : null}
     </>

@@ -1,21 +1,27 @@
 import { 
     CREATE_USER,
     RETRIEVE_USER,
+    EDIT_USER,
     UPDATE_USER,
     DELETE_USER,
     DELETE_ALL_USER
-} from './actions/types';
+} from '../actions/types';
 
 import UserDataService from '../../services/user.service';
 
-export const createUser = (fullname, username, password, email, contact, role, jabatan, status) => async (dispatch) => {
+// Rsponse axios default itu mengambil property res.data
+// jadi kalo ada response dari back-end misalkan message dan data
+// kalo mau dapatkan property message harusnya jadi -> res.data.message
+// kalo mau dapatkan property data harusnya jadi -> res.data.data
+
+export const createUser = (form) => async (dispatch) => {
     try {
-        const res = await UserDataService.create({ fullname, username, password, email, contact, role, jabatan, status });
+        const res = await UserDataService.create(form);
         dispatch({
             type: CREATE_USER,
-            payload: res.data,    
+            payload: res.data.data,    
         });
-        return Promise.resolve(res.data);
+        return Promise.resolve(res.data.data);
     } catch (err) {
         return Promise.reject(err);
     }
@@ -35,9 +41,20 @@ export const retrieveUsers = () => async (dispatch) => {
     }
 };
 
-export const updateUser = (id, data) => async (dispatch) => {
+export const editUser = (id) => async (dispatch) => {
     try {
-        const res = await UserDataService.update(id, data)
+        dispatch({
+            type: EDIT_USER,
+            payload: id
+        })  
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const updateUser = (data) => async (dispatch) => {
+    try {
+        const res = await UserDataService.update(data.id, data)
         dispatch({
             type: UPDATE_USER,
             payload: data,

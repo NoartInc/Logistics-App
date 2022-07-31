@@ -16,7 +16,7 @@ const {
 router.get('/', findAllPengangkutan);
 router.get('/:id', findPengangkutanById);
 router.post('/', createPengangkutan,);
-router.patch('/:id', updatePengangkutan,);
+router.put('/:id', updatePengangkutan,);
 router.delete('/:id', deletePengangkutan);
 router.delete('/', deleteAllPengangkutan);
 

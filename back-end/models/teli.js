@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.Teli.hasMany(models.TeliPengiriman, {
+        as: "teliPengiriman",
+        foreignKey: "teliId"
+      });
     }
   }
   Teli.init({

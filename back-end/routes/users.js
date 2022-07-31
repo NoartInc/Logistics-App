@@ -16,7 +16,7 @@ const {
 router.get('/', findAllUsers);
 router.get('/:id', findUserById);
 router.post('/', createUser);
-router.patch('/:id', updateUser);
+router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 router.delete('/', deleteAllUsers);
 

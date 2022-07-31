@@ -2,7 +2,11 @@ const { Customer } = require('../models');
 
 exports.findAllCustomer = async (req, res) => {
     try {
-        const data = await Customer.findAll()
+        const data = await Customer.findAll({
+            order: [
+                ['customer', 'ASC'],
+            ]
+        })
         res.json(data)
     } catch (err) {
         res.json({ message: err.message})
@@ -21,8 +25,8 @@ exports.findCustomerById = async (req, res) => {
 
 exports.createCustomer = async (req, res) => {
     try {
-        await Customer.create(req.body)
-        res.json({ 'message': 'Customer Created successfully'})
+        var data = await Customer.create(req.body)
+        res.json({ 'message': 'Customer Created successfully', data:data})
     } catch (err) {
         res.json({ message: err.message })
     }

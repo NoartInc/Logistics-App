@@ -2,7 +2,11 @@ const { Teli } = require('../models');
 
 exports.findAllTeli = async (req, res) => {
     try {
-        const data = await Teli.findAll()
+        const data = await Teli.findAll({
+            order: [
+                ['fullName', 'ASC'],
+            ]
+        })
         res.json(data)
     } catch (err) {
         res.json({ message: err.message})
@@ -21,8 +25,8 @@ exports.findTeliById = async (req, res) => {
 
 exports.createTeli = async (req, res) => {
     try {
-        await Teli.create(req.body)
-        res.json({ 'message': 'Teli Created successfully'})
+        var data = await Teli.create(req.body)
+        res.json({ 'message': 'Teli Created successfully', data:data})
     } catch (err) {
         res.json({ message: err.message })
     }

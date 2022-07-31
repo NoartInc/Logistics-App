@@ -16,7 +16,7 @@ const {
 router.get('/', findAllCustomer);
 router.get('/:id', findCustomerById);
 router.post('/', createCustomer,);
-router.patch('/:id', updateCustomer,);
+router.put('/:id', updateCustomer,);
 router.delete('/:id', deleteCustomer);
 router.delete('/', deleteAllCustomer);
 

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var authentication = require('../middleware/authorization')
 
 const {
   findAllTeli,
@@ -15,8 +16,8 @@ const {
 /* GET users listing. */
 router.get('/', findAllTeli);
 router.get('/:id', findTeliById);
-router.post('/', createTeli);
-router.patch('/:id', updateTeli);
+router.post('/', authentication, createTeli);
+router.put('/:id', updateTeli);
 router.delete('/:id', deleteTeli);
 router.delete('/', deleteAllTeli);
 

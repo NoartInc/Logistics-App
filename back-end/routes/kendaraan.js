@@ -16,7 +16,7 @@ const {
 router.get('/', findAllKendaraan);
 router.get('/:id', findKendaraanById);
 router.post('/', createKendaraan,);
-router.patch('/:id', updateKendaraan,);
+router.put('/:id', updateKendaraan,);
 router.delete('/:id', deleteKendaraan);
 router.delete('/', deleteAllKendaraan);
 

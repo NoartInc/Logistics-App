@@ -1,13 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { editCustomer, updateCustomer } from "../../store/actions/customer-action";
 
-function CustomerModalEditForm() {
+function CustomerModalEditForm({ id=null }) {
+
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [form, setForm] = useState({});
+  const currentData = useSelector(state => state.customers.selectedData);
+
+  useEffect(() => {
+    setForm(currentData)
+  }, [currentData]);
+
+  const editData = (id) => {
+    dispatch(editCustomer(id))
+    setShowModal(true)
+  };
+
+  const onInputChange = (e) => {
+    const {name, value} = e.target;
+
+    setForm(prevState => {
+      return {
+        ...prevState,
+        [name]: value
+      }
+    });
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(updateCustomer(form))
+    setShowModal(false)
+  }
 
   return (
     <>
       <svg
         type="button"
-        onClick={() => setShowModal(true)}
+        onClick={() => editData(id)}
         xmlns="http://www.w3.org/2000/svg"
         className="w-6 h-6 text-blue-400 cursor-pointer"
         fill="none"
@@ -24,6 +56,7 @@ function CustomerModalEditForm() {
       {/* <button type="button" onClick={() => setShowModal(true)} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalLg">Tambah Customer</button> */}
       {showModal ? (
         <>
+        <form onSubmit={onSubmit}>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-4xl">
               {/*content*/}
@@ -55,7 +88,7 @@ function CustomerModalEditForm() {
                 </div>
                 {/*body*/}
                 <div className="mt-5 md:mt-0 md:col-span-4">
-                  <form action="#" method="POST">
+                  
                     <div className="grid grid-cols-9 gap-9 px-4 py-4">
                       <div className="col-span-9 sm:col-span-3">
                         <label
@@ -65,10 +98,12 @@ function CustomerModalEditForm() {
                           Customer<span className="text-red-600">*</span>
                         </label>
                         <input
+                          onChange={onInputChange}
                           type="text"
                           name="customer"
                           id="customer"
                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          value={form?.customer}
                         />
                       </div>
 
@@ -80,10 +115,12 @@ function CustomerModalEditForm() {
                           PIC<span className="text-red-600">*</span>
                         </label>
                         <input
+                          onChange={onInputChange}
                           type="text"
                           name="pic"
                           id="pic"
                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          value={form?.pic}
                         />
                       </div>
 
@@ -95,10 +132,12 @@ function CustomerModalEditForm() {
                           Contact<span className="text-red-600">*</span>
                         </label>
                         <input
+                          onChange={onInputChange}
                           type="text"
                           name="contact"
                           id="contact"
                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          value={form?.contact}
                         />
                       </div>
 
@@ -110,13 +149,15 @@ function CustomerModalEditForm() {
                           Alamat Customer
                         </label>
                         <textarea
+                          onChange={onInputChange}
                           type="text"
-                          name="alamat-customer"
-                          id="alamat-customer"
-                          autoComplete="customer"
+                          name="address"
+                          id="address"
+                          autoComplete="address"
                           rows="4"
                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           placeholder="Alamat lengkap customer"
+                          value={form?.address}
                         />
                       </div>
 
@@ -128,12 +169,15 @@ function CustomerModalEditForm() {
                           Status<span className="text-red-600">*</span>
                         </label>
                         <select
+                          onChange={onInputChange}
                           id="status"
                           name="status"
                           className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
+                          value={form?.status}
                         >
-                          <option>Active</option>
-                          <option>Inactive</option>
+                          <option value="">---Pilih Status---</option>
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
                         </select>
                       </div>
 
@@ -145,21 +189,22 @@ function CustomerModalEditForm() {
                           Sales<span className="text-red-600">*</span>
                         </label>
                         <input
+                          onChange={onInputChange}
                           type="text"
                           name="sales"
                           id="sales"
                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          value={form?.sales}
                         />
                       </div>
                     </div>
-                  </form>
+                  
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 hover:bg-emerald-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
+                    type="submit"
                   >
                     Edit
                   </button>
@@ -175,6 +220,7 @@ function CustomerModalEditForm() {
             </div>
           </div>
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </form>
         </>
       ) : null}
     </>
