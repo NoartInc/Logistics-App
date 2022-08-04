@@ -9,6 +9,7 @@ const {
   updateTeli,
   deleteTeli,
   deleteAllTeli,
+  countTonase
 } = require ('../controllers/Teli');
 
 
@@ -16,6 +17,7 @@ const {
 /* GET users listing. */
 router.get('/', findAllTeli);
 router.get('/:id', findTeliById);
+router.get('/:id/count-tonase', countTonase);
 router.post('/', authentication, createTeli);
 router.put('/:id', updateTeli);
 router.delete('/:id', deleteTeli);

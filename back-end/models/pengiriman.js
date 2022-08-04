@@ -51,10 +51,9 @@ module.exports = (sequelize, DataTypes) => {
         as: 'history',
         foreignKey: 'pengirimanId'
       })
-      models.Pengiriman.belongsToMany(models.Teli, { 
+      models.Pengiriman.hasMany(models.TeliPengiriman, { 
         as: 'teli',
-        foreignKey: 'pengirimanId',
-        through: models.TeliPengiriman 
+        foreignKey: 'pengirimanId'
       })
     }
   }
@@ -69,6 +68,7 @@ module.exports = (sequelize, DataTypes) => {
     kendaraan: DataTypes.INTEGER,
     sales: DataTypes.INTEGER,
     user: DataTypes.INTEGER,
+    note: DataTypes.STRING,
     status: 
     { 
       type: DataTypes.ENUM('diproses', 'dimuat', 'termuat', 'dikirim', 'terkirim', 'pending', 'cancel'),

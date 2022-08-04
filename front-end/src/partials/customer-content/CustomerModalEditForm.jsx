@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { editCustomer, updateCustomer } from "../../store/actions/customer-action";
+import SalesOptions from "../options/SalesOptions";
 
 function CustomerModalEditForm({ id=null }) {
 
@@ -188,15 +189,14 @@ function CustomerModalEditForm({ id=null }) {
                         >
                           Sales<span className="text-red-600">*</span>
                         </label>
-                        <input
-                          onChange={onInputChange}
-                          type="text"
-                          name="sales"
-                          id="sales"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                          value={form?.sales}
-                        />
+                        <SalesOptions onChange={onInputChange} value={form?.salesUser}/>
                       </div>
+
+                      <div className="col-span-9 sm:col-span-3">
+                        <label for="coordinate" className="block text-xs font-medium uppercase text-gray-500">Coordinate<span className="text-red-600">*</span></label>
+                        <input onChange={onInputChange} type="text" name="coordinate" id="coordinate" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value={form?.coordinate}/>
+                      </div>
+
                     </div>
                   
                 </div>

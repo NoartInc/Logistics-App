@@ -1,4 +1,4 @@
-const { Teli } = require('../models');
+const { Teli, TeliPengiriman } = require('../models');
 
 exports.findAllTeli = async (req, res) => {
     try {
@@ -62,5 +62,23 @@ exports.deleteAllTeli = async (req, res) => {
         res.json({ 'message': 'Teli All Deleted successfully'})
     } catch (err) {
         res.json({ message: err.message })
+    }
+}
+
+exports.countTonase = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const teli = await TeliPengiriman.findAll({
+            where: { teliId: id }
+        });
+        const result = {
+            total: teli.reduce((acc, cur) => {
+                return acc += cur.tonase;
+            }, 0)
+        }
+
+        return res.json(result);
+    } catch (err) {
+        return res.json({ message: err.message })
     }
 }

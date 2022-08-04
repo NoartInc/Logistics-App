@@ -10,12 +10,14 @@ const {
   updatePengiriman,
   deletePengiriman,
   deleteAllPengiriman,
+  downloadData
 } = require ('../controllers/Pengiriman');
 
 
 /* GET users listing. */
-router.get('/', findAllPengiriman);
+router.get('/', authentication, findAllPengiriman);
 router.get('/:id', findPengirimanById);
+router.get('/downloadPengiriman', downloadData)
 router.post('/', authentication, createPengiriman);
 router.put('/:id', authentication, updatePengiriman);
 router.delete('/:id', deletePengiriman);

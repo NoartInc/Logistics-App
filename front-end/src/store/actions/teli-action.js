@@ -38,10 +38,8 @@ export const retrieveTelis = () => async (dispatch) => {
 
 export const editTeli = (id) => async (dispatch) => {
     try {
-        dispatch({
-            type: EDIT_TELI,
-            payload: id
-        })  
+        const res = await TeliDataService.get(id)
+        return res.data; 
     } catch (err) {
         console.log(err)
     }
@@ -84,3 +82,12 @@ export const deleteAllTelis = () => async (dispatch) => {
         return Promise.reject(err)
     }
 };
+
+export const countTonase = (id) => async (dispatch) => {
+    try {
+        const res = await TeliDataService.getTonase(id)
+        return res.data.total
+    } catch (err) {
+        return Promise.reject(err)
+    }
+}

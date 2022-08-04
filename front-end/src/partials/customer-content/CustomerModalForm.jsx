@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { createCustomer } from '../../store/actions/customer-action';
+import SalesOptions from '../options/SalesOptions';
 
 function CustomerModalForm() {
 
@@ -13,6 +14,7 @@ function CustomerModalForm() {
       address: '',
       sales: '',
       status: '',
+      coordinate: '',
     });
 
     const onInputChange = (e) => {
@@ -93,7 +95,13 @@ function CustomerModalForm() {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label for="sales" className="block text-xs font-medium uppercase text-gray-500">Sales<span className="text-red-600">*</span></label>
-                        <input onChange={onInputChange} type="text" name="sales" id="sales" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                        {/* <input onChange={onInputChange} type="text" name="sales" id="sales" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/> */}
+                        <SalesOptions onChange={onInputChange} />                      
+                      </div>
+
+                      <div className="col-span-9 sm:col-span-3">
+                        <label for="coordinate" className="block text-xs font-medium uppercase text-gray-500">Coordinate<span className="text-red-600">*</span></label>
+                        <input onChange={onInputChange} type="text" name="coordinate" id="coordinate" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                       </div>
 
                     </div>

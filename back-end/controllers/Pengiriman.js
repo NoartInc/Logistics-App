@@ -1,11 +1,11 @@
-const moment = require('moment');
-const sequelize = require('sequelize');
 const { Pengiriman, Customer, Kendaraan, Pengangkutan, Users, Teli, TrackPengiriman, TeliPengiriman } = require('../models');
+const excelJS = require('exceljs');
 
 const dataAssoc = [            
     {
         model: Customer,
         as: 'customers', 
+        include: ["salesUser"]
     },
     {
         model: Kendaraan,
@@ -19,11 +19,11 @@ const dataAssoc = [
         model: Users,
         as: 'drivers'
     },
-    // PR
-    {
-        model: Teli,
-        as: 'teli'
-    },
+    // PR Relasi
+    // {
+    //     model: Teli,
+    //     as: 'teli'
+    // },
     {
         model: TrackPengiriman,
         as: "history",
@@ -34,7 +34,13 @@ const dataAssoc = [
             },
             {
                 model: TeliPengiriman,
-                as: "teli"
+                as: "teli",
+                include: [
+                    {
+                        model: Teli,
+                        as: "teliPerson"
+                    }
+                ]
             }
         ]
     }
@@ -42,15 +48,39 @@ const dataAssoc = [
 
 exports.findAllPengiriman = async (req, res) => {
     try {
+        const { id: userId = 0 } = req.user;
         const data = await Pengiriman.findAll({
             include: dataAssoc,
+            where: { 
+
+            },
+            // where: {
+            //     suratJalan: '',
+            //     $or: [
+            //         {
+            //             createdAt: ''
+            //         },
+            //         {
+            //             driver: ''
+            //         },
+            //         {
+            //             kendaraan: ''
+            //         },
+            //         {
+            //             customer: ''
+            //         },
+            //         {
+            //             sales: ''
+            //         },
+            //         {
+            //             status: ''
+            //         }
+
+            //     ]
+            // },
             order: [
                 ['createdAt', 'DESC'],
             ],
-            // attributes: [
-            //     'createdAt',
-            //     moment('createdAt').format('DD/MM/YYYY')
-            // ]
         })
         
         res.json(data)
@@ -78,7 +108,6 @@ exports.createPengiriman = async (req, res) => {
             ...req.body,
             status: 'diproses',
         }).then(async result => {
-            console.log(result);
             // insert history ke tabel TrackPengiriman
             await TrackPengiriman.create({
                 userId: userId,
@@ -86,10 +115,14 @@ exports.createPengiriman = async (req, res) => {
                 status: 'diproses',
                 note: ''
             });
+            return result;
         })
 
         // ini ada data nya mas. yg disana gak ada,, ohh baru found skrng. coba di sesuaikan.
-        res.json({ 'message': 'Pengiriman Created successfully', data:data})
+        res.json({ 
+            message: 'Pengiriman Created successfully', 
+            data: Pengiriman.findByPk(data?.id, { include: dataAssoc })
+        })
     } catch (err) {
         res.json({ message: err.message })
     }
@@ -159,4 +192,103 @@ exports.deleteAllPengiriman = async (req, res) => {
     } catch (err) {
         res.json({ message: err.message })
     }
+}
+
+exports.downloadData = async (req, res) => {
+
+    Pengiriman.findAll().then((item) => {
+        let data = [];
+
+        item.forEach((item) => {
+            data.push({
+                createdAt: item.createdAt,
+                suratJalan: item.suratJalan,
+                customers: item.customers,
+                drivers: item.drivers,
+                kendaraans: item.kendaraans,
+                address: item.address,
+                salesUser: item.salesUser,
+                teliPerson: item.teliPerson,
+                note: item.note
+            });
+        });
+
+    const workbook = new excelJS.Workbook(); // Create a new workbook
+    const worksheet = workbook.addWorksheet("List Pengiriman"); // New Worksheet
+    const path = "./public/files"; // Path to download excel
+    
+
+    // Column for data in excel. key must match data key
+    worksheet.columns = [
+        { 
+            header: "Date",
+            key: "createdAt",
+            width: "10"
+        },
+        {
+            header: "Surat Jalan",
+            key: "suratJalan",
+            width: "10"
+        },
+        {
+            header: "Customer",
+            key: "customers",
+            width: "10"
+        },
+        {
+            header: "Driver",
+            key: "drivers",
+            width: "10"
+        },
+        {
+            header: "Kendaraan",
+            key: "kendaraans",
+            width: "10"
+        },
+        {
+            header: "Address",
+            key: "address",
+            width: "30"
+        },
+        {
+            header: "Sales",
+            key: "salesUser",
+            width: "10"
+        },
+        {
+            header: "Teli",
+            key: "teliPerson",
+            width: "10"
+        },
+        {
+            header: "Note",
+            key: "note",
+            width: "10"
+        }
+    ];
+
+    worksheet.addRows(data) 
+
+    //Making first line in excel bold
+    worksheet.getRow(1).eachCell((cell) => {
+
+        cell.font = { bold: true };
+
+    });
+
+    res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      );
+      res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=" + "List Pengiriman.xlsx"
+      );
+  
+      return workbook.xlsx.write(res).then(() => {
+        res.status(200).end();
+      });
+        
+    });
+    
 }

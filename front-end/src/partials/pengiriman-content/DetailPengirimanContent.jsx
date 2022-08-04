@@ -3,25 +3,20 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { editPengiriman } from "../../store/actions/pengiriman-action";
 import moment from "moment";
+import _ from "lodash";
+import IconUpdatePengiriman from '../../images/IconUpdatePengiriman';
+
 
 function HistoryItem({ proses_by, status, createdAt, note }) {
   return (
     <li className="mb-6 ml-6">
-      <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-        {/* Bisa tambahkan conditional status icon dan warna */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 text-blue-600 dark:text-blue-400"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </span>
+      <IconUpdatePengiriman status={status} />
+      {/* <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-600 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+    </svg>
+</span> */}
       <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
         {status} by {proses_by?.fullName}
         <span className="bg-gray-100 text-gray-500 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-gray-800 ml-3">
@@ -46,6 +41,7 @@ function DetailPengirimanContent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentData, setCurrentData] = React.useState(null);
+  const [teliList, setTeliList] = React.useState("");
 
   const getCurrentData = () => {
     // const result = data.find(item => item.id === id);
@@ -54,13 +50,30 @@ function DetailPengirimanContent() {
     //   setCurrentData(result);
     // }
     dispatch(editPengiriman(id)).then((res) => {
-      setCurrentData(res.data);
-    });
+      let current_data = {
+        ...res.data,
+        history: _.sortBy(res.data.history, ["id"])
+      };
+      setCurrentData(current_data);
+    }).then(() => {
+    })
   };
+
+
+  const findTeli = () => {
+    let telies = currentData?.history?.find(item => item.status === "dimuat")?.teli.map(item => {
+      return item?.teliPerson?.fullName
+    }).join(",");
+    setTeliList(telies);
+  }
 
   React.useEffect(() => {
     getCurrentData();
   }, [id]);
+
+  React.useEffect(() =>{
+    findTeli();
+  }, [currentData?.history]);
 
   return (
     <div className="mt-10 sm:mt-0">
@@ -110,9 +123,7 @@ function DetailPengirimanContent() {
               <p className="mt-1 text-sm font-medium text-gray-700">
                 Teli :
                 <span className="ml-1 text-sm text-gray-500">
-                  {currentData?.teli?.map((teli) => (
-                    <span>{teli.teliPerson?.fullName}</span>
-                  ))}
+                  {teliList}
                 </span>
               </p>
               <p className="mt-1 text-sm font-medium text-gray-700">
@@ -130,19 +141,25 @@ function DetailPengirimanContent() {
               <p className="mt-1 text-sm font-medium text-gray-700">
                 Sales :
                 <span className="ml-1 text-sm text-gray-500">
-                  {currentData?.customers?.sales}
+                  {currentData?.customers?.salesUser?.fullName}
                 </span>
               </p>
-              <p className="mt-1 text-sm font-medium text-gray-700">
+              {/* <p className="mt-1 text-sm font-medium text-gray-700">
                 Tujuan :
                 <span className="ml-1 text-sm text-gray-500">
                   {currentData?.tujuan}
                 </span>
-              </p>
+              </p> */}
               <p className="mt-1 text-sm font-medium text-gray-700">
                 Alamat :
                 <span className="ml-1 text-sm text-gray-500">
                   {currentData?.address}
+                </span>
+              </p>
+              <p className="mt-1 text-sm font-medium text-gray-700">
+                Note :
+                <span className="ml-1 text-sm text-gray-500">
+                  {currentData?.note}
                 </span>
               </p>
             </div>

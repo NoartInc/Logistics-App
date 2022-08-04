@@ -6,6 +6,7 @@ import CustomerOptions from "../../partials/options/CustomerOptions";
 import PengangkutanOptions from "../options/PengangkutanOptions";
 import DriverOptions from "../options/DriverOptions";
 import KendaraanOptions from "../options/KendaraanOptions";
+import InputText from "../widgets/InputText";
 
 function PengirimanInputForm() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ function PengirimanInputForm() {
     tujuan: "",
     pengangkutan: "",
     address: "",
+    note: "",
     tonase: "",
     driver: "",
     kendaraan: "",
@@ -102,6 +104,15 @@ function PengirimanInputForm() {
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
+                    {/* <InputText
+                      label="Surat Jalan"
+                      onChange={onInputChange}
+                      name="suratJalan"
+                      id="suratJalan"
+                      placeholder="No Surat Jalan"
+                      type="text"
+                      value={form?.suratJalan}
+                    /> */}
                     <label
                       for="suratJalan"
                       className="block text-sm font-medium text-gray-700"
@@ -115,6 +126,7 @@ function PengirimanInputForm() {
                       id="suratJalan"
                       placeholder="No Surat Jalan"
                       className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      value={form?.suratJalan}
                     />
                   </div>
 
@@ -203,21 +215,34 @@ function PengirimanInputForm() {
                   </div>
 
                   <div className="col-span-6 sm:col-span-5">
+                    <InputText
+                      inputType="textarea"
+                      label="Alamat Pengiriman"
+                      onChange={onInputChange}
+                      name="address"
+                      id="address"
+                      placeholder="Alamat Pengiriman"
+                      type="text"
+                      value={form?.address}
+                    />
+                  </div>
+
+                  <div className="col-span-6 sm:col-span-5">
                     <label
-                      for="address"
+                      for="note"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Alamat Pengiriman
+                      Note Pengiriman
                     </label>
                     <textarea
                       onChange={onInputChange}
                       type="text"
-                      name="address"
-                      id="address"
+                      name="note"
+                      id="note"
                       rows="4"
                       className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      placeholder="Alamat lengkap pengiriman"
-                      value={form.address}
+                      placeholder="Note Pengiriman"
+                      value={form.note}
                     />
                   </div>
 

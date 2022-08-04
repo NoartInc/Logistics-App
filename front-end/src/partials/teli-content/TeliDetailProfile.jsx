@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { editTeli } from "../../store/actions/teli-action";
+import { editTeli, countTonase } from "../../store/actions/teli-action";
 
 function TeliDetailProfile() {
 
@@ -9,6 +9,11 @@ function TeliDetailProfile() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [currentData, setCurrentData] = useState(null);
+  const [totalTonase, setTotalTonase] = useState(0);
+
+  const getTotalTonase = () => {
+    dispatch(countTonase(id)).then((total) => setTotalTonase(total))
+  }
 
   const getCurrentData = () => {
     dispatch(editTeli(id)).then((res) => {
@@ -18,6 +23,7 @@ function TeliDetailProfile() {
 
   useEffect(() => {
     getCurrentData()
+    getTotalTonase()
   }, [id]);
 
   return (
@@ -80,7 +86,7 @@ function TeliDetailProfile() {
                     Total Tonase
                   </p>
                   <p className="text-xl text-center font-semibold uppercase text-emerald-600">
-                    10
+                    {totalTonase}
                   </p>
                 </div>
               </div>

@@ -21,6 +21,9 @@ module.exports = {
         type: Sequelize.TEXT
       },
       sales: {
+        type: Sequelize.INTEGER
+      },
+      coordinate: {
         type: Sequelize.STRING
       },
       status: {

@@ -7,14 +7,16 @@ function TeliModalEditForm({ id= null }) {
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({})
   const dispatch = useDispatch();
-  const currentData = useSelector(state => state.telis.selectedData);
+  const [currentData, setCurrentData] = useState(null);
 
   useEffect(() => {
     setForm(currentData)
   }, [currentData]);
 
   const editData = (id) => {
-    dispatch(editTeli(id))
+    dispatch(editTeli(id)).then(res => {
+      setCurrentData(res);
+    })
     setShowModal(true)
   };
 

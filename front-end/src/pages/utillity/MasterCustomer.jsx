@@ -50,7 +50,11 @@ function MasterCustomer() {
           },
           {
               Header: 'Sales',
-              accessor: 'sales'
+              accessor: 'salesUser.fullName'
+          },
+          {
+            Header: 'Coordinate',
+            accessor: 'coordinate'
           },
           {
               Header: 'Status',

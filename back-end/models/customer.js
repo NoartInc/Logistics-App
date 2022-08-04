@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.Customer.belongsTo(models.Users, {
+        as: "salesUser",
+        foreignKey: "sales",
+      })
     }
   }
   Customer.init({
@@ -18,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     pic: DataTypes.STRING,
     contact: DataTypes.STRING,
     address: DataTypes.TEXT,
-    sales: DataTypes.STRING,
+    sales: DataTypes.INTEGER,
+    coordinate: DataTypes.STRING,
     status: 
     {
       type: DataTypes.ENUM('active','inactive')
