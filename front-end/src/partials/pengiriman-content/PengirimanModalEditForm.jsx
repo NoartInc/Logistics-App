@@ -4,18 +4,20 @@ import {
   editPengiriman,
   updatePengiriman,
 } from "../../store/actions/pengiriman-action";
+import { STATUS_PENGIRIMAN, userData } from "../../utils/constants";
 import TeliOptions from "../options/TeliOptions";
 
 function PengirimanModalEditForm({ id = null }) {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const currentData = useSelector((state) => state.pengirimans.selectedData);
+  const { user } = userData;
 
   const [form, setForm] = useState({});
 
   useEffect(() => {
     setForm(currentData);
-  }, [currentData]);
+  }, []);
 
   const editData = (id) => {
     setForm((prevState) => ({
@@ -42,7 +44,7 @@ function PengirimanModalEditForm({ id = null }) {
     dispatch(updatePengiriman(form));
     setShowModal(false);
     let uploaded = e.target.files[0];
-    (URL.createObjectURL(uploaded)); 
+    URL.createObjectURL(uploaded);
   };
 
   return (
@@ -114,13 +116,13 @@ function PengirimanModalEditForm({ id = null }) {
                           value={form?.status}
                         >
                           <option value="">---Pilih Status---</option>
-                          <option value="diproses">Diproses</option>
-                          <option value="dimuat">Dimuat</option>
-                          <option value="termuat">Termuat</option>
-                          <option value="dikirim">Dikirim</option>
-                          <option value="terkirim">Terkirim</option>
-                          <option value="pending">Pending</option>
-                          <option value="cancel">Cancel</option>
+                          {STATUS_PENGIRIMAN[user.role]?.map(
+                            ({ value, key }) => (
+                              <option key={key} value={key}>
+                                {value}
+                              </option>
+                            )
+                          )}
                         </select>
                       </div>
 
