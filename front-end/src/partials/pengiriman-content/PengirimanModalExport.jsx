@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import DateRangePickerExport from '../actions/DateRangePickerExport';
-import { CSVLink } from 'react-csv';
+
 
 
 function PengirimanModalExport() {

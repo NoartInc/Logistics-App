@@ -60,7 +60,6 @@ module.exports = (sequelize, DataTypes) => {
   Pengiriman.init({
     customer: DataTypes.INTEGER,
     suratJalan: DataTypes.STRING,
-    tujuan: DataTypes.STRING,
     pengangkutan: DataTypes.INTEGER,
     address: DataTypes.TEXT,
     tonase: DataTypes.DOUBLE,

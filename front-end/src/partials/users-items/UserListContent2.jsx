@@ -17,7 +17,7 @@ import { Button, PageButton } from "../actions/Button";
 import { classNames } from "../../utils/Utils";
 import { SortIcon, SortUpIcon, SortDownIcon } from "../actions/Icons";
 import UserModalForm from "./UserModalForm";
-import { CSVLink } from "react-csv";
+
 
 // Define a default UI for filtering
 function GlobalFilter({

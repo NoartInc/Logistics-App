@@ -215,7 +215,7 @@ function PengirimanInputForm() {
                   </div>
 
                   <div className="col-span-6 sm:col-span-5">
-                    <InputText
+                    {/* <InputText
                       inputType="textarea"
                       label="Alamat Pengiriman"
                       onChange={onInputChange}
@@ -224,6 +224,22 @@ function PengirimanInputForm() {
                       placeholder="Alamat Pengiriman"
                       type="text"
                       value={form?.address}
+                    /> */}
+                    <label
+                      for="address"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Alamat Pengiriman
+                    </label>
+                    <textarea
+                      onChange={onInputChange}
+                      type="text"
+                      name="address"
+                      id="address"
+                      rows="4"
+                      placeholder="Alamat Lengkap Pengiriman"
+                      value={form?.address}
+                      className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
 

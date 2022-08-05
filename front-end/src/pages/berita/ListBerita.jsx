@@ -22,7 +22,8 @@ function ListBerita() {
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
-            <div className="text-center">Halaman List Berita</div>
+          <div className="text-center font-bold text-xl text-gray-600">Mohon Maaf</div>
+            <div className="text-center font-bold text-xl text-gray-600">Halaman ini Belum Tersedia</div>
 
           </div>
         </main>

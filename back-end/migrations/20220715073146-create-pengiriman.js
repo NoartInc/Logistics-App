@@ -14,9 +14,6 @@ module.exports = {
       suratJalan: {
         type: Sequelize.STRING
       },
-      tujuan: {
-        type: Sequelize.STRING
-      },
       pengangkutan: {
         type: Sequelize.INTEGER
       },
