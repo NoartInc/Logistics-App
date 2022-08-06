@@ -190,94 +190,98 @@ exports.deleteAllPengiriman = async (req, res) => {
 };
 
 exports.downloadData = async (req, res) => {
-  Pengiriman.findAll().then((item) => {
-    let data = [];
+  const pengiriman = await Pengiriman.findAll({
+    include: dataAssoc,
+    order: [["createdAt", "DESC"]],
+  });
+  let data = [];
 
-    item.forEach((item) => {
-      data.push({
-        createdAt: item.createdAt,
-        suratJalan: item.suratJalan,
-        customers: item.customers,
-        drivers: item.drivers,
-        kendaraans: item.kendaraans,
-        address: item.address,
-        salesUser: item.salesUser,
-        teliPerson: item.teliPerson,
-        note: item.note,
-      });
-    });
-
-    const workbook = new excelJS.Workbook(); // Create a new workbook
-    const worksheet = workbook.addWorksheet("List Pengiriman"); // New Worksheet
-    const path = "./public/files"; // Path to download excel
-
-    // Column for data in excel. key must match data key
-    worksheet.columns = [
-      {
-        header: "Date",
-        key: "createdAt",
-        width: "10",
-      },
-      {
-        header: "Surat Jalan",
-        key: "suratJalan",
-        width: "10",
-      },
-      {
-        header: "Customer",
-        key: "customers",
-        width: "10",
-      },
-      {
-        header: "Driver",
-        key: "drivers",
-        width: "10",
-      },
-      {
-        header: "Kendaraan",
-        key: "kendaraans",
-        width: "10",
-      },
-      {
-        header: "Address",
-        key: "address",
-        width: "30",
-      },
-      {
-        header: "Sales",
-        key: "salesUser",
-        width: "10",
-      },
-      {
-        header: "Teli",
-        key: "teliPerson",
-        width: "10",
-      },
-      {
-        header: "Note",
-        key: "note",
-        width: "10",
-      },
-    ];
-
-    worksheet.addRows(data);
-
-    //Making first line in excel bold
-    worksheet.getRow(1).eachCell((cell) => {
-      cell.font = { bold: true };
-    });
-
-    res.setHeader(
-      "Content-Type",
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    );
-    res.setHeader(
-      "Content-Disposition",
-      "attachment; filename=" + "List Pengiriman.xlsx"
-    );
-
-    return workbook.xlsx.write(res).then(() => {
-      res.status(200).end();
+  pengiriman.forEach((item) => {
+    data.push({
+      createdAt: item.createdAt,
+      suratJalan: item.suratJalan,
+      customers: item.customers.customer,
+      drivers: item.drivers.fullName,
+      kendaraans: item.kendaraans.kendaraan,
+      address: item.address,
+      salesUser: item.customers.salesUser.fullName,
+      teliPerson: item.teliPerson,
+      note: item.note,
     });
   });
+
+  const workbook = new excelJS.Workbook(); // Create a new workbook
+  const worksheet = workbook.addWorksheet("List Pengiriman"); // New Worksheet
+  const path = "./public/files"; // Path to download excel
+
+  // Column for data in excel. key must match data key
+  worksheet.columns = [
+    {
+      header: "Date",
+      key: "createdAt",
+      width: "10",
+    },
+    {
+      header: "Surat Jalan",
+      key: "suratJalan",
+      width: "10",
+    },
+    {
+      header: "Customer",
+      key: "customers",
+      width: "10",
+    },
+    {
+      header: "Driver",
+      key: "drivers",
+      width: "10",
+    },
+    {
+      header: "Kendaraan",
+      key: "kendaraans",
+      width: "10",
+    },
+    {
+      header: "Address",
+      key: "address",
+      width: "30",
+    },
+    {
+      header: "Sales",
+      key: "salesUser",
+      width: "10",
+    },
+    {
+      header: "Teli",
+      key: "teliPerson",
+      width: "10",
+    },
+    {
+      header: "Note",
+      key: "note",
+      width: "10",
+    },
+  ];
+
+  worksheet.addRows(data);
+
+  //Making first line in excel bold
+  worksheet.getRow(1).eachCell((cell) => {
+    cell.font = { bold: true };
+  });
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  );
+
+  return await workbook.xlsx
+    .writeFile(`${path}/List-Pengiriman.xlsx`)
+    .then((data) => {
+      res.status(200).send({
+        status: "success",
+        message: "file successfully downloaded",
+        path: `${path}/List-Pengiriman.xlsx`,
+      });
+    });
 };

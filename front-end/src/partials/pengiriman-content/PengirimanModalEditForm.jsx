@@ -127,6 +127,7 @@ function PengirimanModalEditForm({ id = null, status }) {
                       </div>
                       {(status === "terkirim" ||
                         status === "pending" ||
+                        status === "cancel" ||
                         user.role === "administrator") && (
                         <div className="mb-3 col-span-6 sm:col-span-6">
                           <label
