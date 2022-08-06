@@ -9,6 +9,7 @@ const {
   TeliPengiriman,
 } = require("../models");
 const excelJS = require("exceljs");
+const { Op } = require("sequelize");
 
 const dataAssoc = [
   {
@@ -190,8 +191,17 @@ exports.deleteAllPengiriman = async (req, res) => {
 };
 
 exports.downloadData = async (req, res) => {
+  const { startDate, endDate } = req.query;
   const pengiriman = await Pengiriman.findAll({
     include: dataAssoc,
+    where: {
+      createdAt: {
+        [Op.lt]: new Date(
+          new Date(endDate).getTime() + 60 * 60 * 24 * 1000 - 1
+        ),
+        [Op.gt]: new Date(startDate),
+      },
+    },
     order: [["createdAt", "DESC"]],
   });
   let data = [];

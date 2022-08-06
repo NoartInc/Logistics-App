@@ -125,10 +125,9 @@ function PengirimanModalEditForm({ id = null, status }) {
                           )}
                         </select>
                       </div>
-                      {(status === "terkirim" ||
-                        status === "pending" ||
-                        status === "cancel" ||
-                        user.role === "administrator") && (
+                      {(form?.status === "terkirim" ||
+                        form?.status === "pending" ||
+                        form?.status === "cancel") && (
                         <div className="mb-3 col-span-6 sm:col-span-6">
                           <label
                             for="note"
@@ -149,9 +148,8 @@ function PengirimanModalEditForm({ id = null, status }) {
                         </div>
                       )}
 
-                      {(status === "terkirim" ||
-                        status === "pending" ||
-                        user.role === "administrator") && (
+                      {(form?.status === "terkirim" ||
+                        form?.status === "pending") && (
                         <div className="mb-3 col-span-6 sm:col-span-6">
                           <label
                             for="img"
@@ -170,8 +168,7 @@ function PengirimanModalEditForm({ id = null, status }) {
                         </div>
                       )}
 
-                      {(status === "dimuat" ||
-                        user.role === "administrator") && (
+                      {form?.status === "dimuat" && (
                         <div className="mb-3 col-span-6 sm:col-span-6">
                           <label
                             for="teli"

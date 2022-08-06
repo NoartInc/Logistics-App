@@ -19,5 +19,10 @@ class PengirimanDataService {
   deleteAll() {
     return http.delete(`/pengiriman`);
   }
+  exportData(startDate, endDate) {
+    return http.get(
+      `/pengiriman/export/downloadPengiriman?startDate=${startDate}&endDate=${endDate}`
+    );
+  }
 }
 export default new PengirimanDataService();

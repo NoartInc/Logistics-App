@@ -5,6 +5,7 @@ import {
   EDIT_PENGIRIMAN,
   DELETE_PENGIRIMAN,
   DELETE_ALL_PENGIRIMAN,
+  EXPORT_DATA_PENGIRIMAN,
 } from "../actions/types";
 
 import PengirimanDataService from "../../services/pengiriman.service";
@@ -88,3 +89,20 @@ export const deleteAllPengiriman = () => async (dispatch) => {
     return Promise.reject(err);
   }
 };
+
+export const exportDataPengiriman =
+  (startDate, endDate) => async (dispatch) => {
+    try {
+      const res = await PengirimanDataService.exportData(startDate, endDate);
+      dispatch({
+        type: EXPORT_DATA_PENGIRIMAN,
+        payload: res.data,
+      });
+      const { path } = res.data;
+      const urlFile = path.replace("./public", "");
+      console.log(urlFile);
+      window.open(`http://localhost:5000/${urlFile}`);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  };
