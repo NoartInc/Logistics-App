@@ -7,7 +7,7 @@ import {
 import { STATUS_PENGIRIMAN, userData } from "../../utils/constants";
 import TeliOptions from "../options/TeliOptions";
 
-function PengirimanModalEditForm({ id = null }) {
+function PengirimanModalEditForm({ id = null, status }) {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const currentData = useSelector((state) => state.pengirimans.selectedData);
@@ -17,7 +17,7 @@ function PengirimanModalEditForm({ id = null }) {
 
   useEffect(() => {
     setForm(currentData);
-  }, []);
+  }, [currentData]);
 
   const editData = (id) => {
     setForm((prevState) => ({
@@ -125,55 +125,65 @@ function PengirimanModalEditForm({ id = null }) {
                           )}
                         </select>
                       </div>
+                      {(status === "terkirim" ||
+                        status === "pending" ||
+                        user.role === "administrator") && (
+                        <div className="mb-3 col-span-6 sm:col-span-6">
+                          <label
+                            for="note"
+                            className="block text-xs font-medium uppercase text-gray-500"
+                          >
+                            Note
+                          </label>
+                          <textarea
+                            onChange={onInputChange}
+                            type="text"
+                            name="note"
+                            id="note"
+                            rows="4"
+                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            placeholder="Masukan pesan disini .."
+                            value={form?.note}
+                          />
+                        </div>
+                      )}
 
-                      <div className="mb-3 col-span-6 sm:col-span-6">
-                        <label
-                          for="note"
-                          className="block text-xs font-medium uppercase text-gray-500"
-                        >
-                          Note
-                        </label>
-                        <textarea
-                          onChange={onInputChange}
-                          type="text"
-                          name="note"
-                          id="note"
-                          rows="4"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                          placeholder="Masukan pesan disini .."
-                          value={form?.note}
-                        />
-                      </div>
+                      {(status === "terkirim" ||
+                        status === "pending" ||
+                        user.role === "administrator") && (
+                        <div className="mb-3 col-span-6 sm:col-span-6">
+                          <label
+                            for="img"
+                            className="block text-xs font-medium uppercase text-gray-500"
+                          >
+                            Submit Surat Jalan
+                          </label>
+                          <input
+                            className="mt-1 block w-96 py-2 px-3 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-400 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                            id="formFile"
+                            type="file"
+                            accept="image/*"
+                            onChange={onInputChange}
+                            // value={(URL.createObjectURL(e.target.files[0]))}
+                          />
+                        </div>
+                      )}
 
-                      <div className="mb-3 col-span-6 sm:col-span-6">
-                        <label
-                          for="img"
-                          className="block text-xs font-medium uppercase text-gray-500"
-                        >
-                          Submit Surat Jalan
-                        </label>
-                        <input
-                          className="mt-1 block w-96 py-2 px-3 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-400 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                          id="formFile"
-                          type="file"
-                          accept="image/*"
-                          onChange={onInputChange}
-                          // value={(URL.createObjectURL(e.target.files[0]))}
-                        />
-                      </div>
-
-                      <div className="mb-3 col-span-6 sm:col-span-6">
-                        <label
-                          for="teli"
-                          className="block text-xs font-medium uppercase text-gray-500"
-                        >
-                          Teli
-                        </label>
-                        <TeliOptions
-                          onChange={onInputChange}
-                          value={form?.teli}
-                        />
-                      </div>
+                      {(status === "dimuat" ||
+                        user.role === "administrator") && (
+                        <div className="mb-3 col-span-6 sm:col-span-6">
+                          <label
+                            for="teli"
+                            className="block text-xs font-medium uppercase text-gray-500"
+                          >
+                            Teli
+                          </label>
+                          <TeliOptions
+                            onChange={onInputChange}
+                            value={form?.teli}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/*footer*/}

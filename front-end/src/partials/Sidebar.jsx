@@ -699,50 +699,66 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         </a>
                         <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                           <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
-                            <li className="mb-1 last:mb-0">
-                              <NavLink
-                                end
-                                to="/masterkendaraan"
-                                className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
-                              >
-                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Master Kendaraan
-                                </span>
-                              </NavLink>
-                            </li>
-                            <li className="mb-1 last:mb-0">
-                              <NavLink
-                                end
-                                to="/mastercustomer"
-                                className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
-                              >
-                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Master Customer
-                                </span>
-                              </NavLink>
-                            </li>
-                            <li className="mb-1 last:mb-0">
-                              <NavLink
-                                end
-                                to="/masterteli"
-                                className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
-                              >
-                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Master Teli
-                                </span>
-                              </NavLink>
-                            </li>
-                            <li className="mb-1 last:mb-0">
-                              <NavLink
-                                end
-                                to="/masterpengangkutan"
-                                className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
-                              >
-                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Master Pengangkutan
-                                </span>
-                              </NavLink>
-                            </li>
+                            {ROLES_MANAGEMENTS[
+                              "master_kendaraan"
+                            ].allowedRoles.includes(user.role) && (
+                              <li className="mb-1 last:mb-0">
+                                <NavLink
+                                  end
+                                  to="/masterkendaraan"
+                                  className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
+                                >
+                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                    Master Kendaraan
+                                  </span>
+                                </NavLink>
+                              </li>
+                            )}
+                            {ROLES_MANAGEMENTS[
+                              "master_customer"
+                            ].allowedRoles.includes(user.role) && (
+                              <li className="mb-1 last:mb-0">
+                                <NavLink
+                                  end
+                                  to="/mastercustomer"
+                                  className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
+                                >
+                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                    Master Customer
+                                  </span>
+                                </NavLink>
+                              </li>
+                            )}
+                            {ROLES_MANAGEMENTS[
+                              "master_teli"
+                            ].allowedRoles.includes(user.role) && (
+                              <li className="mb-1 last:mb-0">
+                                <NavLink
+                                  end
+                                  to="/masterteli"
+                                  className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
+                                >
+                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                    Master Teli
+                                  </span>
+                                </NavLink>
+                              </li>
+                            )}
+                            {ROLES_MANAGEMENTS[
+                              "master_pengangkutan"
+                            ].allowedRoles.includes(user.role) && (
+                              <li className="mb-1 last:mb-0">
+                                <NavLink
+                                  end
+                                  to="/masterpengangkutan"
+                                  className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
+                                >
+                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                    Master Pengangkutan
+                                  </span>
+                                </NavLink>
+                              </li>
+                            )}
                             <li className="mb-1 last:mb-0">
                               <NavLink
                                 end

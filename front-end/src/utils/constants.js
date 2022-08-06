@@ -48,11 +48,13 @@ export const ROLES_MANAGEMENTS = {
   },
   user_menu: { allowedRoles: ["administrator"] },
   berita_menu: { allowedRoles: ["administrator", "manager"] },
-  utility_menu: { allowedRoles: ["administrator", "manager"] },
+  utility_menu: {
+    allowedRoles: ["administrator", "manager", "logistics", "marketing"],
+  },
 
   // Child Menu
   create_pengiriman: {
-    allowedRoles: ["administrator", "manager", "logistics"],
+    allowedRoles: ["administrator", "logistics"],
   },
   list_pengiriman: {
     allowedRoles: [
@@ -65,11 +67,97 @@ export const ROLES_MANAGEMENTS = {
       "driver",
     ],
   },
+  master_kendaraan: {
+    allowedRoles: ["administrator", "manager"],
+  },
+  master_customer: {
+    allowedRoles: ["administrator", "manager", "marketing"],
+  },
+  master_teli: {
+    allowedRoles: ["administrator", "manager"],
+  },
+  master_pengangkutan: {
+    allowedRoles: ["administrator", "manager", "logistics", "marketing"],
+  },
+
   // Actions
   update_pengiriman: {
-    allowedRoles: ["administrator", "manager", "logistics", "teli"],
+    allowedRoles: ["administrator", "manager", "logistics", "teli", "driver"],
+    allowedStatus_administrator: [
+      "diproses",
+      "dimuat",
+      "termuat",
+      "dikirim",
+      "terkirim",
+      "pending",
+      "cancel",
+    ],
+    allowedStatus_driver: ["dikirim", "terkirim", "pending"],
+    allowedStatus_logistics: ["cancel", "pending"],
+    allowedStatus_teli: ["dimuat", "termuat"],
   },
   delete_pengiriman: {
-    allowedRoles: ["administrator", "manager"],
+    allowedRoles: ["administrator"],
+  },
+
+  // master kendaraan
+  create_kendaraan: {
+    allowedRoles: ["administrator"],
+  },
+  update_kendaraan: {
+    allowedRoles: ["administrator"],
+  },
+  delete_kendaraan: {
+    allowedRoles: ["administrator"],
+  },
+
+  // master customer
+  create_customer: {
+    allowedRoles: ["administrator", "marketing"],
+  },
+  update_customer: {
+    allowedRoles: ["administrator", "marketing"],
+  },
+  delete_customer: {
+    allowedRoles: ["administrator", "marketing"],
+  },
+
+  // master teli
+  create_teli: {
+    allowedRoles: ["administrator"],
+  },
+  update_teli: {
+    allowedRoles: ["administrator"],
+  },
+  delete_teli: {
+    allowedRoles: ["administrator"],
+  },
+
+  // master pengangkutan
+  create_pengangkutan: {
+    allowedRoles: ["administrator", "logistics", "marketing"],
+  },
+  update_pengangkutan: {
+    allowedRoles: ["administrator", "logistics", "marketing"],
+  },
+  delete_pengangkutan: {
+    allowedRoles: ["administrator", "logistics", "marketing"],
+  },
+
+  // forms
+  update_form_pengiriman: {
+    allowedRoles: ["administrator", "manager", "logistics", "teli", "driver"],
+    allowedStatus_administrator: [
+      "diproses",
+      "dimuat",
+      "termuat",
+      "dikirim",
+      "terkirim",
+      "pending",
+      "cancel",
+    ],
+    allowedStatus_driver: ["dikirim", "terkirim", "pending"],
+    allowedStatus_logistics: ["cancel", "pending"],
+    allowedStatus_teli: ["dimuat", "termuat"],
   },
 };

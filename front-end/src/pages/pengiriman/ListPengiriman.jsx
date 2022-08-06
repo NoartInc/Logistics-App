@@ -87,9 +87,15 @@ function ListPengiriman() {
             {console.log(pengirimans?.row)}
             {ROLES_MANAGEMENTS["update_pengiriman"].allowedRoles.includes(
               user.role
-            ) && (
-              <PengirimanModalEditForm id={pengirimans?.row?.original?.id} />
-            )}
+            ) &&
+              ROLES_MANAGEMENTS["update_pengiriman"][
+                `allowedStatus_${user.role}`
+              ]?.includes(pengirimans?.row?.original?.status) && (
+                <PengirimanModalEditForm
+                  id={pengirimans?.row?.original?.id}
+                  status={pengirimans?.row?.original?.status}
+                />
+              )}
             {ROLES_MANAGEMENTS["delete_pengiriman"].allowedRoles.includes(
               user.role
             ) && (
