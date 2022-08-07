@@ -21,6 +21,7 @@ import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
 import TesCard01 from '../partials/dashboard/tesCard01';
+import { result } from 'lodash';
 
 
 function Dashboard() {
@@ -72,7 +73,10 @@ function Dashboard() {
             <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
 
 
-              
+              {/* {results.map(val) => {
+                val.count
+                <h1>Pesanana {val.status}</h1>
+              }} */}
               <DashboardCard01 />
               
               <DashboardCard02 />

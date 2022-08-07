@@ -7,6 +7,7 @@ const {
   Teli,
   TrackPengiriman,
   TeliPengiriman,
+  sequelize,
 } = require("../models");
 const excelJS = require("exceljs");
 const { Op } = require("sequelize");
@@ -122,12 +123,13 @@ exports.updatePengiriman = async (req, res) => {
   try {
     const { id: userId = 0 } = req.user; // userId
     const { id } = req.params; // pengirimanId
-    const { note, status, teli = null } = req.body; // note
+    const { note, status, teli = null, image } = req.body; // note
 
     // update status di tabel Pengiriman
     await Pengiriman.update(
       {
         status: status,
+        image
       },
       {
         where: { id: id },
@@ -211,6 +213,8 @@ exports.downloadData = async (req, res) => {
       createdAt: item.createdAt,
       suratJalan: item.suratJalan,
       customers: item.customers.customer,
+      tonase: item.tonase,
+      pengangkutan: item.pengangkutans?.pengangkutan || "",
       drivers: item.drivers.fullName,
       kendaraans: item.kendaraans.kendaraan,
       address: item.address,
@@ -239,6 +243,16 @@ exports.downloadData = async (req, res) => {
     {
       header: "Customer",
       key: "customers",
+      width: "10",
+    },
+    {
+      header: "Tonase",
+      key: "tonase",
+      width: "10",
+    },
+    {
+      header: "Pengangkutan",
+      key: "pengangkutan",
       width: "10",
     },
     {
@@ -294,4 +308,17 @@ exports.downloadData = async (req, res) => {
         path: `${path}/List-Pengiriman.xlsx`,
       });
     });
+};
+
+exports.getDashboard = async (req, res) => {
+  try {
+    const [results] = await sequelize.query(
+      "SELECT count(*) as count, status from pengirimans group by status"
+    );
+
+    res.status(200).send({
+      status: "success",
+      results,
+    });
+  } catch (error) {}
 };

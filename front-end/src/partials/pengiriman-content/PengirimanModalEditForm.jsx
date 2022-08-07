@@ -6,6 +6,7 @@ import {
 } from "../../store/actions/pengiriman-action";
 import { STATUS_PENGIRIMAN, userData } from "../../utils/constants";
 import TeliOptions from "../options/TeliOptions";
+import http from "../../../http-common";
 
 function PengirimanModalEditForm({ id = null, status }) {
   const [showModal, setShowModal] = useState(false);
@@ -39,12 +40,30 @@ function PengirimanModalEditForm({ id = null, status }) {
     });
   };
 
+  const onUpload = (e) => {
+    let formData = new FormData();
+    formData.append("photo", e.target.files[0]);
+    return http
+      .post("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        setForm((prevState) => {
+          return {
+            ...prevState,
+            ['image']: res.data.image,
+          };
+        });
+      }
+      );
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(updatePengiriman(form));
     setShowModal(false);
-    let uploaded = e.target.files[0];
-    URL.createObjectURL(uploaded);
   };
 
   return (
@@ -150,22 +169,26 @@ function PengirimanModalEditForm({ id = null, status }) {
 
                       {(form?.status === "terkirim" ||
                         form?.status === "pending") && (
-                        <div className="mb-3 col-span-6 sm:col-span-6">
-                          <label
-                            for="img"
-                            className="block text-xs font-medium uppercase text-gray-500"
-                          >
-                            Submit Surat Jalan
-                          </label>
-                          <input
-                            className="mt-1 block w-96 py-2 px-3 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-400 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            id="formFile"
-                            type="file"
-                            accept="image/*"
-                            onChange={onInputChange}
-                            // value={(URL.createObjectURL(e.target.files[0]))}
-                          />
-                        </div>
+                        <>
+                          <div className="mb-3 col-span-6 sm:col-span-6">
+                            <label
+                              for="img"
+                              className="block text-xs font-medium uppercase text-gray-500"
+                            >
+                              Submit Surat Jalan
+                            </label>
+                            <input
+                              className="mt-1 block w-96 py-2 px-3 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-400 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                              id="formFile"
+                              type="file"
+                              name="image"
+                              accept="image/*"
+                              onChange={onUpload}
+                              // value={(URL.createObjectURL(e.target.files[0]))}
+                            />
+                          </div>
+                          {form.image &&<img src={form.image} alt="image" />}
+                        </>
                       )}
 
                       {form?.status === "dimuat" && (

@@ -18,6 +18,7 @@ import { classNames } from "../../utils/Utils";
 import { SortIcon, SortUpIcon, SortDownIcon } from "../actions/Icons";
 
 import PengirimanModalExport from "./PengirimanModalExport";
+import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -141,6 +142,7 @@ function PengirimanTableContent({ columns, data }) {
     useSortBy,
     usePagination // new
   );
+  const { user } = userData;
 
   // render the UI for your table
   return (
@@ -168,8 +170,14 @@ function PengirimanTableContent({ columns, data }) {
               )
             )}
             <div className="flex">
-              <PengirimanModalExport />
-           
+              {console.log(
+                ROLES_MANAGEMENTS["export_pengiriman"].allowedRoles.includes(
+                  user.role
+                )
+              )}
+              {ROLES_MANAGEMENTS["export_pengiriman"].allowedRoles.includes(
+                user.role
+              ) && <PengirimanModalExport />}
             </div>
           </div>
           {/* table */}
@@ -222,7 +230,10 @@ function PengirimanTableContent({ columns, data }) {
                         // new
                         prepareRow(row);
                         return (
-                          <tr className="odd:bg-white even:bg-slate-100" {...row.getRowProps()}>
+                          <tr
+                            className="odd:bg-white even:bg-slate-100"
+                            {...row.getRowProps()}
+                          >
                             {row.cells.map((cell) => {
                               return (
                                 <td

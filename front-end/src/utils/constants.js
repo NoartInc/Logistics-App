@@ -156,20 +156,8 @@ export const ROLES_MANAGEMENTS = {
     allowedRoles: ["administrator", "logistics", "marketing"],
   },
 
-  // forms
-  update_form_pengiriman: {
-    allowedRoles: ["administrator", "manager", "logistics", "teli", "driver"],
-    allowedStatus_administrator: [
-      "diproses",
-      "dimuat",
-      "termuat",
-      "dikirim",
-      "terkirim",
-      "pending",
-      "cancel",
-    ],
-    allowedStatus_driver: ["dikirim", "terkirim", "pending"],
-    allowedStatus_logistics: ["cancel", "pending"],
-    allowedStatus_teli: ["dimuat", "termuat"],
+  // export pengiriman
+  export_pengiriman: {
+    allowedRoles: ["administrator", "logistics"],
   },
 };
