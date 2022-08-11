@@ -24,5 +24,8 @@ class PengirimanDataService {
       `/pengiriman/export/downloadPengiriman?startDate=${startDate}&endDate=${endDate}`
     );
   }
+  getDashboard(results) {
+    return http.get(`/pengiriman/dashboard/pengiriman`, results);
+  }
 }
 export default new PengirimanDataService();

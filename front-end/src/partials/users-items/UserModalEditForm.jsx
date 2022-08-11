@@ -159,9 +159,10 @@ function UserModalEditForm({ id = null }) {
                             <option value='driver'>Driver</option>
                             <option value='logistics'>Logistics</option>
                             <option value='teli'>Teli</option>
-                            <option value='marketing'>Marketing</option>
+                            <option value='cbo'>CBO</option>
                             <option value='sales'>Sales</option>
                             <option value='manager'>Manager</option>
+                            <option value='telemarketing'>Tele Marketing</option>
                         </select>
                       </div>
 

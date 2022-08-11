@@ -61,7 +61,7 @@ function MasterPengangkutan() {
         // accessor: 'action',
         Cell: (pengangkutans) => (
           <div className="flex justify-start">
-            {ROLES_MANAGEMENTS["delete_pengangkutan"].allowedRoles.includes(
+            {ROLES_MANAGEMENTS["update_pengangkutan"].allowedRoles.includes(
               userData?.user?.role
             ) && (
               <PengangkutanModalEditForm id={pengangkutans.row.original.id} />

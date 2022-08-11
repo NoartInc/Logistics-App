@@ -22,5 +22,8 @@ class TeliDataService {
   deleteAll() {
     return http.delete(`/teli`);
   }
+  deleteCount() {
+    return http.delete(`/teli/delete-count`);
+  }
 }
 export default new TeliDataService();

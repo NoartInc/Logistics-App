@@ -58,7 +58,7 @@ function MasterKendaraan() {
         // accessor: '',
         Cell: (kendaraans) => (
           <div className="flex justify-start">
-            {ROLES_MANAGEMENTS["delete_kendaraan"].allowedRoles.includes(
+            {ROLES_MANAGEMENTS["update_kendaraan"].allowedRoles.includes(
               userData?.user?.role
             ) && <KendaraanModalEditForm id={kendaraans.row.original.id} />}
             {ROLES_MANAGEMENTS["delete_kendaraan"].allowedRoles.includes(

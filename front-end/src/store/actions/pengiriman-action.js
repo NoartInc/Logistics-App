@@ -6,6 +6,7 @@ import {
   DELETE_PENGIRIMAN,
   DELETE_ALL_PENGIRIMAN,
   EXPORT_DATA_PENGIRIMAN,
+  GET_DASHBOARD
 } from "../actions/types";
 
 import PengirimanDataService from "../../services/pengiriman.service";
@@ -106,3 +107,15 @@ export const exportDataPengiriman =
       return Promise.reject(err);
     }
   };
+
+export const getDashboard = () => async (dispatch) => {
+  try {
+    const res = await PengirimanDataService.getDashboard();
+    dispatch({
+      type: GET_DASHBOARD,
+      payload: res.data.results,
+    });
+  } catch (err) {
+    console.error(err)
+  }
+}

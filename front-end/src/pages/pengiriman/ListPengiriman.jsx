@@ -43,7 +43,7 @@ function ListPengiriman() {
         Cell: (data) => (
           <a
             href={`/listpengiriman/detailpengiriman/${data?.row?.original?.id}`}
-            className="hover:text-blue-700 font-semibold"
+            className="hover:text-blue-700 font-semibold hover:text-lg"
           >
             {" "}
             {data?.row?.original?.suratJalan}{" "}

@@ -9,7 +9,8 @@ const {
   updateTeli,
   deleteTeli,
   deleteAllTeli,
-  countTonase
+  countTonase,
+  deleteCount
 } = require ('../controllers/Teli');
 
 
@@ -22,5 +23,6 @@ router.post('/', authentication, createTeli);
 router.put('/:id', updateTeli);
 router.delete('/:id', deleteTeli);
 router.delete('/', deleteAllTeli);
+router.delete('/deletecount', deleteCount)
 
 module.exports = router;

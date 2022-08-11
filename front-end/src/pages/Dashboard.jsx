@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -20,13 +20,43 @@ import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
-import TesCard01 from '../partials/dashboard/tesCard01';
+
 import { result } from 'lodash';
+import DashboardCount from '../partials/widgets/DashboardCount';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDashboard } from "../store/actions/pengiriman-action";
+
+function DashboardCard({count, status }) {
+
+  return (
+    <div className="flex flex-col items-center text-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+      <div className="p-3 text-blue-200 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-200">
+        <DashboardCount status={status} />
+      </div>
+      
+      <div>
+        <p className="text-3xl font-bold text-slate-800 mt-3">
+          {count}
+        </p>
+        <p className="text-base font-semibold text-slate-400 mt-2">
+          Pesanan {status}
+        </p>
+      </div>
+    </div>
+  )
+
+}
+
 
 
 function Dashboard() {
-
+  const dispatch = useDispatch();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const results = useSelector((state) => state.pengirimans.summary)
+  
+    useEffect(() => {
+      dispatch(getDashboard());
+    }, []);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -71,13 +101,12 @@ function Dashboard() {
 
             {/* Cards */}
             <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+              
+              {results && results.map(({ status, count}, index) => (
+                <DashboardCard key={index} count={count} status={status} />
+              ))}
 
-
-              {/* {results.map(val) => {
-                val.count
-                <h1>Pesanana {val.status}</h1>
-              }} */}
-              <DashboardCard01 />
+              {/* <DashboardCard01  />
               
               <DashboardCard02 />
               
@@ -89,8 +118,7 @@ function Dashboard() {
               
               <DashboardCard06 />
               
-              <DashboardCard07 />
-              
+              <DashboardCard07 /> */}
               
             </div>
 

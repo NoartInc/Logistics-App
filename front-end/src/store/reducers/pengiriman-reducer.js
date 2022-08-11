@@ -6,11 +6,13 @@ import {
   DELETE_PENGIRIMAN,
   DELETE_ALL_PENGIRIMAN,
   EXPORT_DATA_PENGIRIMAN,
+  GET_DASHBOARD,
 } from "../actions/types";
 
 const initialState = {
   list: [],
   selectedData: null,
+  summary: null
 };
 
 function pengirimanReducer(pengirimans = initialState, action) {
@@ -66,6 +68,12 @@ function pengirimanReducer(pengirimans = initialState, action) {
         list: [],
         selectedData: null,
       };
+
+    case GET_DASHBOARD:
+      return {
+        ...pengirimans,
+        summary: action.payload
+      }
 
     default:
       return pengirimans;

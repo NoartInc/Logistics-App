@@ -1,4 +1,6 @@
 const { Teli, TeliPengiriman } = require('../models');
+const { Op } = require("sequelize")
+const moment = require("moment");
 
 exports.findAllTeli = async (req, res) => {
     try {
@@ -68,8 +70,15 @@ exports.deleteAllTeli = async (req, res) => {
 exports.countTonase = async (req, res) => {
     try {
         const { id } = req.params;
+        const { startDate, endDate } = req.query;
+
         const teli = await TeliPengiriman.findAll({
-            where: { teliId: id }
+            where: { 
+                teliId: id,
+                createdAt: {
+                    [Op.between]: [moment(startDate).format("YYYY-MM-DD HH:mm:ss"), moment(endDate).format("YYYY-MM-DD HH:mm:ss")]
+                }
+            }
         });
         const result = {
             total: teli.reduce((acc, cur) => {
@@ -80,5 +89,17 @@ exports.countTonase = async (req, res) => {
         return res.json(result);
     } catch (err) {
         return res.json({ message: err.message })
+    }
+}
+
+exports.deleteCount = async (req, res) => {
+    try {
+        const val = await TeliPengiriman.destroy({
+            where : { tonase },
+            truncate: true
+        })
+        return res.json(val)
+    } catch (err) {
+        res.json({ message: err.message })
     }
 }

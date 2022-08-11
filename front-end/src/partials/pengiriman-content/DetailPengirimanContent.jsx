@@ -162,6 +162,12 @@ function DetailPengirimanContent() {
                   {currentData?.note}
                 </span>
               </p>
+              <p className="mt-1 text-sm font-medium text-gray-700">
+                Driver Contact :
+                <span className="ml-1 text-sm font-bold text-gray-500">
+                  {currentData?.drivers?.contact}
+                </span>
+              </p>
             </div>
           </div>
         </div>

@@ -48,8 +48,8 @@ function WelcomeBanner() {
 
       {/* Content */}
       <div className="relative">
-        <h1 className="text-2xl md:text-3xl text-slate-800 font-bold mb-1">Selamat Bekerja, Starroof Group 👋</h1>
-        <p>Kejujuran membawa kepada kebaikan dan kebaikan itu membawa rezeki </p>
+        <h1 className="text-2xl md:text-3xl text-slate-800 font-bold mb-1">SELAMAT BEKERJA</h1>
+        <p className="text-base font-medium">Kejujuran membawa kepada kebaikan dan kebaikan itu membawa rezeki </p>
       </div>
 
     </div>

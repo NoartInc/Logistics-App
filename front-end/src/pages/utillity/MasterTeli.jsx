@@ -63,7 +63,7 @@ function MasterTeli() {
         // accessor: 'action',
         Cell: (telis) => (
           <div className="flex justify-start">
-            {ROLES_MANAGEMENTS["delete_teli"].allowedRoles.includes(
+            {ROLES_MANAGEMENTS["update_teli"].allowedRoles.includes(
               userData?.user?.role
             ) && <TeliModalEditForm id={telis.row.original.id} />}
             {ROLES_MANAGEMENTS["delete_teli"].allowedRoles.includes(

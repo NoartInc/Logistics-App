@@ -3,7 +3,7 @@ import React from 'react';
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';
 
-function DashboardCard01() {
+function DashboardCard01({count=0, status=''}) {
 
   
 
@@ -18,7 +18,7 @@ function DashboardCard01() {
       
       <div>
         <p className="text-3xl font-bold text-slate-800 mt-3">
-          10
+          30
         </p>
         <p className="text-base font-semibold text-slate-400 mt-2">
           Pesanan Diproses

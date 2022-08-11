@@ -94,9 +94,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           <NavLink end to="/" className="block">
             <div className="flex gap-x-5 items-center">
               <img
-                src="./src/images/starroof-logo.png"
+                src="/src/images/package.png"
                 alt="logo"
-                className="cursor-pointer duration-200 w-11 h-11 rounded-full"
+                className="cursor-pointer duration-200 w-11 h-11"
               />
               <h1 className="text-white origin-left font-medium text-lg duration-200">
                 Logistics App
@@ -783,6 +783,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
         {/* Expand / collapse button */}
         <div className="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
+          <h2 className="text-xs font-light mx-auto my-auto">Copyright © 2022 Afif</h2>
           <div className="px-3 py-2">
             <button onClick={() => setSidebarExpanded(!sidebarExpanded)}>
               <span className="sr-only">Expand / collapse sidebar</span>

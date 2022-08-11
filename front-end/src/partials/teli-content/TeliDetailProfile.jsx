@@ -83,7 +83,7 @@ function TeliDetailProfile() {
                 </div>
                 <div className="flex-col">
                   <p className="text-lg font-semibold mb-1 uppercase text-gray-600">
-                    Total Tonase
+                    Total Berat
                   </p>
                   <p className="text-xl text-center font-semibold uppercase text-emerald-600">
                     {totalTonase}

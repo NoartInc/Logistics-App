@@ -11,6 +11,7 @@ const {
 } = require("../models");
 const excelJS = require("exceljs");
 const { Op } = require("sequelize");
+const moment = require("moment");
 
 const dataAssoc = [
   {
@@ -62,12 +63,20 @@ exports.findAllPengiriman = async (req, res) => {
     const { id: userId } = req.user;
     const { role } = req.query;
 
-    let conditions = {};
+    const startDate = moment().subtract(15, 'days').format("YYYY-MM-DD HH:mm:ss");
+    const endDate = moment().format("YYYY-MM-DD HH:mm:ss");
+
+    let conditions = {
+      createdAt: { 
+        [Op.between]: [startDate, endDate]
+      }
+    };
     if (role === "driver") {
       conditions = { driver: userId };
     } else if (role === "sales") {
       conditions = { "$customers.sales$": userId };
     }
+
     const data = await Pengiriman.findAll({
       include: dataAssoc,
       where: conditions,
@@ -312,13 +321,31 @@ exports.downloadData = async (req, res) => {
 
 exports.getDashboard = async (req, res) => {
   try {
+    const summary = [
+      { count: 0, status: 'diproses' },
+      { count: 0, status: 'dimuat' },
+      { count: 0, status: 'termuat' },
+      { count: 0, status: 'dikirim' },
+      { count: 0, status: 'terkirim' },
+      { count: 0, status: 'pending' },
+      { count: 0, status: 'cancel' }
+    ];
+
     const [results] = await sequelize.query(
       "SELECT count(*) as count, status from pengirimans group by status"
     );
 
+    const summaries = summary.map(item => {
+      const findData = results.find(result => result.status === item.status);
+      if (findData) {
+        return findData;
+      }
+      return item;
+    });
+
     res.status(200).send({
       status: "success",
-      results,
+      results: summaries
     });
   } catch (error) {}
 };

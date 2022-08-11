@@ -119,6 +119,6 @@ function PengirimanModalExport() {
   );
 }
 
-console.log(DateRangePickerExport);
+
 
 export default PengirimanModalExport;

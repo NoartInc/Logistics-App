@@ -21,15 +21,15 @@ function LoginForm() {
       };
     });
   };
-
+ 
   return (
-    <section className="h-screen">
+    <section className="w-full h-screen bg-white">
       <div className="px-12 h-full text-gray-800">
         <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
           <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-4/8 lg:w-4/8 md:w-4/8 mb-12 md:mb-0">
             <img
-              src="./src/images/starroof_logo-removebg-preview.png"
-              className="w-96 h-96"
+              src="./src/images/6333.jpg"
+              className="w-96"
               alt="Sample image"
             />
           </div>
@@ -127,7 +127,7 @@ function LoginForm() {
                 />
               </div>
 
-              <div className="flex justify-between items-center mb-6">
+              {/* <div className="flex justify-between items-center mb-6">
                 <div className="form-group form-check">
                   <input
                     type="checkbox"
@@ -141,10 +141,10 @@ function LoginForm() {
                     Remember me
                   </label>
                 </div>
-                {/* <a href="#!" className="text-gray-800">
+                <a href="#!" className="text-gray-800">
                   Forgot password?
-                </a> */}
-              </div>
+                </a>
+              </div> */}
 
               <div className="text-center lg:text-left">
                 <button

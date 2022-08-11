@@ -4,7 +4,8 @@ import {
     EDIT_TELI,
     UPDATE_TELI,
     DELETE_TELI,
-    DELETE_ALL_TELI
+    DELETE_ALL_TELI,
+    DELETE_COUNT
 } from "../actions/types";
 
 import TeliDataService from "../../services/teli.service";
@@ -87,6 +88,19 @@ export const countTonase = (id) => async (dispatch) => {
     try {
         const res = await TeliDataService.getTonase(id)
         return res.data.total
+    } catch (err) {
+        return Promise.reject(err)
+    }
+}
+
+export const deleteCount = () => async (dispatch) => {
+    try {
+        const res = await TeliDataService.deleteAll()
+        dispatch({
+            type: DELETE_COUNT,
+            payload: res.val
+        })
+        return Promise.resolve(res.val)
     } catch (err) {
         return Promise.reject(err)
     }

@@ -92,7 +92,7 @@ function PengangkutanModalForm() {
                           type="text"
                           name="pengangkutan"
                           id="pengangkutan"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md uppercase"
+                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           placeholder="Nama Pengangkutan"
                         />
                       </div>
@@ -109,7 +109,7 @@ function PengangkutanModalForm() {
                           type="text"
                           name="pic"
                           id="pic"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md uppercase"
+                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           placeholder="PIC"
                         />
                       </div>
@@ -126,7 +126,7 @@ function PengangkutanModalForm() {
                           type="text"
                           name="contact"
                           id="contact"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md uppercase"
+                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           placeholder="Contact"
                         />
                       </div>
@@ -145,7 +145,7 @@ function PengangkutanModalForm() {
                           name="address"
                           id="address"
                           rows="4"
-                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md uppercase"
+                          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           placeholder="Alamat lengkap pengangkutan"
                         />
                       </div>
@@ -161,7 +161,7 @@ function PengangkutanModalForm() {
                           onChange={onInputChange}
                           id="status"
                           name="status"
-                          className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm uppercase"
+                          className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                         >
                           <option value="">--Pilih Status--</option>
                           <option value="active">Active</option>

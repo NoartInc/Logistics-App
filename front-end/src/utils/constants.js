@@ -18,8 +18,9 @@ export const STATUS_PENGIRIMAN = {
     { key: "terkirim", value: "Terkirim" },
     { key: "pending", value: "Pending" },
   ],
-  marketing: [],
+  CBO: [],
   manager: [],
+  telemarketing: [],
   teli: [
     { key: "dimuat", value: "Dimuat" },
     { key: "termuat", value: "Termuat" },
@@ -33,7 +34,7 @@ export const userData = localStorage.getItem("userData")
 export const ROLES_MANAGEMENTS = {
   // Menu
   dashboard_menu: {
-    allowedRoles: ["administrator", "manager"],
+    allowedRoles: ["administrator", "manager", "CBO", "logistics", "telemarketing"],
   },
   pengiriman_menu: {
     allowedRoles: [
@@ -42,14 +43,15 @@ export const ROLES_MANAGEMENTS = {
       "logistics",
       "sales",
       "driver",
-      "marketing",
+      "CBO",
       "teli",
+      "telemarketing"
     ],
   },
   user_menu: { allowedRoles: ["administrator"] },
   berita_menu: { allowedRoles: ["administrator", "manager"] },
   utility_menu: {
-    allowedRoles: ["administrator", "manager", "logistics", "marketing"],
+    allowedRoles: ["administrator", "manager", "logistics", "CBO", "teli", "telemarketing"],
   },
 
   // Child Menu
@@ -63,21 +65,22 @@ export const ROLES_MANAGEMENTS = {
       "logistics",
       "sales",
       "teli",
-      "marketing",
+      "CBO",
       "driver",
+      "telemarketing"
     ],
   },
   master_kendaraan: {
-    allowedRoles: ["administrator", "manager"],
+    allowedRoles: ["administrator", "manager", "logistics"],
   },
   master_customer: {
-    allowedRoles: ["administrator", "manager", "marketing"],
+    allowedRoles: ["administrator", "manager", "CBO", "telemarketing"],
   },
   master_teli: {
-    allowedRoles: ["administrator", "manager"],
+    allowedRoles: ["administrator", "manager", "teli"],
   },
   master_pengangkutan: {
-    allowedRoles: ["administrator", "manager", "logistics", "marketing"],
+    allowedRoles: ["administrator", "manager", "logistics"],
   },
 
   // Actions
@@ -114,10 +117,10 @@ export const ROLES_MANAGEMENTS = {
 
   // master kendaraan
   create_kendaraan: {
-    allowedRoles: ["administrator"],
+    allowedRoles: ["administrator", "logistics"],
   },
   update_kendaraan: {
-    allowedRoles: ["administrator"],
+    allowedRoles: ["administrator", "logistics"],
   },
   delete_kendaraan: {
     allowedRoles: ["administrator"],
@@ -125,21 +128,21 @@ export const ROLES_MANAGEMENTS = {
 
   // master customer
   create_customer: {
-    allowedRoles: ["administrator", "marketing"],
+    allowedRoles: ["administrator", "CBO"],
   },
   update_customer: {
-    allowedRoles: ["administrator", "marketing"],
+    allowedRoles: ["administrator", "CBO"],
   },
   delete_customer: {
-    allowedRoles: ["administrator", "marketing"],
+    allowedRoles: ["administrator"],
   },
 
   // master teli
   create_teli: {
-    allowedRoles: ["administrator"],
+    allowedRoles: ["administrator", "teli"],
   },
   update_teli: {
-    allowedRoles: ["administrator"],
+    allowedRoles: ["administrator", "teli"],
   },
   delete_teli: {
     allowedRoles: ["administrator"],
@@ -147,17 +150,17 @@ export const ROLES_MANAGEMENTS = {
 
   // master pengangkutan
   create_pengangkutan: {
-    allowedRoles: ["administrator", "logistics", "marketing"],
+    allowedRoles: ["administrator", "logistics"],
   },
   update_pengangkutan: {
-    allowedRoles: ["administrator", "logistics", "marketing"],
+    allowedRoles: ["administrator", "logistics"],
   },
   delete_pengangkutan: {
-    allowedRoles: ["administrator", "logistics", "marketing"],
+    allowedRoles: ["administrator"],
   },
 
   // export pengiriman
   export_pengiriman: {
-    allowedRoles: ["administrator", "logistics"],
+    allowedRoles: ["administrator", "logistics", "manager"],
   },
 };

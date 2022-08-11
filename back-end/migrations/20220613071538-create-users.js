@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.ENUM('administrator','driver','logistics','teli','marketing','sales','manager')
+        type: Sequelize.ENUM('administrator','driver','logistics','teli','CBO','sales','manager', 'telemarketing')
       },
       jabatan: {
         type: Sequelize.STRING

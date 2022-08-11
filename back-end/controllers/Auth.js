@@ -2,7 +2,7 @@ require("dotenv").config()
 const { JWT_SECRET } = process.env
 const jwt = require("jsonwebtoken");
 const { Users } = require("../models");
-const bcrypt = require("bcrypt");
+
 
 exports.login = async (req, res, next) => {
   try {
