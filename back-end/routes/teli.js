@@ -23,6 +23,6 @@ router.post('/', authentication, createTeli);
 router.put('/:id', updateTeli);
 router.delete('/:id', deleteTeli);
 router.delete('/', deleteAllTeli);
-router.delete('/deletecount', deleteCount)
+
 
 module.exports = router;

@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { exportDataPengiriman } from "../../store/actions/pengiriman-action";
-import moment from "moment";
+import moment from 'moment';
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from "react-redux";
+import { countTonase } from '../../store/actions/teli-action';
 
-function PengirimanModalExport() {
-  const [showModal, setShowModal] = useState(false);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const dispatch = useDispatch();
+function TeliCountDateRange() {
+    const [showModal, setShowModal] = useState(false);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    setStartDate(moment().format("YYYY-MM-DD"));
-    setEndDate(moment().add(1, "days").format("YYYY-MM-DD"));
-  }, []);
+    useEffect(() => {
+        setStartDate(moment().format("YYYY-MM-DD"));
+        setEndDate(moment().add(1, "days").format("YYYY-MM-DD"))
+    }, []);
 
-  const exportData = () => {
-    console.log(startDate);
-    dispatch(exportDataPengiriman(startDate, endDate));
-    setShowModal(false);
-  };
-
+    const dateFilter = () => {
+      console.log(startDate);
+      dispatch(countTonase(startDate, endDate));
+      setShowModal(false);
+    };
+    
   return (
     <>
       <button
         type="button"
         onClick={() => setShowModal(true)}
-        className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+        className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
         data-bs-toggle="modal"
         data-bs-target="#exampleModalLg"
       >
-        Export Data
+        Date Count Filter
       </button>
       {showModal ? (
         <>
@@ -40,7 +40,7 @@ function PengirimanModalExport() {
                 {/*header*/}
                 <div className="flex items-start justify-between p-4 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-lg font-semibold uppercase">
-                    Export to csv
+                    Select Date Filter
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -63,7 +63,7 @@ function PengirimanModalExport() {
                   </button>
                 </div>
                 {/*body*/}
-                {/* <DateRangePickerExport  /> */}
+                
 
                 <div className="flex items-center px-4 py-4">
                   <div className="relative">
@@ -73,7 +73,7 @@ function PengirimanModalExport() {
                       value={startDate}
                       id="dateRangePickerId"
                       onChange={(e) => setStartDate(e.target.value)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Select date start"
                     />
                   </div>
@@ -85,7 +85,7 @@ function PengirimanModalExport() {
                       value={endDate}
                       min={startDate}
                       onChange={(e) => setEndDate(e.target.value)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Select date end"
                     />
                   </div>
@@ -96,9 +96,9 @@ function PengirimanModalExport() {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 hover:bg-emerald-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
-                    onClick={() => exportData()}
+                    onClick={() => dateFilter()}
                   >
-                    Export
+                    Select
                   </button>
                   <button
                     className="text-gray-500 background-transparent hover:bg-gray-200 font-bold uppercase px-6 py-3 rounded text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -115,9 +115,7 @@ function PengirimanModalExport() {
         </>
       ) : null}
     </>
-  );
+  )
 }
 
-
-
-export default PengirimanModalExport;
+export default TeliCountDateRange

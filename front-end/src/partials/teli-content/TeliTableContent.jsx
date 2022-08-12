@@ -17,6 +17,7 @@ import { Button, PageButton } from "../actions/Button";
 import { classNames } from "../../utils/Utils";
 import { SortIcon, SortUpIcon, SortDownIcon } from "../actions/Icons";
 import TeliModalForm from "./TeliModalForm";
+import TeliCountDateRange from "./TeliCountDateRange";
 
 
 // Define a default UI for filtering
@@ -161,15 +162,10 @@ function TeliTableContent({ columns, data }) {
             ) : null
           )
         )}
-        <div className="flex px-4">
+        <div className="flex space-x-5 px-4">
           <TeliModalForm />
+          <TeliCountDateRange />
         </div>
-        {/* <button 
-          className="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
-          type="button" 
-          onClick="">
-          Reset Value
-        </button> */}
       </div>
       {/* table */}
       <div className="mt-4 flex flex-col">

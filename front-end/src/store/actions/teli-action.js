@@ -84,24 +84,12 @@ export const deleteAllTelis = () => async (dispatch) => {
     }
 };
 
-export const countTonase = (id) => async (dispatch) => {
+export const countTonase = (startDate, endDate, id) => async (dispatch) => {
     try {
-        const res = await TeliDataService.getTonase(id)
+        const res = await TeliDataService.getTonase(startDate, endDate, id)
         return res.data.total
     } catch (err) {
         return Promise.reject(err)
     }
 }
 
-export const deleteCount = () => async (dispatch) => {
-    try {
-        const res = await TeliDataService.deleteAll()
-        dispatch({
-            type: DELETE_COUNT,
-            payload: res.val
-        })
-        return Promise.resolve(res.val)
-    } catch (err) {
-        return Promise.reject(err)
-    }
-}

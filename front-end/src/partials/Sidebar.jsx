@@ -783,7 +783,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
         {/* Expand / collapse button */}
         <div className="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
-          <h2 className="text-xs font-light mx-auto my-auto">Copyright © 2022 Afif</h2>
+          <h2 className="text-xs font-light mx-auto my-auto">© 2022 IT</h2>
           <div className="px-3 py-2">
             <button onClick={() => setSidebarExpanded(!sidebarExpanded)}>
               <span className="sr-only">Expand / collapse sidebar</span>

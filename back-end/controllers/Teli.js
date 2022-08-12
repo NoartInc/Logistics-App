@@ -91,15 +91,3 @@ exports.countTonase = async (req, res) => {
         return res.json({ message: err.message })
     }
 }
-
-exports.deleteCount = async (req, res) => {
-    try {
-        const val = await TeliPengiriman.destroy({
-            where : { tonase },
-            truncate: true
-        })
-        return res.json(val)
-    } catch (err) {
-        res.json({ message: err.message })
-    }
-}
