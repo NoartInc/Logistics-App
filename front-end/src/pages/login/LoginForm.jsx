@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/actions/auth-action";
+import loginLogo from "../../images/6333.jpg";
 
 function LoginForm() {
 
@@ -28,7 +29,7 @@ function LoginForm() {
         <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
           <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-4/8 lg:w-4/8 md:w-4/8 mb-12 md:mb-0">
             <img
-              src="./src/images/6333.jpg"
+              src={loginLogo}
               className="w-96"
               alt="Sample image"
             />

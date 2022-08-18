@@ -1,25 +1,17 @@
-import moment from 'moment';
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from "react-redux";
-import { countTonase } from '../../store/actions/teli-action';
+import React, { useState } from "react";
 
-function TeliCountDateRange() {
-    const [showModal, setShowModal] = useState(false);
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
-    const dispatch = useDispatch();
+function TeliCountDateRange({
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate,
+}) {
+  const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
-        setStartDate(moment().format("YYYY-MM-DD"));
-        setEndDate(moment().add(1, "days").format("YYYY-MM-DD"))
-    }, []);
+  const dateFilter = () => {
+    setShowModal(false);
+  }
 
-    const dateFilter = () => {
-      console.log(startDate);
-      dispatch(countTonase(startDate, endDate));
-      setShowModal(false);
-    };
-    
   return (
     <>
       <button
@@ -63,7 +55,6 @@ function TeliCountDateRange() {
                   </button>
                 </div>
                 {/*body*/}
-                
 
                 <div className="flex items-center px-4 py-4">
                   <div className="relative">
@@ -73,7 +64,7 @@ function TeliCountDateRange() {
                       value={startDate}
                       id="dateRangePickerId"
                       onChange={(e) => setStartDate(e.target.value)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
                       placeholder="Select date start"
                     />
                   </div>
@@ -85,7 +76,7 @@ function TeliCountDateRange() {
                       value={endDate}
                       min={startDate}
                       onChange={(e) => setEndDate(e.target.value)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
                       placeholder="Select date end"
                     />
                   </div>
@@ -115,7 +106,7 @@ function TeliCountDateRange() {
         </>
       ) : null}
     </>
-  )
+  );
 }
 
-export default TeliCountDateRange
+export default TeliCountDateRange;

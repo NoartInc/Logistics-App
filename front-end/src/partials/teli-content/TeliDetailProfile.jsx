@@ -8,11 +8,12 @@ function TeliDetailProfile() {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
+  const params = new URLSearchParams(window.location.search);
   const [currentData, setCurrentData] = useState(null);
   const [totalTonase, setTotalTonase] = useState(0);
 
   const getTotalTonase = () => {
-    dispatch(countTonase(id)).then((total) => setTotalTonase(total))
+    dispatch(countTonase(params.get('startDate'), params.get('endDate'), id)).then((total) => setTotalTonase(total));
   }
 
   const getCurrentData = () => {

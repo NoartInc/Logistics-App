@@ -224,7 +224,7 @@ exports.downloadData = async (req, res) => {
       customers: item.customers.customer,
       tonase: item.tonase,
       pengangkutan: item.pengangkutans?.pengangkutan || "",
-      drivers: item.drivers.fullName,
+      drivers: item.drivers?.fullName || "",
       kendaraans: item.kendaraans.kendaraan,
       address: item.address,
       salesUser: item.customers.salesUser.fullName,

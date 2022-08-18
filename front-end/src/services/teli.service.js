@@ -7,8 +7,8 @@ class TeliDataService {
   get(id) {
     return http.get(`/teli/${id}`);
   }
-  getTonase(id) {
-    return http.get(`/teli/${id}/count-tonase`)
+  getTonase(startDate, endDate, id) {
+    return http.get(`/teli/${id}/count-tonase?startDate=${startDate}&endDate=${endDate}`)
   }
   create(data) {
     return http.post("/teli", data);

@@ -84,20 +84,19 @@ function ListPengiriman() {
         // accessor: 'action',
         Cell: (pengirimans) => (
           <div className="flex justify-start">
-            {console.log(pengirimans?.row)}
-            {ROLES_MANAGEMENTS["update_pengiriman"].allowedRoles.includes(
+            {ROLES_MANAGEMENTS["update_pengiriman"]?.allowedRoles.includes(
               user.role
             ) &&
               ROLES_MANAGEMENTS["update_pengiriman"][
-                `allowedStatus_${user.role}`
+                `allowedStatus_${user?.role}`
               ]?.includes(pengirimans?.row?.original?.status) && (
                 <PengirimanModalEditForm
                   id={pengirimans?.row?.original?.id}
                   status={pengirimans?.row?.original?.status}
                 />
               )}
-            {ROLES_MANAGEMENTS["delete_pengiriman"].allowedRoles.includes(
-              user.role
+            {ROLES_MANAGEMENTS["delete_pengiriman"]?.allowedRoles.includes(
+              user?.role
             ) && (
               <svg
                 onClick={() => removePengiriman(pengirimans?.row?.original?.id)}

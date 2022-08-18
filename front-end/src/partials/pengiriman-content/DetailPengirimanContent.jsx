@@ -11,25 +11,19 @@ function HistoryItem({ proses_by, status, createdAt, note }) {
   return (
     <li className="mb-6 ml-6">
       <IconUpdatePengiriman status={status} />
-      {/* <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-600 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-    </svg>
-</span> */}
-      <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+      <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
         {status} by {proses_by?.fullName}
-        <span className="bg-gray-100 text-gray-500 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-gray-800 ml-3">
+        <span className="bg-gray-100 text-gray-500 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ml-3">
           [{proses_by?.jabatan}]
         </span>
       </h3>
-      <date className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+      <date className="block mb-2 text-sm font-normal leading-none text-gray-400">
         {moment(createdAt).format("DD MMMM YYYY")}
       </date>
-      <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+      <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
         {moment(createdAt).format("HH:mm:ss")}
       </time>
-      <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+      <p className="text-base font-normal text-gray-500">
         {note}
       </p>
     </li>
@@ -44,11 +38,7 @@ function DetailPengirimanContent() {
   const [teliList, setTeliList] = React.useState("");
 
   const getCurrentData = () => {
-    // const result = data.find(item => item.id === id);
-    // console.log(data);
-    // if (result) {
-    //   setCurrentData(result);
-    // }
+
     dispatch(editPengiriman(id)).then((res) => {
       let current_data = {
         ...res.data,
@@ -82,7 +72,7 @@ function DetailPengirimanContent() {
           <button
             onClick={() => navigate("/listpengiriman")}
             type="button"
-            className="mb-3 text-gray-700 border border-gray-100 hover:bg-gray-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-gray-500 dark:text-gray-500 dark:hover:text-white dark:focus:ring-gray-800"
+            className="mb-3 text-gray-700 border border-gray-100 hover:bg-gray-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +162,7 @@ function DetailPengirimanContent() {
           </div>
         </div>
         {/* <div className="mt-5 md:mt-0 md:col-span-4"> */}
-        <ol className="relative border-l border-gray-200 dark:border-gray-700 ml-10">
+        <ol className="relative border-l border-gray-200 ml-10">
           {currentData?.history?.map((history, index) => (
             <HistoryItem key={index} {...history} />
           ))}

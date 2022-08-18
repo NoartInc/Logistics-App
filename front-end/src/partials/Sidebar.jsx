@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ROLES_MANAGEMENTS, userData } from "../utils/constants";
+import siteLogo from "../images/package.png";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
@@ -94,7 +95,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           <NavLink end to="/" className="block">
             <div className="flex gap-x-5 items-center">
               <img
-                src="/src/images/package.png"
+                src={siteLogo}
                 alt="logo"
                 className="cursor-pointer duration-200 w-11 h-11"
               />

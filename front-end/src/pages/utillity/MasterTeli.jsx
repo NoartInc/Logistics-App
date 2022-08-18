@@ -3,22 +3,35 @@ import { useDispatch, useSelector } from "react-redux";
 import Banner from "../../partials/Banner";
 import Header from "../../partials/Header";
 import Sidebar from "../../partials/Sidebar";
-
+import moment from "moment";
 import TeliModalEditForm from "../../partials/teli-content/TeliModalEditForm";
 import TeliTableContent, {
   StatusPill,
 } from "../../partials/teli-content/TeliTableContent";
-import { retrieveTelis, deleteTeli } from "../../store/actions/teli-action";
+import { retrieveTelis, deleteTeli, countTonase } from "../../store/actions/teli-action";
 import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
 
 function MasterTeli() {
   const dispatch = useDispatch();
   const telis = useSelector((state) => state.telis.list);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [startDate, setStartDate] = useState(localStorage.getItem("startDate") ?? moment().format("YYYY-MM-DD"));
+  const [endDate, setEndDate] = useState(localStorage.getItem("endDate") ?? moment().add(1, "days").format("YYYY-MM-DD"));
+
+  const onStartChange = (value) => {
+    setStartDate(value);
+    localStorage.setItem("startDate", value);
+  }
+
+  const onEndChange = (value) => {
+    setEndDate(value);
+    localStorage.setItem("endDate", value);
+  }
 
   useEffect(() => {
     dispatch(retrieveTelis());
   }, []);
+
 
   const removeTeli = (id) => {
     if (window.confirm("Are you sure you want to remove?")) {
@@ -37,7 +50,7 @@ function MasterTeli() {
         accessor: "fullName",
         Cell: (data) => (
           <a
-            href={`/MasterTeli/TeliProfile/${data.row.original.id}`}
+            href={`/MasterTeli/TeliProfile/${data.row.original.id}?startDate=${startDate}&endDate=${endDate}`}
             className="hover:text-blue-700 font-semibold"
           >
             {" "}
@@ -89,7 +102,7 @@ function MasterTeli() {
         ),
       },
     ],
-    []
+    [startDate, endDate]
   );
 
   return (
@@ -104,7 +117,14 @@ function MasterTeli() {
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <TeliTableContent columns={columns} data={telis} />
+            <TeliTableContent 
+              columns={columns} 
+              data={telis} 
+              startDate={startDate}
+              endDate={endDate}
+              setStartDate={onStartChange}
+              setEndDate={onEndChange}
+            />
           </div>
         </main>
 

@@ -29,7 +29,7 @@ import { getDashboard } from "../store/actions/pengiriman-action";
 function DashboardCard({count, status }) {
 
   return (
-    <div className="flex flex-col items-center text-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+    <div className="flex flex-col items-center text-center p-4 bg-white rounded-lg shadow-xs">
       <div className="p-3 text-blue-200 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-200">
         <DashboardCount status={status} />
       </div>

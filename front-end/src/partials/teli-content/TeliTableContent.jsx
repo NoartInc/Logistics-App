@@ -105,7 +105,14 @@ export function StatusPill({ value }) {
   );
 }
 
-function TeliTableContent({ columns, data }) {
+function TeliTableContent({ 
+  columns, 
+  data, 
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate
+}) {
     // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -124,10 +131,9 @@ function TeliTableContent({ columns, data }) {
     nextPage,
     previousPage,
     setPageSize,
-
     state,
     preGlobalFilteredRows,
-    setGlobalFilter,
+    setGlobalFilter
   } = useTable(
     {
       columns,
@@ -136,7 +142,7 @@ function TeliTableContent({ columns, data }) {
     useFilters, // useFilters!
     useGlobalFilter,
     useSortBy,
-    usePagination // new
+    usePagination// new
   );
 
   // render the UI for your table
@@ -164,7 +170,12 @@ function TeliTableContent({ columns, data }) {
         )}
         <div className="flex space-x-5 px-4">
           <TeliModalForm />
-          <TeliCountDateRange />
+          <TeliCountDateRange 
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+          />
         </div>
       </div>
       {/* table */}
