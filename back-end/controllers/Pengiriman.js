@@ -107,6 +107,8 @@ exports.createPengiriman = async (req, res) => {
     var data = await Pengiriman.create({
       ...req.body,
       pengangkutan: req.body.pengangkutan === "" ? 0 : req.body.pengangkutan,
+      driver: req.body.driver === "" ? 0 : req.body.driver,
+      kendaraan: req.body.kendaraan === "" ? 0 : req.body.kendaraan,
       status: "diproses",
     }).then(async (result) => {
       // insert history ke tabel TrackPengiriman
