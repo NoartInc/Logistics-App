@@ -178,7 +178,7 @@ function PengirimanModalEditForm({ id = null, status }) {
                               Submit Surat Jalan
                             </label>
                             <input
-                              className="mt-1 block w-96 py-2 px-3 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-400 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                              className="mt-1 block w-96 py-2 px-3 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-400 cursor-pointer focus:outline-none"
                               id="formFile"
                               type="file"
                               name="image"

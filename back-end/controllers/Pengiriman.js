@@ -220,16 +220,16 @@ exports.downloadData = async (req, res) => {
   pengiriman.forEach((item) => {
     data.push({
       createdAt: item.createdAt,
-      suratJalan: item.suratJalan,
-      customers: item.customers.customer,
-      tonase: item.tonase,
+      suratJalan: item.suratJalan || "",
+      customers: item.customers?.customer | "",
+      tonase: item.tonase || "",
       pengangkutan: item.pengangkutans?.pengangkutan || "",
       drivers: item.drivers?.fullName || "",
-      kendaraans: item.kendaraans.kendaraan,
-      address: item.address,
-      salesUser: item.customers.salesUser.fullName,
-      teliPerson: item.teliPerson,
-      note: item.note,
+      kendaraans: item.kendaraans?.kendaraan || "",
+      address: item.address || "",
+      salesUser: item.customers?.salesUser?.fullName || "",
+      teliPerson: item.teliPerson || "",
+      note: item.note || "",
     });
   });
 

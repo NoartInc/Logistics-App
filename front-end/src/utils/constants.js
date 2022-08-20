@@ -9,6 +9,8 @@ export const STATUS_PENGIRIMAN = {
     { key: "cancel", value: "Cancel" },
   ],
   logistics: [
+    { key: "dikirim", value: "Dikirim" },
+    { key: "terkirim", value: "Terkirim" },
     { key: "pending", value: "Pending" },
     { key: "cancel", value: "Cancel" },
   ],
