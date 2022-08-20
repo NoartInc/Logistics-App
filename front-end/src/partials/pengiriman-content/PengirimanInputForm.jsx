@@ -70,8 +70,9 @@ function PengirimanInputForm() {
     e.preventDefault();
     dispatch(createPengiriman(form));
     setTimeout(() => {
+      window.alert('Pengiriman created successfully');
       navigate("/listpengiriman");
-    }, 1000);
+    }, 2000);
   };
 
   useEffect(() => {}, [form]);
@@ -344,7 +345,8 @@ function PengirimanInputForm() {
                   Submit
                 </button>
                 <button
-                  type="cancel"
+                  type="button"
+                  onClick={()=> navigate('/listpengiriman')}
                   className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                 >
                   Cancel
