@@ -335,7 +335,7 @@ exports.getDashboard = async (req, res) => {
     ];
 
     const [results] = await sequelize.query(
-      "SELECT count(*) as count, status from pengirimans group by status"
+      "SELECT count(*) as count, status from Pengirimans group by status"
     );
 
     const summaries = summary.map(item => {
