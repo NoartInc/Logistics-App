@@ -18,15 +18,14 @@ function PengirimanInputForm() {
   const pengangkutans = useSelector((state) => state.pengangkutans.list);
 
   const [form, setForm] = useState({
-    customer: "",
+    customer: 0,
     suratJalan: "",
-    tujuan: "",
-    pengangkutan: "",
+    pengangkutan: 0,
     address: "",
     note: "",
     tonase: "",
-    driver: "",
-    kendaraan: "",
+    driver: 0,
+    kendaraan: 0,
     status: "",
   });
 

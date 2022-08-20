@@ -15,11 +15,13 @@ import { userData } from "../../utils/constants";
 export const createPengiriman = (form) => async (dispatch) => {
   try {
     const res = await PengirimanDataService.create(form);
-    dispatch({
-      type: CREATE_PENGIRIMAN,
-      payload: res.data.data,
-    });
-    return Promise.resolve(res.data.data);
+    if (res.data?.data) {
+      dispatch({
+        type: CREATE_PENGIRIMAN,
+        payload: res.data.data,
+      });
+    }
+    return Promise.resolve(res.data?.data ?? null);
   } catch (err) {
     return Promise.reject(err);
   }
