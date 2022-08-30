@@ -42,6 +42,7 @@ app.use("/auth", authRouter);
 
 const formatDate = (date) => {
   let d = new Date(date);
+return d
   let month = (d.getMonth() + 1).toString();
   let day = d.getDate().toString();
   let year = d.getFullYear();
@@ -60,13 +61,12 @@ const storage = multer.diskStorage({
     callback(null, "./public/images");
   },
   filename: async function (req, file, callback) {
-    const number = await generateNumber();
+//    const number = await generateNumber();
 
     callback(
       null,
-      formatDate(Date.now()).replaceAll("-", "") +
+      file.originalname + 
         "-" +
-        number +
         path.extname(file.originalname)
     );
   },
@@ -77,6 +77,8 @@ const generateNumber = (function (num) {
     const lastNumber = await Master.findOne({
       where: { type: "upload_number" },
     });
+
+
     if (lastNumber.date !== formatDate(Date.now())) {
       await Master.update(
         { value: "0001", date: formatDate(Date.now()) },
@@ -109,10 +111,13 @@ const generateNumber = (function (num) {
 
 const upload = multer({ storage });
 
+//app.post("/upload", (req, res) => {
 app.post("/upload", upload.single("photo"), async (req, res) => {
-  //membuat url gambar dan save ke db
-  let finalImageURL =
-    req.protocol + "://" + req.get("host") + "/images/" + req.file?.filename;
+//res.send({"ea": "ea"})
+//res.send({ea: formatDate(new Date())})
+ // membuat url gambar dan save ke db
+let finalImageURL =
+   "http://transmetalroof.com:5000/images/" + req.file?.filename;
   res.json({ status: "uploaded successfully", image: finalImageURL });
 });
 

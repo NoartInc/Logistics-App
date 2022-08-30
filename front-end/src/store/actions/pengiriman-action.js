@@ -104,7 +104,7 @@ export const exportDataPengiriman =
       const { path } = res.data;
       const urlFile = path.replace("./public", "");
       console.log(urlFile);
-      window.open(`http://localhost:5000/${urlFile}`);
+      window.open(`http://transmetalroof.com:5000${urlFile}`);
     } catch (err) {
       return Promise.reject(err);
     }
