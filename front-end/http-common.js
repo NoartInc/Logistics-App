@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "./src/store";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: process.env.NODE_ENV === 'production' ? "https://transmetalroof.com:5000/" : "http://localhost:5000",
   headers: {
     "Content-type": "application/json"
   }

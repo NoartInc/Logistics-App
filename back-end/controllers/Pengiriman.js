@@ -137,6 +137,8 @@ exports.updatePengiriman = async (req, res) => {
     const { id } = req.params; // pengirimanId
     const { note, status, teli = null, image } = req.body; // note
 
+    
+
     // update status di tabel Pengiriman
     await Pengiriman.update(
       {
@@ -224,17 +226,18 @@ exports.downloadData = async (req, res) => {
     data.push({
       createdAt: item.createdAt,
       suratJalan: item.suratJalan || "",
-      customers: item.customers?.customer | "",
+      customers: item.customers?.customer,
       tonase: item.tonase || "",
       pengangkutan: item.pengangkutans?.pengangkutan || "",
       drivers: item.drivers?.fullName || "",
       kendaraans: item.kendaraans?.kendaraan || "",
       address: item.address || "",
       salesUser: item.customers?.salesUser?.fullName || "",
-      teliPerson: item.teliPerson || "",
+      teliPerson: item.teliPerson || "",  
       note: item.note || "",
     });
   });
+
 
   const workbook = new excelJS.Workbook(); // Create a new workbook
   const worksheet = workbook.addWorksheet("List Pengiriman"); // New Worksheet

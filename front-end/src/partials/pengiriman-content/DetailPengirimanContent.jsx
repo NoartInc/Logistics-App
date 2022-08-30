@@ -134,16 +134,16 @@ function DetailPengirimanContent() {
                   {currentData?.customers?.salesUser?.fullName}
                 </span>
               </p>
-              {/* <p className="mt-1 text-sm font-medium text-gray-700">
-                Tujuan :
-                <span className="ml-1 text-sm text-gray-500">
-                  {currentData?.tujuan}
-                </span>
-              </p> */}
               <p className="mt-1 text-sm font-medium text-gray-700">
                 Alamat :
                 <span className="ml-1 text-sm text-gray-500">
                   {currentData?.address}
+                </span>
+              </p>
+              <p className="mt-1 text-sm font-medium text-gray-700">
+                PO :
+                <span className="ml-1 text-sm text-gray-500">
+                  {currentData?.pengangkutans?.pengangkutan}
                 </span>
               </p>
               <p className="mt-1 text-sm font-medium text-gray-700">
