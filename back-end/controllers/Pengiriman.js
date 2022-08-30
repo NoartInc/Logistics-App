@@ -61,7 +61,12 @@ const dataAssoc = [
 exports.findAllPengiriman = async (req, res) => {
   try {
     const { id: userId } = req.user;
-    const { role } = req.query;
+    const { role, page = 1, limit = 25 } = req.query;
+    
+    // 1 - 1 = 0 * 25 = 0
+    // 2 - 1 = 1 * 25 = 25
+    let offset = (page - 1) * limit;
+    
 
     const startDate = moment().subtract(15, 'days').format("YYYY-MM-DD HH:mm:ss");
     const endDate = moment().format("YYYY-MM-DD HH:mm:ss");
@@ -81,6 +86,8 @@ exports.findAllPengiriman = async (req, res) => {
       include: dataAssoc,
       where: conditions,
       order: [["createdAt", "DESC"]],
+      limit: limit,
+      offset: offset
     });
 
     res.json(data);
