@@ -7,16 +7,6 @@ var cors = require("cors");
 var multer = require("multer");
 var bodyParser = require("body-parser");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var kendaraanRouter = require("./routes/kendaraan");
-var teliRouter = require("./routes/teli");
-var customerRouter = require("./routes/customer");
-var pengangkutanRouter = require("./routes/pengangkutan");
-var pengirimanRouter = require("./routes/pengiriman");
-var authRouter = require("./routes/auth");
-const { Master } = require("./models");
-
 var app = express();
 app.use(cors());
 
@@ -30,6 +20,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
+var kendaraanRouter = require("./routes/kendaraan");
+var teliRouter = require("./routes/teli");
+var customerRouter = require("./routes/customer");
+var pengangkutanRouter = require("./routes/pengangkutan");
+var pengirimanRouter = require("./routes/pengiriman");
+var authRouter = require("./routes/auth");
+const { Master } = require("./models");
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
@@ -117,7 +117,7 @@ app.post("/upload", upload.single("photo"), async (req, res) => {
 //res.send({ea: formatDate(new Date())})
  // membuat url gambar dan save ke db
 let finalImageURL =
-   "http://transmetalroof.com:5000/images/" + req.file?.filename;
+   "https://transmetalroof.com:5000/images/" + req.file?.filename;
   res.json({ status: "uploaded successfully", image: finalImageURL });
 });
 

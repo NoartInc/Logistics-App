@@ -31,6 +31,12 @@ function UserModalForm() {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(createUser(form))
+      .then(() => {
+        window.alert('User created successfully');
+      })
+      .catch(err => {
+        window.alert(err)
+      })
     setShowModal(false)
   }
 

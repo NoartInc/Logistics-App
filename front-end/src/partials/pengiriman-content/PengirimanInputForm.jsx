@@ -67,11 +67,14 @@ function PengirimanInputForm() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPengiriman(form));
-    setTimeout(() => {
-      window.alert('Pengiriman created successfully');
-      navigate("/listpengiriman");
-    }, 2000);
+    dispatch(createPengiriman(form))
+      .then(() => {
+        window.alert('Pengiriman created successfully');
+        navigate("/listpengiriman");
+      })
+      .catch(err => {
+        window.alert(err);
+      })
   };
 
   useEffect(() => {}, [form]);

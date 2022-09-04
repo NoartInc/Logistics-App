@@ -11,6 +11,9 @@ import {
 
 const initialState = {
   list: [],
+  offset: 0,
+  pageCount: 0,
+  pageSize: 25,
   selectedData: null,
   summary: null
 };
@@ -28,8 +31,21 @@ function pengirimanReducer(pengirimans = initialState, action) {
     case RETRIEVE_PENGIRIMAN:
       return {
         ...pengirimans,
-        list: payload.pengirimans,
+        list: payload.pengirimans.rows,
+        pageCount: payload.pengirimans.pageCount
       };
+
+    case 'SET_OFFSET':
+      return {
+        ...pengirimans,
+        offset: payload
+      };
+
+    case 'SET_PAGE_SIZE':
+      return {
+        ...pengirimans,
+        pageSize: payload
+      }
 
     case EDIT_PENGIRIMAN:
       const getEdit = pengirimans.list.find((item) => item.id === payload);

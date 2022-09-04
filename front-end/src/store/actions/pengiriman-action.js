@@ -27,10 +27,11 @@ export const createPengiriman = (form) => async (dispatch) => {
   }
 };
 
-export const retrievePengiriman = () => async (dispatch) => {
+export const retrievePengiriman = () => async (dispatch, getState) => {
   const { user } = userData;
+  const { offset, pageSize } = getState().pengirimans;
   try {
-    const res = await PengirimanDataService.getAll(user.role);
+    const res = await PengirimanDataService.getAll(user.role, offset, pageSize);
     dispatch({
       type: RETRIEVE_PENGIRIMAN,
       payload: {
@@ -41,6 +42,28 @@ export const retrievePengiriman = () => async (dispatch) => {
     console.error(err);
   }
 };
+
+export const changeOffset = (offset) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "SET_OFFSET",
+      payload: offset
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const changePageSize = (pageSize) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "SET_PAGE_SIZE",
+      payload: pageSize
+    })
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export const editPengiriman = (id) => async (dispatch) => {
   try {

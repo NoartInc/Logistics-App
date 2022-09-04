@@ -17,19 +17,29 @@ const dataAssoc = [
   {
     model: Customer,
     as: "customers",
-    include: ["salesUser"],
+    include: [
+      { 
+        model: Users,
+        as: "salesUser",
+        attributes: ["fullName"]
+      }
+    ],
+    attributes: ["customer"]
   },
   {
     model: Kendaraan,
     as: "kendaraans",
+    attributes: ["kendaraan"]
   },
   {
     model: Pengangkutan,
     as: "pengangkutans",
+    attributes: ["pengangkutan", "address"]
   },
   {
     model: Users,
     as: "drivers",
+    attributes: ["fullName", "contact"]
   },
   // PR Relasi
   // {
@@ -39,18 +49,22 @@ const dataAssoc = [
   {
     model: TrackPengiriman,
     as: "history",
+    attributes: ["createdAt", "note", "status"],
     include: [
       {
         model: Users,
         as: "proses_by",
+        attributes: ["fullName", "jabatan" ]
       },
       {
         model: TeliPengiriman,
         as: "teli",
+        attributes: ["id"],
         include: [
           {
             model: Teli,
             as: "teliPerson",
+            attributes: ["fullName"]
           },
         ],
       },
@@ -61,12 +75,7 @@ const dataAssoc = [
 exports.findAllPengiriman = async (req, res) => {
   try {
     const { id: userId } = req.user;
-    const { role, page = 1, limit = 25 } = req.query;
-    
-    // 1 - 1 = 0 * 25 = 0
-    // 2 - 1 = 1 * 25 = 25
-    // let offset = (page - 1) * limit;
-    
+    const { role, offset = 0, limit = 25, orderby = "id", orderdir = "desc" } = req.query;    
 
     const startDate = moment().subtract(15, 'days').format("YYYY-MM-DD HH:mm:ss");
     const endDate = moment().format("YYYY-MM-DD HH:mm:ss");
@@ -82,15 +91,22 @@ exports.findAllPengiriman = async (req, res) => {
       conditions = { "$customers.sales$": userId };
     }
 
-    const data = await Pengiriman.findAll({
+    const data = await Pengiriman.findAndCountAll({
+      distinct: true,
       include: dataAssoc,
       where: conditions,
-      order: [["createdAt", "DESC"]],
-      // limit: limit,
-      // offset: offset
+      order: [[orderby, orderdir]],
+      limit: Number(limit),
+      offset: Number(offset)
     });
 
-    res.json(data);
+    let last_page = Math.ceil(data.count / Number(limit));
+    let result = {
+      ...data,
+      pageCount: last_page
+    }
+
+    res.json(result);
   } catch (err) {
     res.json({ message: err.message });
   }

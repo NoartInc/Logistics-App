@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   useAsyncDebounce,
   useGlobalFilter,
@@ -19,6 +19,8 @@ import { SortIcon, SortUpIcon, SortDownIcon } from "../actions/Icons";
 
 import PengirimanModalExport from "./PengirimanModalExport";
 import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { changeOffset, changePageSize, retrievePengiriman } from "../../store/actions/pengiriman-action";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -111,6 +113,8 @@ export function StatusPill({ value }) {
 
 function PengirimanTableContent({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
+  const dispatch = useDispatch();
+  const { pageCount: lastPage, pageSize: limit, offset } = useSelector(state => state.pengirimans);
   const {
     getTableProps,
     getTableBodyProps,
@@ -128,7 +132,6 @@ function PengirimanTableContent({ columns, data }) {
     nextPage,
     previousPage,
     setPageSize,
-
     state,
     preGlobalFilteredRows,
     setGlobalFilter,
@@ -136,13 +139,33 @@ function PengirimanTableContent({ columns, data }) {
     {
       columns,
       data,
+      initialState: { pageIndex: offset },
+      manualPagination: true,
+      pageCount: lastPage
     },
     useFilters, // useFilters!
     useGlobalFilter,
     useSortBy,
-    usePagination // new
+    usePagination, // new
   );
   const { user } = userData;
+
+    useEffect(() => {
+      setPageSize(limit);
+    }, [])
+
+  useEffect(() => {
+    dispatch(retrievePengiriman());
+  }, [offset, limit]);
+
+  useEffect(() => {
+    dispatch(changeOffset(state.pageIndex));
+  }, [state.pageIndex]);
+
+  useEffect(() => {
+    dispatch(changePageSize(state.pageSize));
+  }, [state.pageSize]);
+  
 
   // render the UI for your table
   return (

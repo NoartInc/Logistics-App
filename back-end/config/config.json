@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
+    "username": "afif",
+    "password": "afif",
     "database": "logistics",
-    "host": "127.0.0.1",
+    "host": "103.134.154.229",
     "dialect": "mysql"
   },
   "test": {

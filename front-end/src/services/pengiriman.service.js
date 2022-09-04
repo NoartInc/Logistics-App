@@ -1,8 +1,8 @@
 import http from "../../http-common";
 
 class PengirimanDataService {
-  getAll(role) {
-    return http.get(`/pengiriman?role=${role}`);
+  getAll(role, offset, limit) {
+    return http.get(`/pengiriman?role=${role}&offset=${offset}&limit=${limit}`);
   }
   get(id) {
     return http.get(`/pengiriman/${id}`);

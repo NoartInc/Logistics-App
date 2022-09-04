@@ -25,7 +25,13 @@ function TeliModalForm() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createTeli(form));
+    dispatch(createTeli(form))
+      .then(() => {
+        window.alert('Teli created successfully');
+      })
+      .catch(err => {
+        window.alert(err);
+      })
     setShowModal(false);
   };
 

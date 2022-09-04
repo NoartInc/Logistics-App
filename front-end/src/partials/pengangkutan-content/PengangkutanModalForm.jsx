@@ -26,7 +26,13 @@ function PengangkutanModalForm() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPengangkutan(form));
+    dispatch(createPengangkutan(form))
+      .then(() => {
+        window.alert('Pengangkutan created successfully');
+      })
+      .catch(err => {
+        window.alert(err);
+      })
     setShowModal(false);
   };
 

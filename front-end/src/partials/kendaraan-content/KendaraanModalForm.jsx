@@ -26,7 +26,13 @@ function KendaraanModalForm() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createKendaraan(form));
+    dispatch(createKendaraan(form))
+      .then(() => {
+        window.alert('Kendaraan created successfully');
+      })
+      .catch(err => {
+        window.alert(err);
+      })
     setShowModal(false);
   };
 

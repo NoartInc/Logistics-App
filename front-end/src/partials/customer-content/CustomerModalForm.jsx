@@ -29,7 +29,13 @@ function CustomerModalForm() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createCustomer(form));
+    dispatch(createCustomer(form))
+      .then(() => {
+        window.alert('Customer created successfully');
+      })
+      .catch(err => {
+        window.alert(err);
+      })
     setShowModal(false);
   };
 

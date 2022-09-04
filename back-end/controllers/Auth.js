@@ -48,7 +48,12 @@ exports.login = async (req, res, next) => {
             token: accessToken,
           },
         });
-    }
+    } 
+    return res.status(200).json({
+      status: false,
+      error: "Unknown request",
+      request_body: req.body
+    })
     } catch (err) {
       return next(err);
     }

@@ -63,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     pengangkutan: DataTypes.INTEGER,
     address: DataTypes.TEXT,
     tonase: DataTypes.DOUBLE,
+    
     driver: DataTypes.INTEGER,
     kendaraan: DataTypes.INTEGER,
     sales: DataTypes.INTEGER,
