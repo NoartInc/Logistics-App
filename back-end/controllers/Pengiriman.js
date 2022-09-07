@@ -21,15 +21,18 @@ const dataAssoc = [
       { 
         model: Users,
         as: "salesUser",
-        attributes: ["fullName"]
+        attributes: ["fullName"],
+        required: true
       }
     ],
-    attributes: ["customer"]
+    attributes: ["customer"],
+    required: true
   },
   {
     model: Kendaraan,
     as: "kendaraans",
-    attributes: ["kendaraan"]
+    attributes: ["kendaraan"],
+    required: true
   },
   {
     model: Pengangkutan,
@@ -39,7 +42,8 @@ const dataAssoc = [
   {
     model: Users,
     as: "drivers",
-    attributes: ["fullName", "contact"]
+    attributes: ["fullName", "contact"],
+    required: true
   },
   // PR Relasi
   // {
@@ -75,10 +79,16 @@ const dataAssoc = [
 exports.findAllPengiriman = async (req, res) => {
   try {
     const { id: userId } = req.user;
-    const { role, offset = 0, limit = 25, orderby = "id", orderdir = "desc" } = req.query;    
+    const { role, page = 1, limit = 25, orderby = "id", orderdir = "desc", search = "" } = req.query;    
 
+    const offset = (page - 1) * limit;
     const startDate = moment().subtract(15, 'days').format("YYYY-MM-DD HH:mm:ss");
     const endDate = moment().format("YYYY-MM-DD HH:mm:ss");
+    let formatedDateSearch = "";
+    if (search.match(/\//gi)) {
+      let parseDate = search.split("/");
+      formatedDateSearch = moment(new Date(`${parseDate[2]}-${parseDate[1]}-${parseDate[0]}`)).format("YYYY-MM-DD");
+    }
 
     let conditions = {
       createdAt: { 
@@ -91,10 +101,36 @@ exports.findAllPengiriman = async (req, res) => {
       conditions = { "$customers.sales$": userId };
     }
 
+    if (search !== "") {
+      conditions = {
+        ...conditions,
+        [Op.or]: {
+          suratJalan: { 
+            [Op.like]: `%${search.toLowerCase()}%`
+          },
+          status: {
+            [Op.like]: `%${search.toLowerCase()}%`
+          },
+          "$drivers.fullName$": {
+            [Op.like]: `%${search.toLowerCase()}%`
+          },
+          "$customers.customer$": {
+            [Op.like]: `%${search.toLowerCase()}%`
+          },
+          "$kendaraans.kendaraan$": {
+            [Op.like]: `%${search.toLowerCase()}%`
+          },
+          "$customers.salesUser.fullName$": {
+            [Op.like]: `%${search.toLowerCase()}%`
+          }
+        }
+      }
+    }
+
     const data = await Pengiriman.findAndCountAll({
       distinct: true,
-      include: dataAssoc,
       where: conditions,
+      include: dataAssoc,
       order: [[orderby, orderdir]],
       limit: Number(limit),
       offset: Number(offset)

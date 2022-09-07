@@ -20,7 +20,7 @@ import { SortIcon, SortUpIcon, SortDownIcon } from "../actions/Icons";
 import PengirimanModalExport from "./PengirimanModalExport";
 import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { changeOffset, changePageSize, retrievePengiriman } from "../../store/actions/pengiriman-action";
+import { changeOffset, changePageSize, changeSearch, retrievePengiriman } from "../../store/actions/pengiriman-action";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -28,10 +28,12 @@ function GlobalFilter({
   globalFilter,
   setGlobalFilter,
 }) {
+  const dispatch = useDispatch();
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
   const onChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
+    dispatch(changeSearch(value));
   }, 200);
 
   return (
@@ -114,7 +116,7 @@ export function StatusPill({ value }) {
 function PengirimanTableContent({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
   const dispatch = useDispatch();
-  const { pageCount: lastPage, pageSize: limit, offset } = useSelector(state => state.pengirimans);
+  const { pageCount: lastPage, pageSize: limit, page: dataPage, search } = useSelector(state => state.pengirimans);
   const {
     getTableProps,
     getTableBodyProps,
@@ -139,7 +141,7 @@ function PengirimanTableContent({ columns, data }) {
     {
       columns,
       data,
-      initialState: { pageIndex: offset },
+      initialState: { pageIndex: (dataPage - 1), pageSize: limit },
       manualPagination: true,
       pageCount: lastPage
     },
@@ -156,7 +158,7 @@ function PengirimanTableContent({ columns, data }) {
 
   useEffect(() => {
     dispatch(retrievePengiriman());
-  }, [offset, limit]);
+  }, [dataPage, limit, search]);
 
   useEffect(() => {
     dispatch(changeOffset(state.pageIndex));
@@ -180,7 +182,7 @@ function PengirimanTableContent({ columns, data }) {
           <div className="sm:flex sm:gap-x-2 py-2 justify-between">
             <GlobalFilter
               preGlobalFilteredRows={preGlobalFilteredRows}
-              globalFilter={state.globalFilter}
+              globalFilter={search}
               setGlobalFilter={setGlobalFilter}
             />
             {headerGroups.map((headerGroup) =>

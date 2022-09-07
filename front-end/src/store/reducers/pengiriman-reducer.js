@@ -11,11 +11,12 @@ import {
 
 const initialState = {
   list: [],
-  offset: 0,
+  page: 1,
   pageCount: 0,
   pageSize: 25,
   selectedData: null,
-  summary: null
+  summary: null,
+  search: ""
 };
 
 function pengirimanReducer(pengirimans = initialState, action) {
@@ -35,11 +36,18 @@ function pengirimanReducer(pengirimans = initialState, action) {
         pageCount: payload.pengirimans.pageCount
       };
 
-    case 'SET_OFFSET':
+    case 'SET_PAGE':
       return {
         ...pengirimans,
-        offset: payload
+        page: payload + 1
       };
+
+    case 'SET_SEARCH':
+      return {
+        ...pengirimans,
+        page: 1,
+        search: payload
+      }
 
     case 'SET_PAGE_SIZE':
       return {

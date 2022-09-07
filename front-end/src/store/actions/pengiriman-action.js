@@ -29,9 +29,9 @@ export const createPengiriman = (form) => async (dispatch) => {
 
 export const retrievePengiriman = () => async (dispatch, getState) => {
   const { user } = userData;
-  const { offset, pageSize } = getState().pengirimans;
+  const { page, pageSize, search = "" } = getState().pengirimans;
   try {
-    const res = await PengirimanDataService.getAll(user.role, offset, pageSize);
+    const res = await PengirimanDataService.getAll(user.role, page, pageSize, search);
     dispatch({
       type: RETRIEVE_PENGIRIMAN,
       payload: {
@@ -46,8 +46,19 @@ export const retrievePengiriman = () => async (dispatch, getState) => {
 export const changeOffset = (offset) => async (dispatch) => {
   try {
     dispatch({
-      type: "SET_OFFSET",
+      type: "SET_PAGE",
       payload: offset
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const changeSearch = (search) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "SET_SEARCH",
+      payload: search
     });
   } catch (error) {
     console.log(error);

@@ -26,6 +26,7 @@ function HistoryItem({ proses_by, status, createdAt, note }) {
       <p className="text-base font-normal text-gray-500">
         {note}
       </p>
+      {/* <img src="" alt="Uploaded Photos" status={status}/> */}
     </li>
   );
 }
