@@ -282,7 +282,7 @@ function PengirimanInputForm() {
                     />
                   </div>
 
-                  <div className="col-span-6 sm:col-span-3 mt-3">
+                  {/* <div className="col-span-6 sm:col-span-3 mt-3">
                     <div className="form-check form-check-inline mr-3">
                       <input
                         onChange={(e) => setPickUp(false)}
@@ -313,7 +313,7 @@ function PengirimanInputForm() {
                         Dijemput
                       </label>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
@@ -322,7 +322,9 @@ function PengirimanInputForm() {
                     >
                       Driver
                     </label>
-                    <DriverOptions onChange={onInputChange} disabled={pickUp} />
+                    <DriverOptions onChange={onInputChange} 
+                    // disabled={pickUp} 
+                    />
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
