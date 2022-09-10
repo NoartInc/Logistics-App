@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Transition from '../../utils/Transition';
+import loadable from "@loadable/component";
+const Transition = loadable(() => import("../../utils/Transition"));
 
 // import UserAvatar from '../../images/user-avatar-32.png';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { login, logout } from '../../store/actions/auth-action';
+import { logout } from '../../store/actions/auth-action';
 
 function UserMenu() {
 
@@ -13,10 +13,6 @@ function UserMenu() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.authReducer.user)
-  
-  useEffect(() => {
-    dispatch(login())
-  }, [])
   
   const doLogout = () => {
     dispatch(logout());
@@ -30,7 +26,7 @@ function UserMenu() {
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
+      if (!dropdownOpen || dropdown.current?.contains(target) || trigger.current?.contains(target)) return;
       setDropdownOpen(false);
     };
     document.addEventListener('click', clickHandler);

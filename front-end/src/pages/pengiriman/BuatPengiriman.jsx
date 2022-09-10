@@ -1,38 +1,18 @@
-import React, { useState } from 'react'
-import Banner from '../../partials/Banner';
-import Header from '../../partials/Header';
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
 import PengirimanInputForm from '../../partials/pengiriman-content/PengirimanInputForm';
-import Sidebar from '../../partials/Sidebar';
+import { toggleBanner } from '../../store/actions/layout-action';
 
 function BuatPengiriman() {
+  const dispatch = useDispatch();
 
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(toggleBanner(false));
+    }, 500);
+  }, []);
 
-  return (
-    <div className="flex h-screen overflow-hidden">
-
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-
-        {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-        <main>
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-
-            <PengirimanInputForm />
-
-          </div>
-        </main>
-
-        {/* <Banner /> */}
-
-      </div>
-    </div>
-  )
+  return <PengirimanInputForm />
 }
 
 export default BuatPengiriman

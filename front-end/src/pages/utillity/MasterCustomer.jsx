@@ -1,22 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Banner from "../../partials/Banner";
-import Header from "../../partials/Header";
-import Sidebar from "../../partials/Sidebar";
 
 import CustomerModalEditForm from "../../partials/customer-content/CustomerModalEditForm";
-import CustomerTableContent, {
-  StatusPill,
-} from "../../partials/customer-content/CustomerTableContent";
-import {
-  retrieveCustomers,
-  deleteCustomer,
-} from "../../store/actions/customer-action";
+import CustomerTableContent, { StatusPill } from "../../partials/customer-content/CustomerTableContent";
+import { retrieveCustomers, deleteCustomer } from "../../store/actions/customer-action";
 import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
 
 function MasterCustomer() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const customers = useSelector((state) => state.customers.list);
   const dispatch = useDispatch();
 
@@ -85,9 +75,9 @@ function MasterCustomer() {
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                 />
               </svg>
@@ -99,26 +89,7 @@ function MasterCustomer() {
     []
   );
 
-  return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-        <main>
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <CustomerTableContent columns={columns} data={customers} />
-          </div>
-        </main>
-
-        <Banner />
-      </div>
-    </div>
-  );
+  return <CustomerTableContent columns={columns} data={customers} />
 }
 
 export default MasterCustomer;

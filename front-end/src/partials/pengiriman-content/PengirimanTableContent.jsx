@@ -195,13 +195,8 @@ function PengirimanTableContent({ columns, data }) {
               )
             )}
             <div className="flex">
-              {console.log(
-                ROLES_MANAGEMENTS["export_pengiriman"].allowedRoles.includes(
-                  user.role
-                )
-              )}
               {ROLES_MANAGEMENTS["export_pengiriman"].allowedRoles.includes(
-                user.role
+                user?.role
               ) && <PengirimanModalExport />}
             </div>
           </div>

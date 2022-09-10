@@ -18,7 +18,7 @@ export const login = (data) => {
         }
       })
       .catch((err) => {
-        window.alert(err.response.data.error);
+        window.alert(err.response?.data?.error);
       });
   };
 };

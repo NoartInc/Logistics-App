@@ -15,7 +15,6 @@ import { retrieveUsers, deleteUser } from "../../store/actions/user-action";
 function UserList() {
   
   const dispatch = useDispatch();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const users = useSelector((state) => state.users.list);
   
 
@@ -87,9 +86,9 @@ function UserList() {
               stroke="currentColor"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
               />
             </svg>
@@ -103,26 +102,8 @@ function UserList() {
   
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-        <main>
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            {/* Content */}
-            <div className="grid gap-6 mb-8 md:grid-cols-1 xl:grid-cols-1">
-              <UserListContent2 columns={columns} data={users} />
-            </div>
-          </div>
-        </main>
-
-        <Banner />
-      </div>
+    <div className="grid gap-6 mb-8 md:grid-cols-1 xl:grid-cols-1">
+      <UserListContent2 columns={columns} data={users} />
     </div>
   );
 }
