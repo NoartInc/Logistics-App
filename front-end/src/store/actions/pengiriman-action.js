@@ -31,7 +31,7 @@ export const retrievePengiriman = () => async (dispatch, getState) => {
   const { user } = userData;
   const { page, pageSize, search = "" } = getState().pengirimans;
   try {
-    const res = await PengirimanDataService.getAll(user.role, page, pageSize, search);
+    const res = await PengirimanDataService.getAll(user?.role, page, pageSize, search);
     dispatch({
       type: RETRIEVE_PENGIRIMAN,
       payload: {

@@ -6,8 +6,10 @@ import telis from "./teli-reducer";
 import pengangkutans from "./pengangkutan-reducer";
 import pengirimans from "./pengiriman-reducer";
 import authReducer from "./auth-reducer";
+import layoutReducer from "./layout-reducer";
 
 export default combineReducers({
+  layout: layoutReducer,
   users,
   kendaraans,
   customers,

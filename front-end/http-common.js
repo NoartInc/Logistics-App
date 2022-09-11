@@ -18,7 +18,39 @@ api.interceptors.request.use((req) => {
 
   return req;
 }, (error) => {
+  window.alert(error?.message);
   return Promise.reject(error);
-})
+});
+
+api.interceptors.response.use((res) => {
+  return res;
+}, async (error) => {
+  const originalRequest = error.config;
+  if ((error.response?.status === 403 || error.response?.status === 401) && !originalRequest._retry) {
+    originalRequest._retry = true;
+    const access_token = await refreshAccessToken();            
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
+    return api(originalRequest);
+  }
+  window.alert(error?.message);
+  return Promise.reject(error);
+});
+
+const refreshAccessToken = async () => {
+  try {
+    const { userName, password } = store.getState().authReducer.user;
+    const result = await api.post("/auth", {
+      username: userName, 
+      password: password
+    });
+    store.dispatch({
+      type: "LOGIN_USER",
+      payload: result.data.data,
+    });
+    return result.data?.data?.token;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export default api

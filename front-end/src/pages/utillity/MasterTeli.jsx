@@ -1,8 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Banner from "../../partials/Banner";
-import Header from "../../partials/Header";
-import Sidebar from "../../partials/Sidebar";
 import moment from "moment";
 import TeliModalEditForm from "../../partials/teli-content/TeliModalEditForm";
 import TeliTableContent, {
@@ -14,7 +11,6 @@ import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
 function MasterTeli() {
   const dispatch = useDispatch();
   const telis = useSelector((state) => state.telis.list);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [startDate, setStartDate] = useState(localStorage.getItem("startDate") ?? moment().format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(localStorage.getItem("endDate") ?? moment().add(1, "days").format("YYYY-MM-DD"));
 
@@ -91,9 +87,9 @@ function MasterTeli() {
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                 />
               </svg>
@@ -105,33 +101,14 @@ function MasterTeli() {
     [startDate, endDate]
   );
 
-  return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-        <main>
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <TeliTableContent 
-              columns={columns} 
-              data={telis} 
-              startDate={startDate}
-              endDate={endDate}
-              setStartDate={onStartChange}
-              setEndDate={onEndChange}
-            />
-          </div>
-        </main>
-
-        <Banner />
-      </div>
-    </div>
-  );
+  return <TeliTableContent 
+    columns={columns} 
+    data={telis} 
+    startDate={startDate}
+    endDate={endDate}
+    setStartDate={onStartChange}
+    setEndDate={onEndChange}
+  />;
 }
 
 export default MasterTeli;

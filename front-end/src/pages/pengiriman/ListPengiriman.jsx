@@ -1,23 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Banner from "../../partials/Banner";
-import Header from "../../partials/Header";
-import Sidebar from "../../partials/Sidebar";
 
 import PengirimanModalEditForm from "../../partials/pengiriman-content/PengirimanModalEditForm";
-import PengirimanTableContent, {
-  StatusPill,
-} from "../../partials/pengiriman-content/PengirimanTableContent";
-import {
-  deletePengiriman,
-  retrievePengiriman,
-} from "../../store/actions/pengiriman-action";
-import moment from "moment";
+import PengirimanTableContent, { StatusPill } from "../../partials/pengiriman-content/PengirimanTableContent";
+import { deletePengiriman, retrievePengiriman } from "../../store/actions/pengiriman-action";
 import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
 
 function ListPengiriman() {
   const dispatch = useDispatch();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const pengirimans = useSelector((state) => state.pengirimans.list);
   const { user } = userData;
 
@@ -85,7 +75,7 @@ function ListPengiriman() {
         Cell: (pengirimans) => (
           <div className="flex justify-start">
             {ROLES_MANAGEMENTS["update_pengiriman"]?.allowedRoles.includes(
-              user.role
+              user?.role
             ) &&
               ROLES_MANAGEMENTS["update_pengiriman"][
                 `allowedStatus_${user?.role}`
@@ -107,9 +97,9 @@ function ListPengiriman() {
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                 />
               </svg>
@@ -121,26 +111,7 @@ function ListPengiriman() {
     []
   );
 
-  return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-        <main>
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <PengirimanTableContent columns={columns} data={pengirimans} />
-          </div>
-        </main>
-
-        <Banner />
-      </div>
-    </div>
-  );
+  return <PengirimanTableContent columns={columns} data={pengirimans} />
 }
 
 export default ListPengiriman;

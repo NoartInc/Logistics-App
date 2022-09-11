@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     note: DataTypes.STRING,
     pengirimanId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
-    teliId: DataTypes.INTEGER
+    teliId: DataTypes.INTEGER,
+    image: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'TrackPengiriman',

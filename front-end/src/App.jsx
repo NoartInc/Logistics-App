@@ -1,38 +1,31 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import loadable, { lazy } from "@loadable/component";
 import "./css/style.scss";
-import "flowbite";
 
 import "./charts/ChartjsConfig";
+import Layout from "./components/Layout";
 
-// Import pages
-import Dashboard from "./pages/Dashboard";
-import UserList from "./pages/users/UserList";
-import UserConfig from "./pages/users/UserConfig";
-import BuatPengiriman from "./pages/pengiriman/BuatPengiriman";
-import ListPengiriman from "./pages/pengiriman/ListPengiriman";
-import BuatBerita from "./pages/berita/BuatBerita";
-import ListBerita from "./pages/berita/ListBerita";
-import MasterCustomer from "./pages/utillity/MasterCustomer";
-import MasterKendaraan from "./pages/utillity/MasterKendaraan";
-import MasterTeli from "./pages/utillity/MasterTeli";
-import MasterPengangkutan from "./pages/utillity/MasterPengangkutan";
-import Summary from "./pages/utillity/Summary";
-import LoginForm from "./pages/login/LoginForm";
-import DetailPengiriman from "./pages/pengiriman/DetailPengiriman";
-import { useSelector } from "react-redux";
-import TeliProfile from "./pages/utillity/TeliProfile";
-
-function PrivateRoute({ children }) {
-  const location = useLocation();
-  const { isLogin, user } = useSelector((state) => state.authReducer);
-
-  if (!isLogin && !user) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  return children;
-}
+// Import pages with codesplitting by loadable
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const UserList = lazy(() => import("./pages/users/UserList"));
+const UserConfig = lazy(() => import("./pages/users/UserConfig"));
+const BuatPengiriman = lazy(() => import("./pages/pengiriman/BuatPengiriman"));
+const ListPengiriman = lazy(() => import("./pages/pengiriman/ListPengiriman"));
+const BuatBerita = lazy(() => import("./pages/berita/BuatBerita"));
+const ListBerita = lazy(() => import("./pages/berita/ListBerita"));
+const MasterCustomer = lazy(() => import("./pages/utillity/MasterCustomer"));
+const MasterKendaraan = lazy(() => import("./pages/utillity/MasterKendaraan"));
+const MasterTeli = lazy(() => import("./pages/utillity/MasterTeli"));
+const MasterPengangkutan = lazy(() =>
+  import("./pages/utillity/MasterPengangkutan")
+);
+const Summary = lazy(() => import("./pages/utillity/Summary"));
+const LoginForm = loadable(() => import("./pages/login/LoginForm"));
+const DetailPengiriman = lazy(() =>
+  import("./pages/pengiriman/DetailPengiriman")
+);
+const TeliProfile = lazy(() => import("./pages/utillity/TeliProfile"));
 
 function App() {
   const location = useLocation();
@@ -46,113 +39,26 @@ function App() {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/userlist"
-          element={
-            <PrivateRoute>
-              <UserList />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/userconfig"
-          element={
-            <PrivateRoute>
-              <UserConfig />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/buatpengiriman"
-          element={
-            <PrivateRoute>
-              <BuatPengiriman />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          exact
-          path="/listpengiriman"
-          element={
-            <PrivateRoute>
-              <ListPengiriman />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/buatberita"
-          element={
-            <PrivateRoute>
-              <BuatBerita />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/listberita"
-          element={
-            <PrivateRoute>
-              <ListBerita />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/mastercustomer"
-          element={
-            <PrivateRoute>
-              <MasterCustomer />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/masterkendaraan"
-          element={
-            <PrivateRoute>
-              <MasterKendaraan />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/masterteli"
-          element={
-            <PrivateRoute>
-              <MasterTeli />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/masterpengangkutan"
-          element={
-            <PrivateRoute>
-              <MasterPengangkutan />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/summary" element={<Summary />} />
         <Route exact path="/login" element={<LoginForm />} />
-        <Route
-          path="listpengiriman/detailpengiriman/:id"
-          element={
-            <PrivateRoute>
-              <DetailPengiriman />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="masterteli/teliprofile/:id"
-          element={
-            <PrivateRoute>
-              <TeliProfile />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/" element={<Layout />}>
+          <Route path="" index element={<Dashboard />} />
+          <Route path="userlist" element={<UserList />} />
+          <Route path="userconfig" element={<UserConfig />} />
+          <Route path="buatpengiriman" element={<BuatPengiriman />} />
+          <Route path="listpengiriman" element={<ListPengiriman />} />
+          <Route path="buatberita" element={<BuatBerita />} />
+          <Route path="listberita" element={<ListBerita />} />
+          <Route path="mastercustomer" element={<MasterCustomer />} />
+          <Route path="masterkendaraan" element={<MasterKendaraan />} />
+          <Route path="masterteli" element={<MasterTeli />} />
+          <Route path="masterpengangkutan" element={<MasterPengangkutan />} />
+          <Route path="summary" element={<Summary />} />
+          <Route
+            path="listpengiriman/detailpengiriman/:id"
+            element={<DetailPengiriman />}
+          />
+          <Route path="masterteli/teliprofile/:id" element={<TeliProfile />} />
+        </Route>
       </Routes>
     </>
   );

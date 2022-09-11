@@ -5,7 +5,7 @@ import { retrieveUsers } from '../../store/actions/user-action';
 
 const SalesOptions = ({ onChange=null, value=null }) => {
     const dispatch = useDispatch();
-    const lists = useSelector((state) => state.users.list).filter(user => user.role === 'sales').map(item => {
+    const lists = useSelector((state) => state.users.list).filter(user => user?.role === 'sales').map(item => {
         return {
             value: item.id,
             label: item.fullName

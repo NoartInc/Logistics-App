@@ -140,7 +140,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             <ul className="mt-3">
               {/* Dashboard */}
               {ROLES_MANAGEMENTS["dashboard_menu"].allowedRoles.includes(
-                user.role
+                user?.role
               ) && (
                 <li
                   className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
@@ -196,7 +196,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </li> */}
               {/* E-Commerce */}
               {ROLES_MANAGEMENTS["pengiriman_menu"].allowedRoles.includes(
-                user.role
+                user?.role
               ) && (
                 <SidebarLinkGroup
                   activecondition={pathname.includes("pengiriman")}
@@ -266,7 +266,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                             {ROLES_MANAGEMENTS[
                               "create_pengiriman"
-                            ].allowedRoles.includes(user.role) && (
+                            ].allowedRoles.includes(user?.role) && (
                               <li className="mb-1 last:mb-0">
                                 <NavLink
                                   end
@@ -281,7 +281,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             )}
                             {ROLES_MANAGEMENTS[
                               "list_pengiriman"
-                            ].allowedRoles.includes(user.role) && (
+                            ].allowedRoles.includes(user?.role) && (
                               <li className="mb-1 last:mb-0">
                                 <NavLink
                                   end
@@ -350,7 +350,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </li> */}
               {/* user */}
               {ROLES_MANAGEMENTS["user_menu"].allowedRoles.includes(
-                user.role
+                user?.role
               ) && (
                 <SidebarLinkGroup activecondition={pathname.includes("user")}>
                   {(handleClick, open) => {
@@ -493,7 +493,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </li> */}
               {/* berita */}
               {ROLES_MANAGEMENTS["berita_menu"].allowedRoles.includes(
-                user.role
+                user?.role
               ) && (
                 <SidebarLinkGroup activecondition={pathname.includes("berita")}>
                   {(handleClick, open) => {
@@ -617,7 +617,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               )}
               {/* Utility */}
               {ROLES_MANAGEMENTS["utility_menu"].allowedRoles.includes(
-                user.role
+                user?.role
               ) && (
                 <SidebarLinkGroup
                   activecondition={pathname.includes("utility")}
@@ -702,7 +702,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                             {ROLES_MANAGEMENTS[
                               "master_kendaraan"
-                            ].allowedRoles.includes(user.role) && (
+                            ].allowedRoles.includes(user?.role) && (
                               <li className="mb-1 last:mb-0">
                                 <NavLink
                                   end
@@ -717,7 +717,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             )}
                             {ROLES_MANAGEMENTS[
                               "master_customer"
-                            ].allowedRoles.includes(user.role) && (
+                            ].allowedRoles.includes(user?.role) && (
                               <li className="mb-1 last:mb-0">
                                 <NavLink
                                   end
@@ -732,7 +732,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             )}
                             {ROLES_MANAGEMENTS[
                               "master_teli"
-                            ].allowedRoles.includes(user.role) && (
+                            ].allowedRoles.includes(user?.role) && (
                               <li className="mb-1 last:mb-0">
                                 <NavLink
                                   end
@@ -747,7 +747,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             )}
                             {ROLES_MANAGEMENTS[
                               "master_pengangkutan"
-                            ].allowedRoles.includes(user.role) && (
+                            ].allowedRoles.includes(user?.role) && (
                               <li className="mb-1 last:mb-0">
                                 <NavLink
                                   end
