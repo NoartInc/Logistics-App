@@ -1,10 +1,10 @@
-import resolveConfig from 'tailwindcss/resolveConfig';
+import resolveConfig from "tailwindcss/resolveConfig";
 import regeneratorRuntime from "regenerator-runtime";
 
 export const tailwindConfig = () => {
   // Tailwind config
-  return resolveConfig('./src/css/tailwind.config.js')
-}
+  return resolveConfig("./src/css/tailwind.config.js");
+};
 
 export const hexToRGB = (h) => {
   let r = 0;
@@ -22,13 +22,22 @@ export const hexToRGB = (h) => {
   return `${+r},${+g},${+b}`;
 };
 
-export const formatValue = (value) => Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  maximumSignificantDigits: 3,
-  notation: 'compact',
-}).format(value);
+export const formatValue = (value) =>
+  Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumSignificantDigits: 3,
+    notation: "compact",
+  }).format(value);
 
 export function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
+export const serverImagePath = () => {
+  if (process.env.NODE_ENV !== "production") {
+    return "http://localhost:4000";
+  } else {
+    return "https://transmetalroof.com:5000";
+  }
+};

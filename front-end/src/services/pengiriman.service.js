@@ -2,7 +2,9 @@ import http from "../../http-common";
 
 class PengirimanDataService {
   getAll(role, page, limit, search) {
-    return http.get(`/pengiriman?role=${role}&page=${page}&limit=${limit}&search=${search}`);
+    return http.get(
+      `/pengiriman?role=${role}&page=${page}&limit=${limit}&search=${search}`
+    );
   }
   get(id) {
     return http.get(`/pengiriman/${id}`);
@@ -11,7 +13,15 @@ class PengirimanDataService {
     return http.post("/pengiriman", data);
   }
   update(id, data) {
-    return http.put(`/pengiriman/${id}`, data);
+    let dataForm = new FormData();
+    for (const [key, value] of Object.entries(data)) {
+      dataForm.append(key, value);
+    }
+    return http.post(`/pengiriman/${id}/update`, dataForm, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
   delete(id) {
     return http.delete(`/pengiriman/${id}`);
