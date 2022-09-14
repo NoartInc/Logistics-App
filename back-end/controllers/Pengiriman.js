@@ -12,38 +12,39 @@ const {
 const excelJS = require("exceljs");
 const { Op } = require("sequelize");
 const moment = require("moment");
+const { getImage } = require("../utils/helper");
 
 const dataAssoc = [
   {
     model: Customer,
     as: "customers",
     include: [
-      { 
+      {
         model: Users,
         as: "salesUser",
         attributes: ["fullName"],
-        required: true
-      }
+        required: true,
+      },
     ],
     attributes: ["customer"],
-    required: true
+    required: true,
   },
   {
     model: Kendaraan,
     as: "kendaraans",
     attributes: ["kendaraan"],
-    required: true
+    required: true,
   },
   {
     model: Pengangkutan,
     as: "pengangkutans",
-    attributes: ["pengangkutan", "address"]
+    attributes: ["pengangkutan", "address"],
   },
   {
     model: Users,
     as: "drivers",
     attributes: ["fullName", "contact"],
-    required: true
+    required: true,
   },
   // PR Relasi
   // {
@@ -53,12 +54,12 @@ const dataAssoc = [
   {
     model: TrackPengiriman,
     as: "history",
-    attributes: ["createdAt", "note", "status"],
+    attributes: ["createdAt", "note", "status", "image"],
     include: [
       {
         model: Users,
         as: "proses_by",
-        attributes: ["fullName", "jabatan" ]
+        attributes: ["fullName", "jabatan"],
       },
       {
         model: TeliPengiriman,
@@ -68,7 +69,7 @@ const dataAssoc = [
           {
             model: Teli,
             as: "teliPerson",
-            attributes: ["fullName"]
+            attributes: ["fullName"],
           },
         ],
       },
@@ -79,21 +80,32 @@ const dataAssoc = [
 exports.findAllPengiriman = async (req, res) => {
   try {
     const { id: userId } = req.user;
-    const { role, page = 1, limit = 25, orderby = "id", orderdir = "desc", search = "" } = req.query;    
+    const {
+      role,
+      page = 1,
+      limit = 25,
+      orderby = "id",
+      orderdir = "desc",
+      search = "",
+    } = req.query;
 
     const offset = (page - 1) * limit;
-    const startDate = moment().subtract(15, 'days').format("YYYY-MM-DD HH:mm:ss");
+    const startDate = moment()
+      .subtract(15, "days")
+      .format("YYYY-MM-DD HH:mm:ss");
     const endDate = moment().format("YYYY-MM-DD HH:mm:ss");
     let formatedDateSearch = "";
     if (search.match(/\//gi)) {
       let parseDate = search.split("/");
-      formatedDateSearch = moment(new Date(`${parseDate[2]}-${parseDate[1]}-${parseDate[0]}`)).format("YYYY-MM-DD");
+      formatedDateSearch = moment(
+        new Date(`${parseDate[2]}-${parseDate[1]}-${parseDate[0]}`)
+      ).format("YYYY-MM-DD");
     }
 
     let conditions = {
-      createdAt: { 
-        [Op.between]: [startDate, endDate]
-      }
+      createdAt: {
+        [Op.between]: [startDate, endDate],
+      },
     };
     if (role === "driver") {
       conditions = { driver: userId };
@@ -105,26 +117,26 @@ exports.findAllPengiriman = async (req, res) => {
       conditions = {
         ...conditions,
         [Op.or]: {
-          suratJalan: { 
-            [Op.like]: `%${search.toLowerCase()}%`
+          suratJalan: {
+            [Op.like]: `%${search.toLowerCase()}%`,
           },
           status: {
-            [Op.like]: `%${search.toLowerCase()}%`
+            [Op.like]: `%${search.toLowerCase()}%`,
           },
           "$drivers.fullName$": {
-            [Op.like]: `%${search.toLowerCase()}%`
+            [Op.like]: `%${search.toLowerCase()}%`,
           },
           "$customers.customer$": {
-            [Op.like]: `%${search.toLowerCase()}%`
+            [Op.like]: `%${search.toLowerCase()}%`,
           },
           "$kendaraans.kendaraan$": {
-            [Op.like]: `%${search.toLowerCase()}%`
+            [Op.like]: `%${search.toLowerCase()}%`,
           },
           "$customers.salesUser.fullName$": {
-            [Op.like]: `%${search.toLowerCase()}%`
-          }
-        }
-      }
+            [Op.like]: `%${search.toLowerCase()}%`,
+          },
+        },
+      };
     }
 
     const data = await Pengiriman.findAndCountAll({
@@ -133,14 +145,14 @@ exports.findAllPengiriman = async (req, res) => {
       include: dataAssoc,
       order: [[orderby, orderdir]],
       limit: Number(limit),
-      offset: Number(offset)
+      offset: Number(offset),
     });
 
     let last_page = Math.ceil(data.count / Number(limit));
     let result = {
       ...data,
-      pageCount: last_page
-    }
+      pageCount: last_page,
+    };
 
     res.json(result);
   } catch (err) {
@@ -194,15 +206,13 @@ exports.updatePengiriman = async (req, res) => {
   try {
     const { id: userId = 0 } = req.user; // userId
     const { id } = req.params; // pengirimanId
-    const { note, status, teli = null, image } = req.body; // note
-
-    
+    const { note, status, teli = null } = req.body; // note
+    const { filename } = req.file;
 
     // update status di tabel Pengiriman
     await Pengiriman.update(
       {
         status: status,
-        image
       },
       {
         where: { id: id },
@@ -212,8 +222,6 @@ exports.updatePengiriman = async (req, res) => {
     // Get Tonase
     const tonase = await Pengiriman.findByPk(id);
 
-    console.log(teli);
-
     // insert history ke tabel TrackPengiriman
     await TrackPengiriman.create(
       {
@@ -221,6 +229,7 @@ exports.updatePengiriman = async (req, res) => {
         pengirimanId: id,
         status: status,
         note: note,
+        image: `/images/${filename}`,
         teli: teli?.map((item) => {
           // Calculate tonase divide by how many teli
           const tonasePerTeli = tonase?.tonase / teli.length;
@@ -292,11 +301,10 @@ exports.downloadData = async (req, res) => {
       kendaraans: item.kendaraans?.kendaraan || "",
       address: item.address || "",
       salesUser: item.customers?.salesUser?.fullName || "",
-      teliPerson: item.teliPerson || "",  
+      teliPerson: item.teliPerson || "",
       note: item.note || "",
     });
   });
-
 
   const workbook = new excelJS.Workbook(); // Create a new workbook
   const worksheet = workbook.addWorksheet("List Pengiriman"); // New Worksheet
@@ -387,21 +395,21 @@ exports.downloadData = async (req, res) => {
 exports.getDashboard = async (req, res) => {
   try {
     const summary = [
-      { count: 0, status: 'diproses' },
-      { count: 0, status: 'dimuat' },
-      { count: 0, status: 'termuat' },
-      { count: 0, status: 'dikirim' },
-      { count: 0, status: 'terkirim' },
-      { count: 0, status: 'pending' },
-      { count: 0, status: 'cancel' }
+      { count: 0, status: "diproses" },
+      { count: 0, status: "dimuat" },
+      { count: 0, status: "termuat" },
+      { count: 0, status: "dikirim" },
+      { count: 0, status: "terkirim" },
+      { count: 0, status: "pending" },
+      { count: 0, status: "cancel" },
     ];
 
     const [results] = await sequelize.query(
       "SELECT count(*) as count, status from Pengirimans group by status"
     );
 
-    const summaries = summary.map(item => {
-      const findData = results.find(result => result.status === item.status);
+    const summaries = summary.map((item) => {
+      const findData = results.find((result) => result.status === item.status);
       if (findData) {
         return findData;
       }
@@ -410,7 +418,7 @@ exports.getDashboard = async (req, res) => {
 
     res.status(200).send({
       status: "success",
-      results: summaries
+      results: summaries,
     });
   } catch (error) {}
 };

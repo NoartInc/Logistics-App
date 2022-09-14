@@ -5,9 +5,9 @@ import { editPengiriman } from "../../store/actions/pengiriman-action";
 import moment from "moment";
 import _ from "lodash";
 import IconUpdatePengiriman from '../../images/IconUpdatePengiriman';
+import { serverImagePath } from "../../utils/Utils";
 
-
-function HistoryItem({ proses_by, status, createdAt, note }) {
+function HistoryItem({ proses_by, status, image, createdAt, note }) {
   return (
     <li className="mb-6 ml-6">
       <IconUpdatePengiriman status={status} />
@@ -26,7 +26,7 @@ function HistoryItem({ proses_by, status, createdAt, note }) {
       <p className="text-base font-normal text-gray-500">
         {note}
       </p>
-      {/* <img src="" alt="Uploaded Photos" status={status}/> */}
+      {image && !image.match(/wikimedia.org/g) && <img src={`${serverImagePath()}${image}`} alt="Uploaded Photos" />}
     </li>
   );
 }
@@ -62,7 +62,7 @@ function DetailPengirimanContent() {
     getCurrentData();
   }, [id]);
 
-  React.useEffect(() =>{
+  React.useEffect(() => {
     findTeli();
   }, [currentData?.history]);
 
