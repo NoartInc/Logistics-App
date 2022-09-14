@@ -15,6 +15,7 @@ function PengirimanModalEditForm({ id = null, status }) {
   const { user } = userData;
 
   const [form, setForm] = useState({});
+  const [previewImage, setPreviewImage] = useState("https://angelofshiva.com/resources/assets/images/no-file.png");
 
   useEffect(() => {
     setForm(currentData);
@@ -41,23 +42,19 @@ function PengirimanModalEditForm({ id = null, status }) {
   };
 
   const onUpload = (e) => {
-    let formData = new FormData();
-    formData.append("photo", e.target.files[0]);
-    return http
-      .post("/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setForm((prevState) => {
-          return {
-            ...prevState,
-            ['image']: res.data.image,
-          };
-        });
-      }
-      );
+    if (e.target.files.length > 0) {
+      setPreviewImage(URL.createObjectURL(e.target.files[0]));
+      setForm(prevState => ({
+        ...prevState,
+        image: e.target.files[0]
+      }));
+    } else {
+      setPreviewImage("https://angelofshiva.com/resources/assets/images/no-file.png");
+      setForm(prevState => ({
+        ...prevState,
+        image: null
+      }))
+    }
   };
 
   const onSubmit = (e) => {
@@ -147,49 +144,49 @@ function PengirimanModalEditForm({ id = null, status }) {
                       {(form?.status === "terkirim" ||
                         form?.status === "pending" ||
                         form?.status === "cancel") && (
-                        <div className="mb-3 col-span-6 sm:col-span-6">
-                          <label
-                            for="note"
-                            className="block text-xs font-medium uppercase text-gray-500"
-                          >
-                            Note
-                          </label>
-                          <textarea
-                            onChange={onInputChange}
-                            type="text"
-                            name="note"
-                            id="note"
-                            rows="4"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                            placeholder="Masukan pesan disini .."
-                            value={form?.note}
-                          />
-                        </div>
-                      )}
+                          <div className="mb-3 col-span-6 sm:col-span-6">
+                            <label
+                              for="note"
+                              className="block text-xs font-medium uppercase text-gray-500"
+                            >
+                              Note
+                            </label>
+                            <textarea
+                              onChange={onInputChange}
+                              type="text"
+                              name="note"
+                              id="note"
+                              rows="4"
+                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              placeholder="Masukan pesan disini .."
+                              value={form?.note}
+                            />
+                          </div>
+                        )}
 
                       {(form?.status === "terkirim" ||
                         form?.status === "pending") && (
-                        <>
-                          <div className="mb-3 col-span-6 sm:col-span-6">
-                            <label
-                              for="img"
-                              className="block text-xs font-medium uppercase text-gray-500"
-                            >
-                              Submit Surat Jalan
-                            </label>
-                            <input
-                              className="mt-1 block w-96 py-2 px-3 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-400 cursor-pointer focus:outline-none"
-                              id="formFile"
-                              type="file"
-                              name="image"
-                              accept="image/*"
-                              onChange={onUpload}
+                          <>
+                            <div className="mb-3 col-span-6 sm:col-span-6">
+                              <label
+                                for="img"
+                                className="block text-xs font-medium uppercase text-gray-500"
+                              >
+                                Submit Surat Jalan
+                              </label>
+                              <input
+                                className="mt-1 block w-96 py-2 px-3 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-400 cursor-pointer focus:outline-none"
+                                id="formFile"
+                                type="file"
+                                name="image"
+                                accept="image/*"
+                                onChange={onUpload}
                               // value={(URL.createObjectURL(e.target.files[0]))}
-                            />
-                          </div>
-                          {form.image &&<img src={form.image} alt="image" />}
-                        </>
-                      )}
+                              />
+                            </div>
+                            {form.image && <img src={previewImage} alt="image" />}
+                          </>
+                        )}
 
                       {form?.status === "dimuat" && (
                         <div className="mb-3 col-span-6 sm:col-span-6">
