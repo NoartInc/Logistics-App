@@ -13,6 +13,7 @@ const excelJS = require("exceljs");
 const { Op } = require("sequelize");
 const moment = require("moment");
 const { getImage } = require("../utils/helper");
+const logging = require("../utils/logging");
 
 const dataAssoc = [
   {
@@ -174,7 +175,7 @@ exports.findPengirimanById = async (req, res) => {
 exports.createPengiriman = async (req, res) => {
   try {
     const { id: userId = 0 } = req.user;
-
+    const { fullName } = req.user;
     var data = await Pengiriman.create({
       ...req.body,
       pengangkutan: req.body.pengangkutan === "" ? 0 : req.body.pengangkutan,
@@ -193,6 +194,7 @@ exports.createPengiriman = async (req, res) => {
     });
 
     // ini ada data nya mas. yg disana gak ada,, ohh baru found skrng. coba di sesuaikan.
+    logging(fullName, "Create Data", "Melakukan Create Pengiriman ke sistem");
     res.json({
       message: "Pengiriman Created successfully",
       data: Pengiriman.findByPk(data?.id, { include: dataAssoc }),
@@ -206,13 +208,22 @@ exports.updatePengiriman = async (req, res) => {
   try {
     const { id: userId = 0 } = req.user; // userId
     const { id } = req.params; // pengirimanId
-    const { note, status, teli = null } = req.body; // note
-    const { filename } = req.file;
+    const { note, status, teli = null, driver, kendaraan } = req.body; // note
+    const { fullName } = req.user;
+    let filename = null;
+    if (req.file) {
+      filename = req.file?.filename;
+    }
 
     // update status di tabel Pengiriman
+    // Disini saya tinggal ambah driver: driver, kendaraan: kendaraan kah ? 
+    // iyap
+    // pastikan nama field di table'nya ini ya ?
     await Pengiriman.update(
       {
         status: status,
+        driver: driver, 
+        kendaraan: kendaraan
       },
       {
         where: { id: id },
@@ -229,7 +240,7 @@ exports.updatePengiriman = async (req, res) => {
         pengirimanId: id,
         status: status,
         note: note,
-        image: `/images/${filename}`,
+        image: filename ? `/images/${filename}` : null,
         teli: teli?.map((item) => {
           // Calculate tonase divide by how many teli
           const tonasePerTeli = tonase?.tonase / teli.length;
@@ -245,18 +256,48 @@ exports.updatePengiriman = async (req, res) => {
         include: ["teli"],
       }
     );
-
+    logging(fullName, "Update Status", "Melakukan Update Pengiriman ke sistem");
     res.json({ message: "Pengiriman Updated successfully" });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
+/**
+ * Update data on single table only
+ * on table Pengirimans only
+ */
+exports.updateData = async (req, res) => {
+  try {
+    // mau pakai userName / fullName ? fullName aja
+    // oke sesuaikan aja
+    const { id: userId = 0, fullName } = req.user; // userId, butuh ini buat logg ? butuh mas oke
+    const { id } = req.params; // pengirimanId
+    const { driver, kendaraan } = req.body; 
+
+    await Pengiriman.update(
+      { 
+        driver: driver, 
+        kendaraan: kendaraan
+      },
+      {
+        where: { id: id },
+      }
+    );
+    logging(fullName, "Edit Data", "Melakukan Edit Pengiriman ke sistem");
+    res.json({ message: "Pengiriman Updated successfully" });
+  } catch (error) {
+    res.status(400).json({ message: err.message });
+  }
+}
+
 exports.deletePengiriman = async (req, res) => {
   try {
+    const { fullName } = req.user;
     await Pengiriman.destroy({
       where: { id: req.params.id },
     });
+    logging(fullName, "Delete Data", "Melakukan Delete Pengiriman ke sistem");
     res.json({ message: "Pengiriman Deleted successfully" });
   } catch (err) {
     res.json({ message: err.message });
@@ -265,9 +306,11 @@ exports.deletePengiriman = async (req, res) => {
 
 exports.deleteAllPengiriman = async (req, res) => {
   try {
+    const { fullName } = req.user;
     await Pengiriman.destroy({
       truncate: true,
     });
+    logging(fullName, "Delete All Data", "Melakukan Delete All Pengiriman ke sistem");
     res.json({ message: "Pengiriman All Deleted successfully" });
   } catch (err) {
     res.json({ message: err.message });
@@ -380,7 +423,7 @@ exports.downloadData = async (req, res) => {
     "Content-Type",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
   );
-
+  
   return await workbook.xlsx
     .writeFile(`${path}/List-Pengiriman.xlsx`)
     .then((data) => {

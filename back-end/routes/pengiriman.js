@@ -23,6 +23,7 @@ const {
   deleteAllPengiriman,
   downloadData,
   getDashboard,
+  updateData
 } = require("../controllers/Pengiriman");
 
 /* GET users listing. */
@@ -37,6 +38,9 @@ router.post(
   upload.single("image"),
   updatePengiriman
 );
+// karena simple update, paket put aja
+// endpoint-nya update-data
+router.put("/:id/update-data", authentication, updateData);
 router.delete("/:id", deletePengiriman);
 router.delete("/", deleteAllPengiriman);
 

@@ -98,7 +98,7 @@ function PengirimanInputForm() {
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="customer"
+                      htmlFor="customer"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Customer
@@ -117,7 +117,7 @@ function PengirimanInputForm() {
                       value={form?.suratJalan}
                     /> */}
                     <label
-                      for="suratJalan"
+                      htmlFor="suratJalan"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Surat Jalan
@@ -135,7 +135,7 @@ function PengirimanInputForm() {
 
                   {/* <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="tujuan"
+                      htmlFor="tujuan"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Tujuan
@@ -152,7 +152,7 @@ function PengirimanInputForm() {
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="pengangkutan"
+                      htmlFor="pengangkutan"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Pengangkutan
@@ -229,7 +229,7 @@ function PengirimanInputForm() {
                       value={form?.address}
                     /> */}
                     <label
-                      for="address"
+                      htmlFor="address"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Alamat Pengiriman
@@ -248,7 +248,7 @@ function PengirimanInputForm() {
 
                   <div className="col-span-6 sm:col-span-5">
                     <label
-                      for="note"
+                      htmlFor="note"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Note Pengiriman
@@ -267,7 +267,7 @@ function PengirimanInputForm() {
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="tonase"
+                      htmlFor="tonase"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Total Berat
@@ -293,7 +293,7 @@ function PengirimanInputForm() {
                       />
                       <label
                         className="form-check-label inline-block text-sm font-medium text-gray-500"
-                        for="inlineRadio10"
+                        htmlFor="inlineRadio10"
                       >
                         Diantar
                       </label>
@@ -308,7 +308,7 @@ function PengirimanInputForm() {
                       />
                       <label
                         className="form-check-label inline-block text-sm font-medium text-gray-500"
-                        for="inlineRadio20"
+                        htmlFor="inlineRadio20"
                       >
                         Dijemput
                       </label>
@@ -317,7 +317,7 @@ function PengirimanInputForm() {
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="driver"
+                      htmlFor="driver"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Driver
@@ -329,7 +329,7 @@ function PengirimanInputForm() {
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="kendaraan"
+                      htmlFor="kendaraan"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Kendaraan

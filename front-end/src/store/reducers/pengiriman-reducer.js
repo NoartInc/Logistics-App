@@ -3,6 +3,7 @@ import {
   RETRIEVE_PENGIRIMAN,
   UPDATE_PENGIRIMAN,
   EDIT_PENGIRIMAN,
+  MODIFY_PENGIRIMAN,
   DELETE_PENGIRIMAN,
   DELETE_ALL_PENGIRIMAN,
   EXPORT_DATA_PENGIRIMAN,
@@ -62,6 +63,15 @@ function pengirimanReducer(pengirimans = initialState, action) {
         selectedData: getEdit,
       };
 
+    case MODIFY_PENGIRIMAN:
+      // ini bukannya nge-set data untuk di edit ?
+      const getModify = pengirimans.list.find((item) => item.id === payload);
+      return {
+        ...pengirimans,
+        selectedData: getModify,
+      };
+
+    // Coba pake ini aja
     case UPDATE_PENGIRIMAN:
       const updateList = pengirimans.list.map((pengiriman) => {
         if (pengiriman.id === payload.id) {

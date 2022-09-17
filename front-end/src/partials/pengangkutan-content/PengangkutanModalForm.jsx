@@ -77,7 +77,7 @@ function PengangkutanModalForm() {
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          stroke-width="2"
+                          strokeWidth="2"
                           d="M6 18L18 6M6 6l12 12"
                         ></path>
                       </svg>
@@ -88,7 +88,7 @@ function PengangkutanModalForm() {
                     <div className="grid grid-cols-9 gap-9 px-4 py-4">
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="pengangkutan"
+                          htmlFor="pengangkutan"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Pengangkutan<span className="text-red-600">*</span>
@@ -105,7 +105,7 @@ function PengangkutanModalForm() {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="pic"
+                          htmlFor="pic"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Pic
@@ -122,7 +122,7 @@ function PengangkutanModalForm() {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="contact"
+                          htmlFor="contact"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Contact<span className="text-red-600">*</span>
@@ -139,7 +139,7 @@ function PengangkutanModalForm() {
 
                       <div className="col-span-9 sm:col-span-6">
                         <label
-                          for="address"
+                          htmlFor="address"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Alamat Pengangkutan
@@ -158,7 +158,7 @@ function PengangkutanModalForm() {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="status"
+                          htmlFor="status"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Status<span className="text-red-600">*</span>

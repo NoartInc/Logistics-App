@@ -1,5 +1,6 @@
 const { Customer } = require("../models");
 
+
 exports.findAllCustomer = async (req, res) => {
   try {
     const data = await Customer.findAll({

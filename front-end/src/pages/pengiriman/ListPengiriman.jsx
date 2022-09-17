@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import PengirimanModalEditForm from "../../partials/pengiriman-content/PengirimanModalEditForm";
+import PengirimanModalModify from "../../partials/pengiriman-content/PengirimanModalModify";
 import PengirimanTableContent, { StatusPill } from "../../partials/pengiriman-content/PengirimanTableContent";
 import { deletePengiriman, retrievePengiriman } from "../../store/actions/pengiriman-action";
 import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
@@ -85,9 +86,27 @@ function ListPengiriman() {
                   status={pengirimans?.row?.original?.status}
                 />
               )}
+            
+            {/* mungkin karena tdai belum di import */}
+            {/* allowed statusnya butuh ? wait saya cek constant */}
+            {ROLES_MANAGEMENTS["modify_pengiriman"]?.allowedRoles.includes(
+              user?.role
+            ) && 
+            ROLES_MANAGEMENTS["modify_pengiriman"][
+              `allowedStatus_${user?.role}`
+            ]?.includes(pengirimans?.row?.original?.status) && (
+                <PengirimanModalModify
+                  id={pengirimans?.row?.original?.id}
+                  status={pengirimans?.row?.original?.status}
+                />
+              )}
+
             {ROLES_MANAGEMENTS["delete_pengiriman"]?.allowedRoles.includes(
               user?.role
-            ) && (
+            ) && 
+            ROLES_MANAGEMENTS["delete_pengiriman"][
+              `allowedStatus_${user?.role}`
+            ]?.includes(pengirimans?.row?.original?.status) && (
               <svg
                 onClick={() => removePengiriman(pengirimans?.row?.original?.id)}
                 xmlns="http://www.w3.org/2000/svg"

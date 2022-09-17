@@ -93,7 +93,7 @@ function CustomerModalEditForm({ id=null }) {
                     <div className="grid grid-cols-9 gap-9 px-4 py-4">
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="customer"
+                          htmlFor="customer"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Customer<span className="text-red-600">*</span>
@@ -110,7 +110,7 @@ function CustomerModalEditForm({ id=null }) {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="pic"
+                          htmlFor="pic"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           PIC<span className="text-red-600">*</span>
@@ -127,7 +127,7 @@ function CustomerModalEditForm({ id=null }) {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="contact"
+                          htmlFor="contact"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Contact<span className="text-red-600">*</span>
@@ -144,7 +144,7 @@ function CustomerModalEditForm({ id=null }) {
 
                       <div className="col-span-9 sm:col-span-6">
                         <label
-                          for="alamat-customer"
+                          htmlFor="alamat-customer"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Alamat Customer
@@ -164,7 +164,7 @@ function CustomerModalEditForm({ id=null }) {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="status"
+                          htmlFor="status"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Status<span className="text-red-600">*</span>
@@ -184,7 +184,7 @@ function CustomerModalEditForm({ id=null }) {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="sales"
+                          htmlFor="sales"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Sales<span className="text-red-600">*</span>
@@ -193,7 +193,7 @@ function CustomerModalEditForm({ id=null }) {
                       </div>
 
                       <div className="col-span-9 sm:col-span-3">
-                        <label for="coordinate" className="block text-xs font-medium uppercase text-gray-500">Coordinate<span className="text-red-600">*</span></label>
+                        <label htmlFor="coordinate" className="block text-xs font-medium uppercase text-gray-500">Coordinate<span className="text-red-600">*</span></label>
                         <input onChange={onInputChange} type="text" name="coordinate" id="coordinate" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value={form?.coordinate}/>
                       </div>
 

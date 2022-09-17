@@ -88,7 +88,7 @@ function KendaraanModalForm() {
                     <div className="grid grid-cols-9 gap-9 px-4 py-4">
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="kendaraan"
+                          htmlFor="kendaraan"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Kendaraan<span className="text-red-600">*</span>
@@ -104,7 +104,7 @@ function KendaraanModalForm() {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="merk"
+                          htmlFor="merk"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Merk
@@ -120,7 +120,7 @@ function KendaraanModalForm() {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="roda"
+                          htmlFor="roda"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Roda<span className="text-red-600">*</span>
@@ -139,7 +139,7 @@ function KendaraanModalForm() {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="status"
+                          htmlFor="status"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Status<span className="text-red-600">*</span>

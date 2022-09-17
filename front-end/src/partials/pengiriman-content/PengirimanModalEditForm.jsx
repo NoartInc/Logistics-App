@@ -119,7 +119,7 @@ function PengirimanModalEditForm({ id = null, status }) {
                     <div className="grid grid-cols-6 px-4 py-4">
                       <div className="mb-3 col-span-6 sm:col-span-6">
                         <label
-                          for="status"
+                          htmlFor="status"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Update Progress<span className="text-red-600">*</span>
@@ -146,7 +146,7 @@ function PengirimanModalEditForm({ id = null, status }) {
                         form?.status === "cancel") && (
                           <div className="mb-3 col-span-6 sm:col-span-6">
                             <label
-                              for="note"
+                              htmlFor="note"
                               className="block text-xs font-medium uppercase text-gray-500"
                             >
                               Note
@@ -169,7 +169,7 @@ function PengirimanModalEditForm({ id = null, status }) {
                           <>
                             <div className="mb-3 col-span-6 sm:col-span-6">
                               <label
-                                for="img"
+                                htmlFor="img"
                                 className="block text-xs font-medium uppercase text-gray-500"
                               >
                                 Submit Surat Jalan
@@ -191,7 +191,7 @@ function PengirimanModalEditForm({ id = null, status }) {
                       {form?.status === "dimuat" && (
                         <div className="mb-3 col-span-6 sm:col-span-6">
                           <label
-                            for="teli"
+                            htmlFor="teli"
                             className="block text-xs font-medium uppercase text-gray-500"
                           >
                             Teli

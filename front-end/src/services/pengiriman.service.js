@@ -13,15 +13,21 @@ class PengirimanDataService {
     return http.post("/pengiriman", data);
   }
   update(id, data) {
-    let dataForm = new FormData();
-    for (const [key, value] of Object.entries(data)) {
-      dataForm.append(key, value);
+    let dataForm = data;
+    if (typeof data?.image !== 'undefined') {
+      dataForm = new FormData();
+      for (const [key, value] of Object.entries(data)) {
+        dataForm.append(key, value);
+      }
     }
     return http.post(`/pengiriman/${id}/update`, dataForm, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": typeof data?.image !== 'undefined' ? "multipart/form-data" : "application/x-www-form-urlencoded",
       },
     });
+  }
+  updateData(id, data) {
+    return http.put(`/pengiriman/${id}/update-data`, data);
   }
   delete(id) {
     return http.delete(`/pengiriman/${id}`);

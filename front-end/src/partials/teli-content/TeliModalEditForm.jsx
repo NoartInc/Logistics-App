@@ -96,7 +96,7 @@ function TeliModalEditForm({ id= null }) {
                     <div className="grid grid-cols-9 gap-9 px-4 py-4">
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="fullname"
+                          htmlFor="fullname"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Fullname<span className="text-red-600">*</span>
@@ -113,7 +113,7 @@ function TeliModalEditForm({ id= null }) {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="contact"
+                          htmlFor="contact"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Contact
@@ -130,7 +130,7 @@ function TeliModalEditForm({ id= null }) {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="location"
+                          htmlFor="location"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Location<span className="text-red-600">*</span>
@@ -150,7 +150,7 @@ function TeliModalEditForm({ id= null }) {
 
                       <div className="col-span-9 sm:col-span-3">
                         <label
-                          for="status"
+                          htmlFor="status"
                           className="block text-xs font-medium uppercase text-gray-500"
                         >
                           Status<span className="text-red-600">*</span>

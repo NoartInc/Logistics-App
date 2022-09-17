@@ -2,7 +2,7 @@ export const STATUS_PENGIRIMAN = {
   administrator: [
     { key: "diproses", value: "Diproses" },
     { key: "dimuat", value: "Dimuat" },
-    { key: "termuat", value: "Termuat" },
+    // { key: "termuat", value: "Termuat" },
     { key: "dikirim", value: "Dikirim" },
     { key: "terkirim", value: "Terkirim" },
     { key: "pending", value: "Pending" },
@@ -25,7 +25,7 @@ export const STATUS_PENGIRIMAN = {
   telemarketing: [],
   teli: [
     { key: "dimuat", value: "Dimuat" },
-    { key: "termuat", value: "Termuat" },
+    // { key: "termuat", value: "Termuat" },
   ],
 };
 
@@ -76,7 +76,7 @@ export const ROLES_MANAGEMENTS = {
     allowedRoles: ["administrator", "manager", "logistics"],
   },
   master_customer: {
-    allowedRoles: ["administrator", "manager", "CBO", "telemarketing"],
+    allowedRoles: ["administrator", "manager", "CBO", "telemarketing", "logistics"],
   },
   master_teli: {
     allowedRoles: ["administrator", "manager", "teli"],
@@ -112,9 +112,48 @@ export const ROLES_MANAGEMENTS = {
       "pending",
     ],
     allowedStatus_teli: ["diproses", "dimuat", "termuat", "dikirim", "pending"],
+    // disini allowedStatus ada
   },
   delete_pengiriman: {
-    allowedRoles: ["administrator"],
+    allowedRoles: ["administrator", "logistics"],
+    allowedStatus_administrator: [
+      "diproses",
+      "dimuat",
+      "termuat",
+      "dikirim",
+      "terkirim",
+      "pending",
+      "cancel",
+    ],
+    allowedStatus_logistics: [
+      "diproses",
+      "dimuat",
+      "termuat",
+      "dikirim",
+      "pending",
+    ],
+  },
+  modify_pengiriman: {
+    allowedRoles: ["administrator", "logistics"],
+    // disini allowedstatus gak ada
+    // makanya dibaca => gak boleh akses
+    // soalnya operand'nya && 
+    allowedStatus_administrator: [
+      "diproses",
+      "dimuat",
+      "termuat",
+      "dikirim",
+      "terkirim",
+      "pending",
+      "cancel",
+    ],
+    allowedStatus_logistics: [
+      "diproses",
+      "dimuat",
+      "termuat",
+      "dikirim",
+      "pending",
+    ],
   },
 
   // master kendaraan
@@ -130,10 +169,10 @@ export const ROLES_MANAGEMENTS = {
 
   // master customer
   create_customer: {
-    allowedRoles: ["administrator", "CBO"],
+    allowedRoles: ["administrator", "CBO", "logistics"],
   },
   update_customer: {
-    allowedRoles: ["administrator", "CBO"],
+    allowedRoles: ["administrator", "CBO", "logistics"],
   },
   delete_customer: {
     allowedRoles: ["administrator"],

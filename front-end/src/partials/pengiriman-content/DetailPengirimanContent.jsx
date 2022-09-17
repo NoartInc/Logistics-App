@@ -17,16 +17,22 @@ function HistoryItem({ proses_by, status, image, createdAt, note }) {
           [{proses_by?.jabatan}]
         </span>
       </h3>
-      <date className="block mb-2 text-sm font-normal leading-none text-gray-400">
+      <div className="block mb-2 text-sm font-normal leading-none text-gray-400">
         {moment(createdAt).format("DD MMMM YYYY")}
-      </date>
+      </div>
       <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
         {moment(createdAt).format("HH:mm:ss")}
       </time>
       <p className="text-base font-normal text-gray-500">
         {note}
       </p>
-      {image && !image.match(/wikimedia.org/g) && <img src={`${serverImagePath()}${image}`} alt="Uploaded Photos" />}
+      {/* Bisa set width dan height di image atau pake style, bisa juga tambahkan anchor <a> */}
+      {/* silahkan di set sendiri mas */}
+      {image && !image.match(/wikimedia.org/g) && (
+        <a href={`${serverImagePath()}${image}`} target="_blank">
+          <img src={`${serverImagePath()}${image}`} alt="Uploaded Photos" style={{ width: 320, height: 'auto' }} />
+        </a>
+      )}
     </li>
   );
 }
@@ -77,7 +83,7 @@ function DetailPengirimanContent() {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
+              className="h-5 w-5"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -117,12 +123,12 @@ function DetailPengirimanContent() {
                   {teliList}
                 </span>
               </p>
-              <p className="mt-1 text-sm font-medium text-gray-700">
+              {/* <p className="mt-1 text-sm font-medium text-gray-700">
                 Date of Shipment :
                 <span className="ml-1 text-sm text-gray-500">
                   {currentData?.createdAt}
                 </span>
-              </p>
+              </p> */}
               <p className="mt-1 text-sm font-medium text-gray-700">
                 Customer :
                 <span className="ml-1 text-sm text-gray-500">
