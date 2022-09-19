@@ -41,7 +41,7 @@ router.post(
 // karena simple update, paket put aja
 // endpoint-nya update-data
 router.put("/:id/update-data", authentication, updateData);
-router.delete("/:id", deletePengiriman);
-router.delete("/", deleteAllPengiriman);
+router.delete("/:id", authentication, deletePengiriman);
+router.delete("/", authentication, deleteAllPengiriman);
 
 module.exports = router;

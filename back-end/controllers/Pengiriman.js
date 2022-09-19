@@ -293,7 +293,7 @@ exports.updateData = async (req, res) => {
 
 exports.deletePengiriman = async (req, res) => {
   try {
-    const { fullName } = req.user;
+    const { id: userId = 0, fullName } = req.user;
     await Pengiriman.destroy({
       where: { id: req.params.id },
     });
