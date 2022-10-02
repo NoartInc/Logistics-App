@@ -25,8 +25,58 @@ function ListPengiriman() {
   const columns = useMemo(
     () => [
       {
-        Header: "Date",
-        accessor: "createdAt",
+        Header: "Action",
+        // accessor: 'action',
+        Cell: (pengirimans) => (
+          <div className="flex justify-start">
+            {ROLES_MANAGEMENTS["delete_pengiriman"]?.allowedRoles.includes(
+              user?.role
+            ) && 
+            ROLES_MANAGEMENTS["delete_pengiriman"][
+              `allowedStatus_${user?.role}`
+            ]?.includes(pengirimans?.row?.original?.status) && (
+              <svg
+                onClick={() => removePengiriman(pengirimans?.row?.original?.id)}
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6 text-red-400 cursor-pointer"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+            )}
+            {/* mungkin karena tdai belum di import */}
+            {/* allowed statusnya butuh ? wait saya cek constant */}
+            {ROLES_MANAGEMENTS["modify_pengiriman"]?.allowedRoles.includes(
+              user?.role
+            ) && 
+            ROLES_MANAGEMENTS["modify_pengiriman"][
+              `allowedStatus_${user?.role}`
+            ]?.includes(pengirimans?.row?.original?.status) && (
+                <PengirimanModalModify
+                  id={pengirimans?.row?.original?.id}
+                  status={pengirimans?.row?.original?.status}
+                />
+              )}
+            {ROLES_MANAGEMENTS["update_pengiriman"]?.allowedRoles.includes(
+              user?.role
+            ) &&
+              ROLES_MANAGEMENTS["update_pengiriman"][
+                `allowedStatus_${user?.role}`
+              ]?.includes(pengirimans?.row?.original?.status) && (
+                <PengirimanModalEditForm
+                  id={pengirimans?.row?.original?.id}
+                  status={pengirimans?.row?.original?.status}
+                />
+              )}
+          </div>
+        ),
       },
       {
         Header: "SuratJalan",
@@ -40,6 +90,11 @@ function ListPengiriman() {
             {data?.row?.original?.suratJalan}{" "}
           </a>
         ),
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+        Cell: StatusPill,
       },
       {
         Header: "Driver",
@@ -66,66 +121,9 @@ function ListPengiriman() {
         ),
       },
       {
-        Header: "Status",
-        accessor: "status",
-        Cell: StatusPill,
-      },
-      {
-        Header: "Action",
-        // accessor: 'action',
-        Cell: (pengirimans) => (
-          <div className="flex justify-start">
-            {ROLES_MANAGEMENTS["update_pengiriman"]?.allowedRoles.includes(
-              user?.role
-            ) &&
-              ROLES_MANAGEMENTS["update_pengiriman"][
-                `allowedStatus_${user?.role}`
-              ]?.includes(pengirimans?.row?.original?.status) && (
-                <PengirimanModalEditForm
-                  id={pengirimans?.row?.original?.id}
-                  status={pengirimans?.row?.original?.status}
-                />
-              )}
-            
-            {/* mungkin karena tdai belum di import */}
-            {/* allowed statusnya butuh ? wait saya cek constant */}
-            {ROLES_MANAGEMENTS["modify_pengiriman"]?.allowedRoles.includes(
-              user?.role
-            ) && 
-            ROLES_MANAGEMENTS["modify_pengiriman"][
-              `allowedStatus_${user?.role}`
-            ]?.includes(pengirimans?.row?.original?.status) && (
-                <PengirimanModalModify
-                  id={pengirimans?.row?.original?.id}
-                  status={pengirimans?.row?.original?.status}
-                />
-              )}
-
-            {ROLES_MANAGEMENTS["delete_pengiriman"]?.allowedRoles.includes(
-              user?.role
-            ) && 
-            ROLES_MANAGEMENTS["delete_pengiriman"][
-              `allowedStatus_${user?.role}`
-            ]?.includes(pengirimans?.row?.original?.status) && (
-              <svg
-                onClick={() => removePengiriman(pengirimans?.row?.original?.id)}
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6 text-red-400 cursor-pointer"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
-            )}
-          </div>
-        ),
-      },
+        Header: "Date",
+        accessor: "createdAt",
+      }
     ],
     []
   );
