@@ -80,6 +80,12 @@ module.exports = (sequelize, DataTypes) => {
       get() {
         return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY');
       }
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      get() {
+        return moment(this.getDataValue('updatedAt')).format('DD/MM/YYYY HH:mm:ss');
+      }
     }
 
   }, {

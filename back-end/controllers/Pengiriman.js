@@ -332,7 +332,7 @@ exports.downloadData = async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
   let data = [];
-
+  
   pengiriman.forEach((item) => {
     data.push({
       createdAt: item.createdAt,
@@ -346,6 +346,7 @@ exports.downloadData = async (req, res) => {
       salesUser: item.customers?.salesUser?.fullName || "",
       teliPerson: item.teliPerson || "",
       note: item.note || "",
+      updatedAt: item.updatedAt
     });
   });
 
@@ -410,6 +411,11 @@ exports.downloadData = async (req, res) => {
       key: "note",
       width: "10",
     },
+    {
+      header: "UpdatedAt",
+      key: "updatedAt",
+      width: "10",
+    }
   ];
 
   worksheet.addRows(data);
