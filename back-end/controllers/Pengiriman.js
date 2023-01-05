@@ -92,7 +92,7 @@ exports.findAllPengiriman = async (req, res) => {
 
     const offset = (page - 1) * limit;
     const startDate = moment()
-      .subtract(30, "days")
+      .subtract(90, "days")
       .format("YYYY-MM-DD HH:mm:ss");
     const endDate = moment().format("YYYY-MM-DD HH:mm:ss");
     let formatedDateSearch = "";
