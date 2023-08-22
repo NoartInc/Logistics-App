@@ -93,6 +93,7 @@ function UserModalForm() {
                             <option value='driver'>Driver</option>
                             <option value='logistics'>Logistics</option>
                             <option value='teli'>Teli</option>
+                            <option value='produksi'>Produksi</option>
                             <option value='cbo'>CBO</option>
                             <option value='sales'>Sales</option>
                             <option value='manager'>Manager</option>

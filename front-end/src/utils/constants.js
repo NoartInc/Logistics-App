@@ -1,8 +1,8 @@
 export const STATUS_PENGIRIMAN = {
   administrator: [
     { key: "diproses", value: "Diproses" },
+    { key: "dicetak", value: "Dicetak" },
     { key: "dimuat", value: "Dimuat" },
-    // { key: "termuat", value: "Termuat" },
     { key: "dikirim", value: "Dikirim" },
     { key: "terkirim", value: "Terkirim" },
     { key: "pending", value: "Pending" },
@@ -25,7 +25,9 @@ export const STATUS_PENGIRIMAN = {
   telemarketing: [],
   teli: [
     { key: "dimuat", value: "Dimuat" },
-    // { key: "termuat", value: "Termuat" },
+  ],
+  produksi: [
+    { key: "dicetak", value: "Dicetak" },
   ],
 };
 
@@ -36,7 +38,7 @@ export const userData = localStorage.getItem("userData")
 export const ROLES_MANAGEMENTS = {
   // Menu
   dashboard_menu: {
-    allowedRoles: ["administrator", "manager", "CBO", "logistics", "telemarketing"],
+    allowedRoles: ["administrator", "manager", "CBO", "logistics", "telemarketing", "produksi"],
   },
   pengiriman_menu: {
     allowedRoles: [
@@ -47,13 +49,14 @@ export const ROLES_MANAGEMENTS = {
       "driver",
       "CBO",
       "teli",
-      "telemarketing"
+      "telemarketing",
+      "produksi"
     ],
   },
   user_menu: { allowedRoles: ["administrator"] },
   berita_menu: { allowedRoles: ["administrator", "manager"] },
   utility_menu: {
-    allowedRoles: ["administrator", "manager", "logistics", "CBO", "teli", "telemarketing"],
+    allowedRoles: ["administrator", "manager", "logistics", "CBO", "teli", "telemarketing", "produksi"],
   },
 
   // Child Menu
@@ -69,7 +72,8 @@ export const ROLES_MANAGEMENTS = {
       "teli",
       "CBO",
       "driver",
-      "telemarketing"
+      "telemarketing",
+      "produksi"
     ],
   },
   master_kendaraan: {
@@ -84,14 +88,17 @@ export const ROLES_MANAGEMENTS = {
   master_pengangkutan: {
     allowedRoles: ["administrator", "manager", "logistics"],
   },
+  master_produksi: {
+    allowedRoles: ["administrator", "manager", "produksi"],
+  },
 
   // Actions
   update_pengiriman: {
-    allowedRoles: ["administrator", "manager", "logistics", "teli", "driver"],
+    allowedRoles: ["administrator", "manager", "logistics", "teli", "driver", "produksi"],
     allowedStatus_administrator: [
       "diproses",
       "dimuat",
-      "termuat",
+      "dicetak",
       "dikirim",
       "terkirim",
       "pending",
@@ -100,26 +107,39 @@ export const ROLES_MANAGEMENTS = {
     allowedStatus_driver: [
       "diproses",
       "dimuat",
-      "termuat",
+      "dicetak",
       "dikirim",
       "pending",
     ],
     allowedStatus_logistics: [
       "diproses",
       "dimuat",
-      "termuat",
+      "dicetak",
       "dikirim",
       "pending",
     ],
-    allowedStatus_teli: ["diproses", "dimuat", "termuat", "dikirim", "pending"],
+    allowedStatus_teli: [
+      "diproses", 
+      "dimuat",
+      "dicetak",
+      "dikirim",
+      "pending",
+    ],
     // disini allowedStatus ada
+    allowedStatus_produksi: [
+      "diproses", 
+      "dimuat",
+      "dicetak",
+      "dikirim",
+      "pending",
+    ],
   },
   delete_pengiriman: {
     allowedRoles: ["administrator", "logistics"],
     allowedStatus_administrator: [
       "diproses",
       "dimuat",
-      "termuat",
+      "dicetak",
       "dikirim",
       "terkirim",
       "pending",
@@ -128,7 +148,7 @@ export const ROLES_MANAGEMENTS = {
     allowedStatus_logistics: [
       "diproses",
       "dimuat",
-      "termuat",
+      "dicetak",
       "dikirim",
       "pending",
     ],
@@ -141,7 +161,7 @@ export const ROLES_MANAGEMENTS = {
     allowedStatus_administrator: [
       "diproses",
       "dimuat",
-      "termuat",
+      "dicetak",
       "dikirim",
       "terkirim",
       "pending",
@@ -150,7 +170,7 @@ export const ROLES_MANAGEMENTS = {
     allowedStatus_logistics: [
       "diproses",
       "dimuat",
-      "termuat",
+      "dicetak",
       "dikirim",
       "pending",
     ],
@@ -197,6 +217,17 @@ export const ROLES_MANAGEMENTS = {
     allowedRoles: ["administrator", "logistics"],
   },
   delete_pengangkutan: {
+    allowedRoles: ["administrator"],
+  },
+
+  // master produksi
+  create_produksi: {
+    allowedRoles: ["administrator", "produksi"],
+  },
+  update_produksi: {
+    allowedRoles: ["administrator", "produksi"],
+  },
+  delete_produksi: {
     allowedRoles: ["administrator"],
   },
 

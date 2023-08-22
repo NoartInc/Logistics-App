@@ -746,6 +746,21 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               </li>
                             )}
                             {ROLES_MANAGEMENTS[
+                              "master_produksi"
+                            ].allowedRoles.includes(user?.role) && (
+                              <li className="mb-1 last:mb-0">
+                                <NavLink
+                                  end
+                                  to="/masterproduksi"
+                                  className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
+                                >
+                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                    Master Produksi
+                                  </span>
+                                </NavLink>
+                              </li>
+                            )}
+                            {ROLES_MANAGEMENTS[
                               "master_pengangkutan"
                             ].allowedRoles.includes(user?.role) && (
                               <li className="mb-1 last:mb-0">

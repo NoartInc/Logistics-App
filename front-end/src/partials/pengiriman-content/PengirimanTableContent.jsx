@@ -100,6 +100,7 @@ export function StatusPill({ value }) {
       className={classNames(
         "px-3 py-1 uppercase leading-wide font-bold text-xs rounded-full shadow-sm",
         status.startsWith("diproses") ? "bg-green-100 text-green-800" : null,
+        status.startsWith("dicetak") ? "bg-green-100 text-green-800" : null,
         status.startsWith("dimuat") ? "bg-green-100 text-green-800" : null,
         status.startsWith("termuat") ? "bg-green-100 text-green-800" : null,
         status.startsWith("dikirim") ? "bg-green-100 text-green-800" : null,

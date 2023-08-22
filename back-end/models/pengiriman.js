@@ -55,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
         as: 'teli',
         foreignKey: 'pengirimanId'
       })
+      models.Pengiriman.belongsTo(models.Produksi, {
+        as: 'produksi_by',
+        foreignKey: 'produksiId',
+      })
     }
   }
   Pengiriman.init({
@@ -63,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
     pengangkutan: DataTypes.INTEGER,
     address: DataTypes.TEXT,
     tonase: DataTypes.DOUBLE,
-    
+    produksiId: DataTypes.INTEGER,
     driver: DataTypes.INTEGER,
     kendaraan: DataTypes.INTEGER,
     sales: DataTypes.INTEGER,

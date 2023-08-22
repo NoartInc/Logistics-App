@@ -101,6 +101,8 @@ export const modifyPengiriman = (id) => async (dispatch) => {
 export const updatePengiriman = (data) => async (dispatch) => {
   try {
     const res = await PengirimanDataService.update(data.id, data);
+    console.log(res.data?.message)
+    alert(res.data?.message)
     dispatch({
       type: UPDATE_PENGIRIMAN,
       payload: data,

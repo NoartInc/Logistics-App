@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "proses_by",
         foreignKey: "userId"
       });
+      models.TrackPengiriman.belongsTo(models.Produksi, {
+        as: "produksi_by",
+        foreignKey: "produksiId"
+      });
 
       models.TrackPengiriman.hasMany(models.TeliPengiriman, {
         as: "teli",
@@ -28,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     pengirimanId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     teliId: DataTypes.INTEGER,
+    produksiId: DataTypes.INTEGER,
     image: DataTypes.STRING
   }, {
     sequelize,

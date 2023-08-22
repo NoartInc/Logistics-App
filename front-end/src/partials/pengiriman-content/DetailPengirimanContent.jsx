@@ -7,12 +7,12 @@ import _ from "lodash";
 import IconUpdatePengiriman from '../../images/IconUpdatePengiriman';
 import { serverImagePath } from "../../utils/Utils";
 
-function HistoryItem({ proses_by, status, image, createdAt, note }) {
+function HistoryItem({ proses_by, status, image, createdAt, note, produksi_by }) {
   return (
     <li className="mb-6 ml-6">
       <IconUpdatePengiriman status={status} />
       <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
-        {status} by {proses_by?.fullName}
+        {status} by {produksi_by ? produksi_by?.fullName : proses_by?.fullName}
         <span className="bg-gray-100 text-gray-500 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ml-3">
           [{proses_by?.jabatan}]
         </span>
@@ -121,6 +121,12 @@ function DetailPengirimanContent() {
                 Teli :
                 <span className="ml-1 text-sm text-gray-500">
                   {teliList}
+                </span>
+              </p>
+              <p className="mt-1 text-sm font-medium text-gray-700">
+                Produksi :
+                <span className="ml-1 text-sm text-gray-500">
+                  {currentData?.produksi_by?.fullName}
                 </span>
               </p>
               {/* <p className="mt-1 text-sm font-medium text-gray-700">

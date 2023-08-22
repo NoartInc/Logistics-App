@@ -7,6 +7,7 @@ const {
   Teli,
   TrackPengiriman,
   TeliPengiriman,
+  Produksi,
   sequelize,
 } = require("../models");
 const excelJS = require("exceljs");
@@ -47,6 +48,12 @@ const dataAssoc = [
     attributes: ["fullName", "contact"],
     required: true,
   },
+  {
+    model: Produksi,
+    as: "produksi_by",
+    attributes: ["fullName"],
+    // required: true,
+  },
   // PR Relasi
   // {
   //     model: Teli,
@@ -61,6 +68,11 @@ const dataAssoc = [
         model: Users,
         as: "proses_by",
         attributes: ["fullName", "jabatan"],
+      },
+      {
+        model: Produksi,
+        as: "produksi_by",
+        attributes: ["fullName"],
       },
       {
         model: TeliPengiriman,
@@ -92,7 +104,7 @@ exports.findAllPengiriman = async (req, res) => {
 
     const offset = (page - 1) * limit;
     const startDate = moment()
-      .subtract(90, "days")
+      .subtract(120, "days")
       .format("YYYY-MM-DD HH:mm:ss");
     const endDate = moment().format("YYYY-MM-DD HH:mm:ss");
     let formatedDateSearch = "";
@@ -208,7 +220,7 @@ exports.updatePengiriman = async (req, res) => {
   try {
     const { id: userId = 0 } = req.user; // userId
     const { id } = req.params; // pengirimanId
-    const { note, status, teli = null, driver, kendaraan } = req.body; // note
+    const { note, status, teli = null, driver, kendaraan, produksiId } = req.body; // note
     const { fullName } = req.user;
     let filename = null;
     if (req.file) {
@@ -223,7 +235,8 @@ exports.updatePengiriman = async (req, res) => {
       {
         status: status,
         driver: driver, 
-        kendaraan: kendaraan
+        kendaraan: kendaraan,
+        produksiId: produksiId
       },
       {
         where: { id: id },
@@ -238,6 +251,7 @@ exports.updatePengiriman = async (req, res) => {
       {
         userId: userId,
         pengirimanId: id,
+        produksiId: produksiId,
         status: status,
         note: note,
         image: filename ? `/images/${filename}` : null,
@@ -445,8 +459,8 @@ exports.getDashboard = async (req, res) => {
   try {
     const summary = [
       { count: 0, status: "diproses" },
+      { count: 0, status: "dicetak" },
       { count: 0, status: "dimuat" },
-      { count: 0, status: "termuat" },
       { count: 0, status: "dikirim" },
       { count: 0, status: "terkirim" },
       { count: 0, status: "pending" },

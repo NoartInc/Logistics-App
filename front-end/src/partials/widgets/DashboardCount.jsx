@@ -1,24 +1,7 @@
 import React from "react";
 
 const DashboardCount = ({ status }) => {
-  if (status === "dimuat") {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-7 w-7"
-        viewBox="0 0 20 20"
-        fill="#05B4E1"
-      >
-        <path
-          fillRule="evenodd"
-          d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
-          clipRule="evenodd"
-        />
-      </svg>
-    );
-  }
-
-  if (status === "termuat") {
+  if (status === "dicetak") {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -30,6 +13,23 @@ const DashboardCount = ({ status }) => {
         <path
           fillRule="evenodd"
           d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
+          clipRule="evenodd"
+        />
+      </svg>
+    );
+  }
+  
+  if (status === "dimuat") {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-7 w-7"
+        viewBox="0 0 20 20"
+        fill="#05B4E1"
+      >
+        <path
+          fillRule="evenodd"
+          d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
           clipRule="evenodd"
         />
       </svg>
