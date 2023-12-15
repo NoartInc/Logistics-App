@@ -29,6 +29,12 @@ class PengirimanDataService {
   updateData(id, data) {
     return http.put(`/pengiriman/${id}/update-data`, data);
   }
+  updateInformasi(id, data) {
+    return http.put(`/pengiriman/${id}/update-informasi`, data);
+  }
+  updateExclude(id, data) {
+    return http.put(`/pengiriman/${id}/update-exclude`, data);
+  }
   delete(id) {
     return http.delete(`/pengiriman/${id}`);
   }

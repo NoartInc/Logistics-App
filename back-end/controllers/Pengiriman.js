@@ -216,12 +216,57 @@ exports.createPengiriman = async (req, res) => {
   }
 };
 
+exports.updateInformasi = async (req, res) => {
+  try {
+    const { fullName } = req.user;
+    const { id } = req.params;
+    const { informasi } = req.body;
+    await Pengiriman.update(
+      {
+        informasi: informasi
+      },
+      {
+        where: { id: id }
+      }
+    );
+    logging(fullName, "Update Informasi", "Melakukan Update Informasi Pengiriman ke sistem");
+    res.json({
+      message: "Berhasil mengubah informasi pengiriman"
+    });
+  } catch (error) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+exports.updateExclude = async (req, res) => {
+  try {
+    const { fullName } = req.user;
+    const { id } = req.params;
+    const { exclude } = req.body;
+    await Pengiriman.update(
+      {
+        exclude: exclude
+      },
+      {
+        where: { id: id}
+      }
+    );
+    logging(fullName, "Update exclude pengiriman", `Mengganti exclude pengiriman menjadi ${exclude}, ke sistem`);
+    res.json({
+      message: "Berhasil mengubah exclude pengiriman"
+    });
+  } catch (error) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 exports.updatePengiriman = async (req, res) => {
   try {
     const { id: userId = 0 } = req.user; // userId
     const { id } = req.params; // pengirimanId
     const { note, status, teli = null, driver, kendaraan, produksiId } = req.body; // note
     const { fullName } = req.user;
+    const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     let filename = null;
     if (req.file) {
       filename = req.file?.filename;
@@ -236,7 +281,8 @@ exports.updatePengiriman = async (req, res) => {
         status: status,
         driver: driver, 
         kendaraan: kendaraan,
-        produksiId: produksiId
+        produksiId: produksiId,
+        tanggalKirim: status === "terkirim" ? currentTime : null
       },
       {
         where: { id: id },

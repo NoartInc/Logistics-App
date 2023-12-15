@@ -7,6 +7,7 @@ import PengangkutanOptions from "../options/PengangkutanOptions";
 import DriverOptions from "../options/DriverOptions";
 import KendaraanOptions from "../options/KendaraanOptions";
 import InputText from "../widgets/InputText";
+import moment from "moment";
 
 function PengirimanInputForm() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ function PengirimanInputForm() {
     driver: 0,
     kendaraan: 0,
     status: "",
+    tanggalOrder: moment().format("YYYY-MM-DD")
   });
 
   const getAddressValue = () => {
@@ -67,7 +69,11 @@ function PengirimanInputForm() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPengiriman(form))
+    const dataForm = {
+      ...form,
+      tanggalOrder: `${form?.tanggalOrder} 00:00:00`
+    };
+    dispatch(createPengiriman(dataForm))
       .then(() => {
         window.alert('Pengiriman created successfully');
         navigate("/listpengiriman");
@@ -116,21 +122,42 @@ function PengirimanInputForm() {
                       type="text"
                       value={form?.suratJalan}
                     /> */}
-                    <label
-                      htmlFor="suratJalan"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Surat Jalan
-                    </label>
-                    <input
-                      onChange={onInputChange}
-                      type="text"
-                      name="suratJalan"
-                      id="suratJalan"
-                      placeholder="No Surat Jalan"
-                      className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      value={form?.suratJalan}
-                    />
+                    <div className="flex gap-3 flex-col md:flex-row">
+                      <div>
+                        <label
+                          htmlFor="suratJalan"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Surat Jalan
+                        </label>
+                        <input
+                          onChange={onInputChange}
+                          type="text"
+                          name="suratJalan"
+                          id="suratJalan"
+                          placeholder="No Surat Jalan"
+                          className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          value={form?.suratJalan}
+                        />  
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="tanggalOrder"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Tanggal Order (Surat Jalan)
+                        </label>
+                        <input
+                          onChange={onInputChange}
+                          type="date"
+                          name="tanggalOrder"
+                          id="tanggalOrder"
+                          placeholder="No Surat Jalan"
+                          className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          value={form?.tanggalOrder}
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   {/* <div className="col-span-6 sm:col-span-3">

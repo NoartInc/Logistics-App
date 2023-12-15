@@ -6,6 +6,7 @@ import moment from "moment";
 import _ from "lodash";
 import IconUpdatePengiriman from '../../images/IconUpdatePengiriman';
 import { serverImagePath } from "../../utils/Utils";
+import PengirimanInformasiForm from "./PengirimanInformasiForm";
 
 function HistoryItem({ proses_by, status, image, createdAt, note, produksi_by }) {
   return (
@@ -94,7 +95,7 @@ function DetailPengirimanContent() {
               />
             </svg>
           </button>
-          <div className="px-4 sm:px-0 border-2 rounded-xl">
+          <div className="px-4 sm:px-0 border-2 rounded-xl mb-3">
             <div className="px-2 mt-2 mb-2">
               <h3 className="text-lg font-bold leading-6 text-gray-900">
                 Informasi Pengiriman
@@ -172,6 +173,9 @@ function DetailPengirimanContent() {
                 </span>
               </p>
             </div>
+          </div>
+          <div className="p-4 border-2 rounded-xl">
+            <PengirimanInformasiForm data={currentData} />
           </div>
         </div>
         {/* <div className="mt-5 md:mt-0 md:col-span-4"> */}

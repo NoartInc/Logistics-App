@@ -74,6 +74,10 @@ module.exports = (sequelize, DataTypes) => {
     user: DataTypes.INTEGER,
     note: DataTypes.STRING,
     image: DataTypes.STRING,
+    tanggalOrder: DataTypes.DATE,
+    tanggalKirim: DataTypes.DATE,
+    informasi: DataTypes.TEXT,
+    exclude: DataTypes.BOOLEAN,
     status: 
     { 
       type: DataTypes.ENUM('diproses', 'dimuat', 'termuat', 'dikirim', 'terkirim', 'pending', 'cancel'),

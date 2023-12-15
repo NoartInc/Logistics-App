@@ -127,6 +127,34 @@ export const updateData = (data) => async (dispatch) => {
   }
 }
 
+export const updateInformasi = (data) => async (dispatch) => {
+  try {
+    const res = await PengirimanDataService.updateInformasi(data?.id, data);
+    dispatch({
+      type: UPDATE_PENGIRIMAN,
+      payload: data,
+    });
+    // owalah, payloadnya gak dari belakang, ya udah berarti di BE gak perlu balikin data
+    return Promise.resolve(res.data);
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}
+
+export const updateExclude = (data) => async (dispatch) => {
+  try {
+    const res = await PengirimanDataService.updateExclude(data?.id, data);
+    dispatch({
+      type: UPDATE_PENGIRIMAN,
+      payload: data,
+    });
+    // owalah, payloadnya gak dari belakang, ya udah berarti di BE gak perlu balikin data
+    return Promise.resolve(res.data);
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}
+
 export const deletePengiriman = (id) => async (dispatch) => {
   try {
     await PengirimanDataService.delete(id);

@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import PengirimanModalEditForm from "../../partials/pengiriman-content/PengirimanModalEditForm";
 import PengirimanModalModify from "../../partials/pengiriman-content/PengirimanModalModify";
 import PengirimanTableContent, { StatusPill } from "../../partials/pengiriman-content/PengirimanTableContent";
-import { deletePengiriman, retrievePengiriman } from "../../store/actions/pengiriman-action";
+import { deletePengiriman, retrievePengiriman, updateExclude } from "../../store/actions/pengiriman-action";
 import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
+import moment from "moment";
+import CheckboxInput from "../../components/CheckboxInput";
 
 function ListPengiriman() {
   const dispatch = useDispatch();
@@ -22,13 +24,24 @@ function ListPengiriman() {
     }
   };
 
+  const setExclude = (id, value) => {
+    dispatch(updateExclude({ id, exclude: value }))
+      .then(result => {
+        window.alert(result?.message);
+      })
+      .catch(err => {
+        window.alert(JSON.stringify(err));
+      })
+  }
+
   const columns = useMemo(
     () => [
       {
         Header: "Action",
         // accessor: 'action',
         Cell: (pengirimans) => (
-          <div className="flex justify-start">
+          <div className="flex justify-start gap-x-1">
+            <CheckboxInput value={pengirimans?.row?.original?.exclude} onChange={(value) => setExclude(pengirimans?.row?.original?.id, value)} />
             {ROLES_MANAGEMENTS["delete_pengiriman"]?.allowedRoles.includes(
               user?.role
             ) && 
@@ -121,12 +134,51 @@ function ListPengiriman() {
         ),
       },
       {
-        Header: "Date",
-        accessor: "createdAt",
+        Header: "Tanggal Order",
+        accessor: "tanggalOrder",
+        Cell: (data) => (
+          <span className="w-32 block">{data?.row?.original?.tanggalOrder ? moment(data?.row?.original?.tanggalOrder).format("DD/MM/YYYY") : "-"}</span>
+        )
+      },
+      {
+        Header: "Progress Time",
+        Cell: (data) => (
+          <strong className="w-32 block">{data?.row?.original?.tanggalOrder ? progressDuration(data?.row?.original?.tanggalOrder) : "-"}</strong>
+        )
+      },
+      {
+        Header: "Durasi",
+        Cell: (data) => (
+          <strong>{"-"}</strong>
+        )
       }
     ],
     []
   );
+
+  const progressDuration = (start) => {
+    const startDate = moment(start);
+    const endDate = moment();
+    const duration = moment.duration(endDate.diff(startDate));
+    const days = duration.days();
+    const hours = duration.hours();
+    const minutes = duration.minutes();
+    let formattedDuration = "";
+
+    if (days !== 0) {
+      formattedDuration += `${days}d`;
+    }
+
+    if (hours !== 0) {
+      formattedDuration += ` ${hours}h`;
+    }
+
+    if (minutes !== 0) {
+      formattedDuration += ` ${minutes}m`;
+    }
+
+    return formattedDuration.trim();
+  }
 
   return <PengirimanTableContent columns={columns} data={pengirimans} />
 }

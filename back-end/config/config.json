@@ -1,10 +1,11 @@
 {
   "development": {
-    "username": "afif",
-    "password": "afif",
+    "username": "root",
+    "password": "",
     "database": "logistics",
-    "host": "103.134.154.229",
-    "dialect": "mysql"
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "quoteIdentifier": false
   },
   "test": {
     "username": "root",
