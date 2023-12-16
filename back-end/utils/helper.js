@@ -47,7 +47,7 @@ const getTerkirimDay = (start, end) => {
   const endDate = moment(end);
   const duration = moment.duration(endDate.diff(startDate));
   const hours = duration.asHours();
-  return Math.round(hours);
+  return hours;
 }
 
 const getGradingData = (gradings, hoursCount) => {

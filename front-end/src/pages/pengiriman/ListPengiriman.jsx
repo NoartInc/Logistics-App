@@ -206,13 +206,15 @@ function ListPengiriman() {
     const endDate = moment(end);
     const duration = moment.duration(endDate.diff(startDate));
     const hours = duration.asHours();
-    return Math.round(hours);
+    return hours;
   }
 
   const getGradingData = (hoursCount) => {
     if (hoursCount === null) {
       return "-";
     }
+
+    console.log(hoursCount);
 
     const matchingGrade = gradings?.find(grade => {
         const startRange = (parseInt(grade.gradeValue) - 1) * 24;
