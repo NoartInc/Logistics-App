@@ -214,8 +214,6 @@ function ListPengiriman() {
       return "-";
     }
 
-    console.log(hoursCount);
-
     const matchingGrade = gradings?.find(grade => {
         const startRange = (parseInt(grade.gradeValue) - 1) * 24;
         const endRange = parseInt(grade.gradeValue) * 24;
