@@ -107,6 +107,12 @@ function DetailPengirimanContent() {
                 </span>
               </p>
               <p className="mt-1 text-sm font-medium text-gray-700">
+                Tanggal Order :
+                <span className="ml-1 text-sm text-gray-500">
+                  {moment(currentData?.tanggalOrder).format("DD/MM/YYYY")}
+                </span>
+              </p>
+              <p className="mt-1 text-sm font-medium text-gray-700">
                 Driver :
                 <span className="ml-1 text-sm text-gray-500">
                   {currentData?.drivers?.fullName}
