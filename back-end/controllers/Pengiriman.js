@@ -9,11 +9,12 @@ const {
   TeliPengiriman,
   Produksi,
   sequelize,
+  Grading
 } = require("../models");
 const excelJS = require("exceljs");
 const { Op } = require("sequelize");
 const moment = require("moment");
-const { getImage } = require("../utils/helper");
+const { getImage, progressDuration, getGradingData, getTerkirimDay } = require("../utils/helper");
 const logging = require("../utils/logging");
 
 const dataAssoc = [
@@ -126,7 +127,16 @@ exports.findAllPengiriman = async (req, res) => {
       conditions = { "$customers.sales$": userId };
     }
 
-    if (search !== "") {
+    if (formatedDateSearch !== "") {
+      conditions = {
+        ...conditions,
+        tanggalOrder: {
+          [Op.like]: `%${formatedDateSearch}%`
+        }
+      }
+    }
+
+    if (search !== "" && !search.match(/\//gi)) {
       conditions = {
         ...conditions,
         [Op.or]: {
@@ -395,10 +405,13 @@ exports.downloadData = async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
   let data = [];
+
+  const gradings = await Grading.findAll();
   
   pengiriman.forEach((item) => {
     const telis = item?.history.flatMap(entry => entry.teli).find(item => item.teliPerson !== null);
     const teliPersons = telis ? telis.teliPerson.fullName : '';
+    const gradingData = getGradingData(gradings, getTerkirimDay(item?.tanggalOrder, item?.tanggalKirim));
     data.push({
       createdAt: item.createdAt,
       suratJalan: item.suratJalan || "",
@@ -412,9 +425,16 @@ exports.downloadData = async (req, res) => {
       // teliPerson: item.teliPerson || "",
       teliPerson: teliPersons,
       note: item.note || "",
-      updatedAt: item.updatedAt
+      updatedAt: item.updatedAt,
+      informasi: item?.informasi || "",
+      tanggalOrder: item?.tanggalOrder ? moment(item?.tanggalOrder).format("DD/MM/YYYY HH:mm") : "-",
+      tanggalKirim: item?.tanggalKirim ? moment(item?.tanggalKirim).format("DD/MM/YYYY HH:mm") : "-",
+      progressTime: item?.tanggalOrder || item?.tanggalKirim ? progressDuration(item?.tanggalOrder, item?.tanggalKirim ? item?.tanggalKirim : "now") : "-",
+      durasi: item?.exclude ? "Exclude" : gradingData == "-" ? "-" : `${gradingData?.gradeName} ${gradingData?.gradePoin == "0" ? "(Expired)" : ""}`,
     });
   });
+
+  
 
   const workbook = new excelJS.Workbook(); // Create a new workbook
   const worksheet = workbook.addWorksheet("List Pengiriman"); // New Worksheet
@@ -422,11 +442,6 @@ exports.downloadData = async (req, res) => {
 
   // Column for data in excel. key must match data key
   worksheet.columns = [
-    {
-      header: "Date",
-      key: "createdAt",
-      width: "10",
-    },
     {
       header: "Surat Jalan",
       key: "suratJalan",
@@ -478,9 +493,39 @@ exports.downloadData = async (req, res) => {
       width: "10",
     },
     {
+      header: "Informasi",
+      key: "informasi",
+      width: "20",
+    },
+    {
+      header: "Tanggal Order",
+      key: "tanggalOrder",
+      width: "18",
+    },
+    {
+      header: "Progress Time",
+      key: "progressTime",
+      width: "18",
+    },
+    {
+      header: "Tanggal Terkirim",
+      key: "tanggalKirim",
+      width: "18",
+    },
+    {
+      header: "Durasi",
+      key: "durasi",
+      width: "18",
+    },
+    {
+      header: "CreatedAt",
+      key: "createdAt",
+      width: "12",
+    },
+    {
       header: "UpdatedAt",
       key: "updatedAt",
-      width: "10",
+      width: "14",
     }
   ];
 

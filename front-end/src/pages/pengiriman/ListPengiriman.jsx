@@ -47,38 +47,38 @@ function ListPengiriman() {
             {ROLES_MANAGEMENTS["exclude_pengiriman"]?.allowedRoles.includes(
               user?.role
             ) && (
-              <CheckboxInput value={pengirimans?.row?.original?.exclude} onChange={(value) => setExclude(pengirimans?.row?.original?.id, value)} />
-            )}
+                <CheckboxInput value={pengirimans?.row?.original?.exclude} onChange={(value) => setExclude(pengirimans?.row?.original?.id, value)} />
+              )}
             {ROLES_MANAGEMENTS["delete_pengiriman"]?.allowedRoles.includes(
               user?.role
-            ) && 
-            ROLES_MANAGEMENTS["delete_pengiriman"][
-              `allowedStatus_${user?.role}`
-            ]?.includes(pengirimans?.row?.original?.status) && (
-              <svg
-                onClick={() => removePengiriman(pengirimans?.row?.original?.id)}
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6 text-red-400 cursor-pointer"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
-            )}
+            ) &&
+              ROLES_MANAGEMENTS["delete_pengiriman"][
+                `allowedStatus_${user?.role}`
+              ]?.includes(pengirimans?.row?.original?.status) && (
+                <svg
+                  onClick={() => removePengiriman(pengirimans?.row?.original?.id)}
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6 text-red-400 cursor-pointer"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              )}
             {/* mungkin karena tdai belum di import */}
             {/* allowed statusnya butuh ? wait saya cek constant */}
             {ROLES_MANAGEMENTS["modify_pengiriman"]?.allowedRoles.includes(
               user?.role
-            ) && 
-            ROLES_MANAGEMENTS["modify_pengiriman"][
-              `allowedStatus_${user?.role}`
-            ]?.includes(pengirimans?.row?.original?.status) && (
+            ) &&
+              ROLES_MANAGEMENTS["modify_pengiriman"][
+                `allowedStatus_${user?.role}`
+              ]?.includes(pengirimans?.row?.original?.status) && (
                 <PengirimanModalModify
                   id={pengirimans?.row?.original?.id}
                   status={pengirimans?.row?.original?.status}
@@ -149,27 +149,33 @@ function ListPengiriman() {
       {
         Header: "Progress Time",
         Cell: (data) => (
-          <strong className="w-32 block">{data?.row?.original?.tanggalOrder ? progressDuration(data?.row?.original?.tanggalOrder) : "-"}</strong>
+          <strong className="w-32 block">
+            {data?.row?.original?.tanggalOrder ? progressDuration(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim ? data?.row?.original?.tanggalKirim : "now") : "-"}
+          </strong>
         )
       },
       {
         Header: "Durasi",
-        Cell: (data) => (
-          <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold`}>
-            {data?.row?.original?.exclude 
-              ? "Excluded" 
-              : getGradingData(getTerkirimDay(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim))
-            }
-          </span>
-        )
+        Cell: (data) => {
+          const gradingData = getGradingData(getTerkirimDay(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim));
+          return (
+            <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold`}>
+              {data?.row?.original?.exclude
+                ? "Excluded"
+                : gradingData == "-" ? "-" : gradingData?.gradeName
+              }
+              <small className="ml-2">{gradingData != "-" && gradingData?.gradePoin == 0 ? `(Expired)` : ""}</small>
+            </span>
+          );
+        }
       }
     ],
     []
   );
 
-  const progressDuration = (start) => {
+  const progressDuration = (start, end = "now") => {
     const startDate = moment(start);
-    const endDate = moment();
+    const endDate = end === "now" ? moment() : moment(end);
     const duration = moment.duration(endDate.diff(startDate));
     const days = duration.days();
     const hours = duration.hours();
@@ -199,18 +205,24 @@ function ListPengiriman() {
     const startDate = moment(start);
     const endDate = moment(end);
     const duration = moment.duration(endDate.diff(startDate));
-    const days = duration.days();
-    return days;
+    const hours = duration.asHours();
+    return Math.round(hours);
   }
 
-  const getGradingData = (dayCount) => {
-    if (dayCount === null) {
+  const getGradingData = (hoursCount) => {
+    if (hoursCount === null) {
       return "-";
     }
 
-    const grade = gradings?.find(item => item?.gradeValue === dayCount);
-    return grade?.gradeName ?? "-";
+    const matchingGrade = gradings?.find(grade => {
+        const startRange = (parseInt(grade.gradeValue) - 1) * 24;
+        const endRange = parseInt(grade.gradeValue) * 24;
+        return hoursCount >= startRange && hoursCount < endRange;
+    });
+
+    return matchingGrade ? matchingGrade : "-";
   }
+
 
   return <PengirimanTableContent columns={columns} data={pengirimans} />
 }

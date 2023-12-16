@@ -5,7 +5,11 @@
     "database": "logistics",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "quoteIdentifier": false
+    "quoteIdentifier": false,
+    "dialectOptions": {
+      "useUTC": false
+    },
+    "timezone": "+07:00"
   },
   "test": {
     "username": "root",
@@ -19,6 +23,10 @@
     "password": "afif",
     "database": "logistics",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "dialectOptions": {
+      "useUTC": false
+    },
+    "timezone": "+07:00"
   }
 }
