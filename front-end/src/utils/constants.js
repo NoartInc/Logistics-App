@@ -63,6 +63,9 @@ export const ROLES_MANAGEMENTS = {
   create_pengiriman: {
     allowedRoles: ["administrator", "logistics"],
   },
+  exclude_pengiriman: {
+    allowedRoles: ["administrator", "manager"]
+  },
   list_pengiriman: {
     allowedRoles: [
       "administrator",
@@ -91,7 +94,9 @@ export const ROLES_MANAGEMENTS = {
   master_produksi: {
     allowedRoles: ["administrator", "manager", "produksi"],
   },
-
+  master_grading: {
+    allowedRoles: ["administrator", "manager"]
+  },
   // Actions
   update_pengiriman: {
     allowedRoles: ["administrator", "manager", "logistics", "teli", "driver", "produksi"],

@@ -9,7 +9,7 @@ import TeliOptions from "../options/TeliOptions";
 import http from "../../../http-common";
 import ProduksiOptions from "../options/ProduksiOptions";
 
-function PengirimanModalEditForm({ id = null, status }) {
+function PengirimanModalEditForm({ id = null }) {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const currentData = useSelector((state) => state.pengirimans.selectedData);
@@ -22,13 +22,15 @@ function PengirimanModalEditForm({ id = null, status }) {
     setForm(currentData);
   }, [currentData]);
 
-  const editData = (id) => {
-    setForm((prevState) => ({
-      ...prevState,
-      id: id,
-    }));
-    dispatch(editPengiriman(id));
-    setShowModal(true);
+  const editData = async (id) => {
+    dispatch(editPengiriman(id)).then(res => {
+      setForm((prevState) => ({
+        ...prevState,
+        id: id,
+        suratJalan: res?.data?.suratJalan
+      }));
+      setShowModal(true);
+    })
   };
 
   const onInputChange = (e) => {

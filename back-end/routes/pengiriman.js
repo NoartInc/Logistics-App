@@ -9,7 +9,7 @@ var storage = multer.diskStorage({
     cb(null, path.resolve("public/images"));
   },
   filename: (req, file, cb) => {
-    cb(null, getImage(file));
+    cb(null, getImage(req, file));
   },
 });
 var upload = multer({ storage: storage });

@@ -8,14 +8,17 @@ import { deletePengiriman, retrievePengiriman, updateExclude } from "../../store
 import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
 import moment from "moment";
 import CheckboxInput from "../../components/CheckboxInput";
+import { retrieveGrading } from "../../store/actions/grading-action";
 
 function ListPengiriman() {
   const dispatch = useDispatch();
   const pengirimans = useSelector((state) => state.pengirimans.list);
+  const gradings = useSelector(state => state?.gradings?.list);
   const { user } = userData;
 
   useEffect(() => {
     dispatch(retrievePengiriman());
+    dispatch(retrieveGrading());
   }, []);
 
   const removePengiriman = (id) => {
@@ -41,7 +44,11 @@ function ListPengiriman() {
         // accessor: 'action',
         Cell: (pengirimans) => (
           <div className="flex justify-start gap-x-1">
-            <CheckboxInput value={pengirimans?.row?.original?.exclude} onChange={(value) => setExclude(pengirimans?.row?.original?.id, value)} />
+            {ROLES_MANAGEMENTS["exclude_pengiriman"]?.allowedRoles.includes(
+              user?.role
+            ) && (
+              <CheckboxInput value={pengirimans?.row?.original?.exclude} onChange={(value) => setExclude(pengirimans?.row?.original?.id, value)} />
+            )}
             {ROLES_MANAGEMENTS["delete_pengiriman"]?.allowedRoles.includes(
               user?.role
             ) && 
@@ -85,7 +92,6 @@ function ListPengiriman() {
               ]?.includes(pengirimans?.row?.original?.status) && (
                 <PengirimanModalEditForm
                   id={pengirimans?.row?.original?.id}
-                  status={pengirimans?.row?.original?.status}
                 />
               )}
           </div>
@@ -149,7 +155,12 @@ function ListPengiriman() {
       {
         Header: "Durasi",
         Cell: (data) => (
-          <strong>{"-"}</strong>
+          <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold`}>
+            {data?.row?.original?.exclude 
+              ? "Excluded" 
+              : getGradingData(getTerkirimDay(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim))
+            }
+          </span>
         )
       }
     ],
@@ -178,6 +189,27 @@ function ListPengiriman() {
     }
 
     return formattedDuration.trim();
+  }
+
+  const getTerkirimDay = (start, end) => {
+    if (end === null) {
+      return null;
+    }
+
+    const startDate = moment(start);
+    const endDate = moment(end);
+    const duration = moment.duration(endDate.diff(startDate));
+    const days = duration.days();
+    return days;
+  }
+
+  const getGradingData = (dayCount) => {
+    if (dayCount === null) {
+      return "-";
+    }
+
+    const grade = gradings?.find(item => item?.gradeValue === dayCount);
+    return grade?.gradeName ?? "-";
   }
 
   return <PengirimanTableContent columns={columns} data={pengirimans} />

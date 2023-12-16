@@ -317,7 +317,10 @@ exports.updatePengiriman = async (req, res) => {
       }
     );
     logging(fullName, "Update Status", "Melakukan Update Pengiriman ke sistem");
-    res.json({ message: "Pengiriman Updated successfully" });
+    const updatedData = await Pengiriman.findByPk(id, {
+      include: dataAssoc,
+    });
+    res.json({ message: "Pengiriman Updated successfully", data: updatedData });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
