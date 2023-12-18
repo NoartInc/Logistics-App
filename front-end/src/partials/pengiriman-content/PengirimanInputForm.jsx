@@ -152,7 +152,7 @@ function PengirimanInputForm() {
                           type="date"
                           name="tanggalOrder"
                           id="tanggalOrder"
-                          placeholder="No Surat Jalan"
+                          placeholder="Tanggal Order"
                           className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           value={form?.tanggalOrder}
                         />

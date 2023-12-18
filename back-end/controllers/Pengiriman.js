@@ -12,7 +12,7 @@ const {
   Grading
 } = require("../models");
 const excelJS = require("exceljs");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const moment = require("moment");
 const { getImage, progressDuration, getGradingData, getTerkirimDay } = require("../utils/helper");
 const logging = require("../utils/logging");
@@ -101,12 +101,12 @@ exports.findAllPengiriman = async (req, res) => {
       orderby = "id",
       orderdir = "desc",
       search = "",
+      filters: requestFilters = null
     } = req.query;
 
+    const filters = JSON.parse(requestFilters);
     const offset = (page - 1) * limit;
-    const startDate = moment()
-      .subtract(120, "days")
-      .format("YYYY-MM-DD HH:mm:ss");
+    const startDate = moment().subtract(120, "days").format("YYYY-MM-DD HH:mm:ss");
     const endDate = moment().format("YYYY-MM-DD HH:mm:ss");
     let formatedDateSearch = "";
     if (search.match(/\//gi)) {
@@ -121,6 +121,7 @@ exports.findAllPengiriman = async (req, res) => {
         [Op.between]: [startDate, endDate],
       },
     };
+
     if (role === "driver") {
       conditions = { driver: userId };
     } else if (role === "sales") {
@@ -132,6 +133,38 @@ exports.findAllPengiriman = async (req, res) => {
         ...conditions,
         tanggalOrder: {
           [Op.like]: `%${formatedDateSearch}%`
+        }
+      }
+    }
+
+    // filter data
+    if (filters != null) {
+      if (filters?.status || filters?.status !== "") {
+        conditions = {
+          ...conditions,
+          status: filters?.status
+        }
+      }
+
+      if ((filters?.tanggalOrderStart && filters?.tanggalOrderEnd) || (filters?.tanggalOrderStart !== "" && filters?.tanggalOrderEnd !== "")) {
+        conditions = {
+          ...conditions,
+          tanggalOrder: {
+            [Op.lte]: moment(`${filters?.tanggalOrderEnd} 23:59:59`).format("YYYY-MM-DD HH:mm:ss"),
+            [Op.gte]: moment(`${filters?.tanggalOrderStart} 00:00:00`).format("YYYY-MM-DD HH:mm:ss"),
+          }
+        }
+      }
+
+      if (filters?.progressTime || filters?.progressTime !== "") {
+        const startRange = (filters?.progressTime - 1) * 24
+        const endRange = filters?.progressTime * 24;
+        conditions = {
+          ...conditions,
+          [Op.and]: [
+            Sequelize.literal(`TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) >= ${startRange}`),
+            Sequelize.literal(`TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) < ${endRange}`),
+          ],
         }
       }
     }
@@ -411,7 +444,7 @@ exports.downloadData = async (req, res) => {
   pengiriman.forEach((item) => {
     const telis = item?.history.flatMap(entry => entry.teli).find(item => item.teliPerson !== null);
     const teliPersons = telis ? telis.teliPerson.fullName : '';
-    const gradingData = getGradingData(gradings, getTerkirimDay(item?.tanggalOrder, item?.tanggalKirim));
+    const gradingData = getGradingData(gradings, getTerkirimDay(item?.tanggalOrder, item?.tanggalKirim ? item?.tanggalKirim : moment().format("YYYY-MM-DD HH:mm:ss")));
     data.push({
       createdAt: item.createdAt,
       suratJalan: item.suratJalan || "",
@@ -429,8 +462,8 @@ exports.downloadData = async (req, res) => {
       informasi: item?.informasi || "",
       tanggalOrder: item?.tanggalOrder ? moment(item?.tanggalOrder).format("DD/MM/YYYY HH:mm") : "-",
       tanggalKirim: item?.tanggalKirim ? moment(item?.tanggalKirim).format("DD/MM/YYYY HH:mm") : "-",
-      progressTime: item?.tanggalOrder || item?.tanggalKirim ? progressDuration(item?.tanggalOrder, item?.tanggalKirim ? item?.tanggalKirim : "now") : "-",
-      durasi: item?.exclude ? "Exclude" : gradingData == "-" ? "-" : `${gradingData?.gradeName} ${gradingData?.gradePoin == "0" ? "(Expired)" : ""}`,
+      // progressTime: item?.tanggalOrder || item?.tanggalKirim ? progressDuration(item?.tanggalOrder, item?.tanggalKirim ? item?.tanggalKirim : "now") : "-",
+      progressTime: item?.exclude ? "Exclude" : gradingData == "-" ? "-" : `${gradingData?.gradeName} ${gradingData?.gradePoin == "0" ? "(Expired)" : ""}`,
     });
   });
 
@@ -512,11 +545,11 @@ exports.downloadData = async (req, res) => {
       key: "tanggalKirim",
       width: "18",
     },
-    {
-      header: "Durasi",
-      key: "durasi",
-      width: "18",
-    },
+    // {
+    //   header: "Durasi",
+    //   key: "durasi",
+    //   width: "18",
+    // },
     {
       header: "CreatedAt",
       key: "createdAt",

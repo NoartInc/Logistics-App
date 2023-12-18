@@ -148,18 +148,10 @@ function ListPengiriman() {
       },
       {
         Header: "Progress Time",
-        Cell: (data) => (
-          <strong className="w-32 block">
-            {data?.row?.original?.tanggalOrder ? progressDuration(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim ? data?.row?.original?.tanggalKirim : "now") : "-"}
-          </strong>
-        )
-      },
-      {
-        Header: "Durasi",
-        Cell: (data) => {
-          const gradingData = getGradingData(getTerkirimDay(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim));
+          Cell: (data) => {
+          const gradingData = getGradingData(getTerkirimDay(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim ? data?.row?.original?.tanggalKirim : moment().format("YYYY-MM-DD HH:mm:ss")));
           return (
-            <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold`}>
+            <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold w-32 block`}>
               {data?.row?.original?.exclude
                 ? "Excluded"
                 : gradingData == "-" ? "-" : gradingData?.gradeName
@@ -168,7 +160,27 @@ function ListPengiriman() {
             </span>
           );
         }
-      }
+        // Cell: (data) => (
+        //   <strong className="w-32 block">
+        //     {data?.row?.original?.tanggalOrder ? progressDuration(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim ? data?.row?.original?.tanggalKirim : "now") : "-"}
+        //   </strong>
+        // )
+      },
+      // {
+      //   Header: "Durasi",
+      //   Cell: (data) => {
+      //     const gradingData = getGradingData(getTerkirimDay(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim));
+      //     return (
+      //       <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold`}>
+      //         {data?.row?.original?.exclude
+      //           ? "Excluded"
+      //           : gradingData == "-" ? "-" : gradingData?.gradeName
+      //         }
+      //         <small className="ml-2">{gradingData != "-" && gradingData?.gradePoin == 0 ? `(Expired)` : ""}</small>
+      //       </span>
+      //     );
+      //   }
+      // }
     ],
     []
   );

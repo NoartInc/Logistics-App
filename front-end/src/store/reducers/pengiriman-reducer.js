@@ -17,7 +17,8 @@ const initialState = {
   pageSize: 25,
   selectedData: null,
   summary: null,
-  search: ""
+  search: "",
+  filters: null
 };
 
 function pengirimanReducer(pengirimans = initialState, action) {
@@ -48,6 +49,13 @@ function pengirimanReducer(pengirimans = initialState, action) {
         ...pengirimans,
         page: 1,
         search: payload
+      }
+
+    case 'SET_FILTER':
+      return {
+        ...pengirimans,
+        page: 1,
+        filters: payload
       }
 
     case 'SET_PAGE_SIZE':
