@@ -147,11 +147,11 @@ function ListPengiriman() {
         )
       },
       {
-        Header: "Progress Time",
+        Header: "Lead Time",
           Cell: (data) => {
           const gradingData = getGradingData(getTerkirimDay(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim ? data?.row?.original?.tanggalKirim : moment().format("YYYY-MM-DD HH:mm:ss")));
           return (
-            <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold w-32 block`}>
+            <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold w-24 block`}>
               {data?.row?.original?.exclude
                 ? "Excluded"
                 : gradingData == "-" ? "-" : gradingData?.gradeName

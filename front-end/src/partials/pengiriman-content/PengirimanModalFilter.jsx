@@ -2,13 +2,14 @@ import React from 'react'
 import FilterIcon from '../../icons/FilterIcon';
 import CloseIcon from '../../icons/CloseIcon';
 import { useSelector } from 'react-redux'
+import CheckboxButton from '../../components/CheckboxButton';
 
 const status = ["diproses", "dicetak", "dimuat", "termuat", "dikirim", "terkirim", "pending", "cancel"];
 const initFilters = {
     status: "",
     tanggalOrderStart: "",
     tanggalOrderEnd: "",
-    progressTime: ""
+    progressTime: []
 };
 
 const PengirimanModalFilter = ({ applyFilter = () => null }) => {
@@ -20,6 +21,30 @@ const PengirimanModalFilter = ({ applyFilter = () => null }) => {
     const submitFilter = () => {
         setShowModal(false);
         applyFilter(filters);
+    }
+
+    const selectGrade = (value) => {
+        let selectedGrade = filters?.progressTime ?? [];
+        if (selectedGrade) {
+            if (!selectedGrade.includes(value)) {
+                selectedGrade.push(value);
+            } else {
+                let toRemove = selectedGrade.indexOf(value);
+                if (toRemove !== -1) {
+                    selectedGrade.splice(toRemove, 1);
+                }
+            }
+            onFilterChange({
+                target: {
+                    name: "progressTime",
+                    value: selectedGrade
+                }
+            })
+        }
+    }
+
+    const isGradeSelected = (value) => {
+        return filters?.progressTime?.includes(value);
     }
 
     const onFilterChange = (event) => {
@@ -35,10 +60,6 @@ const PengirimanModalFilter = ({ applyFilter = () => null }) => {
             setFilters(storedFilter);
         }
     }, [storedFilter]);
-
-    React.useEffect(() => {
-        
-    }, []);
 
     return (
         <>
@@ -116,9 +137,9 @@ const PengirimanModalFilter = ({ applyFilter = () => null }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="w-full">
-                                        <label>By Progress Time (Grading Name)</label>
-                                        <select
+                                    <div className="w-full flex flex-col gap-y-2">
+                                        <label>By Lead Time (Grading Name)</label>
+                                        {/* <select
                                             onChange={onFilterChange}
                                             type="text"
                                             id="progressTime"
@@ -130,7 +151,18 @@ const PengirimanModalFilter = ({ applyFilter = () => null }) => {
                                             {gradings?.map(item => (
                                                 <option key={item?.id} value={item?.gradeValue}>{item?.gradeName}</option>
                                             ))}
-                                        </select>
+                                        </select> */}
+                                        <div className="flex flex-wrap gap-2 max-w-sm">
+                                            {gradings?.map(item => (
+                                                <CheckboxButton
+                                                    key={item?.id}
+                                                    onClick={() => selectGrade(item?.gradeValue)}
+                                                    selected={isGradeSelected(item?.gradeValue)}
+                                                >
+                                                    {item?.gradeName}
+                                                </CheckboxButton>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
 

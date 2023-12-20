@@ -156,15 +156,24 @@ exports.findAllPengiriman = async (req, res) => {
         }
       }
 
-      if (filters?.progressTime || filters?.progressTime !== "") {
-        const startRange = (filters?.progressTime - 1) * 24
-        const endRange = filters?.progressTime * 24;
-        conditions = {
-          ...conditions,
-          [Op.and]: [
-            Sequelize.literal(`TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) >= ${startRange}`),
-            Sequelize.literal(`TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) < ${endRange}`),
-          ],
+      if (filters?.progressTime || filters?.progressTime?.length) {
+        const progressTimeOptions = filters?.progressTime;
+        let groupedProgressTime = [];
+        progressTimeOptions.forEach(progressTime => {
+          const startRange = (progressTime - 1) * 24
+          const endRange = progressTime * 24;
+          groupedProgressTime.push({
+            [Op.and]: [
+              Sequelize.literal(`TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) >= ${startRange}`),
+              Sequelize.literal(`TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) < ${endRange}`),
+            ]
+          });
+        });
+        if (groupedProgressTime.length) {
+          conditions = {
+            ...conditions,
+            [Op.or]: groupedProgressTime,
+          }
         }
       }
     }
@@ -536,7 +545,7 @@ exports.downloadData = async (req, res) => {
       width: "18",
     },
     {
-      header: "Progress Time",
+      header: "Lead Time",
       key: "progressTime",
       width: "18",
     },
