@@ -10,7 +10,7 @@ pm2 start be-logistic
 
 # deploy front-end
 cd /home/logistics/front-end && npm install && npm run build
-sudo cp -R dist/* /var/www/html/
+cp -R dist/* /var/www/html/
 
 # restart web server
 systemctl restart nginx
