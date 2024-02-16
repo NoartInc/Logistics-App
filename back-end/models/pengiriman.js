@@ -74,6 +74,11 @@ module.exports = (sequelize, DataTypes) => {
     user: DataTypes.INTEGER,
     note: DataTypes.STRING,
     image: DataTypes.STRING,
+    gudang:
+    {
+      type: DataTypes.ENUM('stok', 'custom'),
+      default: 'custom'
+    }, 
     tanggalOrder: DataTypes.DATE,
     tanggalKirim: DataTypes.DATE,
     informasi: DataTypes.TEXT,

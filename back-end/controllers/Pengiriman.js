@@ -464,6 +464,7 @@ exports.downloadData = async (req, res) => {
       kendaraans: item.kendaraans?.kendaraan || "",
       address: item.address || "",
       salesUser: item.customers?.salesUser?.fullName || "",
+      gudang: item.gudang || "",
       // teliPerson: item.teliPerson || "",
       teliPerson: teliPersons,
       note: item.note || "",
@@ -472,7 +473,7 @@ exports.downloadData = async (req, res) => {
       tanggalOrder: item?.tanggalOrder ? moment(item?.tanggalOrder).format("DD/MM/YYYY HH:mm") : "-",
       tanggalKirim: item?.tanggalKirim ? moment(item?.tanggalKirim).format("DD/MM/YYYY HH:mm") : "-",
       // progressTime: item?.tanggalOrder || item?.tanggalKirim ? progressDuration(item?.tanggalOrder, item?.tanggalKirim ? item?.tanggalKirim : "now") : "-",
-      progressTime: item?.exclude ? "Exclude" : gradingData == "-" ? "-" : `${gradingData?.gradeName} ${gradingData?.gradePoin == "0" ? "(Expired)" : ""}`,
+      progressTime: item?.exclude ? "Exclude" : gradingData == "-" ? "Expired" : `${gradingData?.gradeName} ${gradingData?.gradePoin == "0" ? "(Expired)" : ""}`,
     });
   });
 
@@ -527,6 +528,11 @@ exports.downloadData = async (req, res) => {
     {
       header: "Teli",
       key: "teliPerson",
+      width: "10",
+    },
+    {
+      header: "Gudang",
+      key: "gudang",
       width: "10",
     },
     {

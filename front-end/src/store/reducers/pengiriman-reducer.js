@@ -34,8 +34,8 @@ function pengirimanReducer(pengirimans = initialState, action) {
     case RETRIEVE_PENGIRIMAN:
       return {
         ...pengirimans,
-        list: payload.pengirimans.rows,
-        pageCount: payload.pengirimans.pageCount
+        list: payload.pengirimans?.rows,
+        pageCount: payload.pengirimans?.pageCount
       };
 
     case 'SET_PAGE':
@@ -65,7 +65,7 @@ function pengirimanReducer(pengirimans = initialState, action) {
       }
 
     case EDIT_PENGIRIMAN:
-      const getEdit = pengirimans.list.find((item) => item.id === payload);
+      const getEdit = pengirimans?.list?.find((item) => item?.id === payload);
       return {
         ...pengirimans,
         selectedData: getEdit,
@@ -73,7 +73,7 @@ function pengirimanReducer(pengirimans = initialState, action) {
 
     case MODIFY_PENGIRIMAN:
       // ini bukannya nge-set data untuk di edit ?
-      const getModify = pengirimans.list.find((item) => item.id === payload);
+      const getModify = pengirimans?.list?.find((item) => item?.id === payload);
       return {
         ...pengirimans,
         selectedData: getModify,
@@ -81,8 +81,8 @@ function pengirimanReducer(pengirimans = initialState, action) {
 
     // Coba pake ini aja
     case UPDATE_PENGIRIMAN:
-      const updateList = pengirimans.list.map((pengiriman) => {
-        if (pengiriman.id === payload.id) {
+      const updateList = pengirimans?.list?.map((pengiriman) => {
+        if (pengiriman?.id === payload?.id) {
           return {
             ...pengiriman,
             ...payload,
@@ -97,7 +97,7 @@ function pengirimanReducer(pengirimans = initialState, action) {
       };
 
     case DELETE_PENGIRIMAN:
-      const deletedItem = pengirimans.list.filter(
+      const deletedItem = pengirimans?.list?.filter(
         ({ id }) => id !== payload.id
       );
       return {

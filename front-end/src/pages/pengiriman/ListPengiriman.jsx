@@ -140,6 +140,10 @@ function ListPengiriman() {
         ),
       },
       {
+        Header: "Gudang",
+        accessor: "gudang"
+      },
+      {
         Header: "Tanggal Order",
         accessor: "tanggalOrder",
         Cell: (data) => (
@@ -154,7 +158,7 @@ function ListPengiriman() {
             <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold w-24 block`}>
               {data?.row?.original?.exclude
                 ? "Excluded"
-                : gradingData == "-" ? "-" : gradingData?.gradeName
+                : gradingData == "-" ? "Expired" : gradingData?.gradeName
               }
               <small className="ml-2">{gradingData != "-" && gradingData?.gradePoin == 0 ? `(Expired)` : ""}</small>
             </span>

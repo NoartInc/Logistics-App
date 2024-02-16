@@ -14,6 +14,7 @@ function PengirimanInputForm() {
   const dispatch = useDispatch();
   const [tipePengiriman, setTipePengiriman] = useState(null);
   const [pickUp, setPickUp] = useState(null);
+  const gudangs = ["stok","custom"];
 
   const customers = useSelector((state) => state.customers.list);
   const pengangkutans = useSelector((state) => state.pengangkutans.list);
@@ -25,6 +26,7 @@ function PengirimanInputForm() {
     address: "",
     note: "",
     tonase: "",
+    gudang: "",
     driver: 0,
     kendaraan: 0,
     status: "",
@@ -191,56 +193,82 @@ function PengirimanInputForm() {
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
-                    <div className="form-check form-check-inline mr-3">
-                      <input
-                        onChange={(e) => setTipePengiriman(e.target.value)}
-                        className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                        type="radio"
-                        name="tipetoko"
-                        id="tipeToko"
-                        value="toko"
-                        disabled={form.customer === "" ? true : false}
-                      />
-                      <label
-                        className="form-check-label inline-block text-sm font-medium text-gray-500"
-                        htmlFor="tipeToko"
-                      >
-                        Toko
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline mr-3">
-                      <input
-                        onChange={(e) => setTipePengiriman(e.target.value)}
-                        className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                        type="radio"
-                        name="tipetoko"
-                        id="tipePO"
-                        value="po"
-                        disabled={form.customer === "" ? true : false}
-                      />
-                      <label
-                        className="form-check-label inline-block text-sm font-medium text-gray-500"
-                        htmlFor="tipePO"
-                      >
-                        PO
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline mr-3">
-                      <input
-                        onChange={(e) => setTipePengiriman(e.target.value)}
-                        className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                        type="radio"
-                        name="tipetoko"
-                        id="tipeLainnya"
-                        value="lain-lain"
-                        disabled={form.customer === "" ? true : false}
-                      />
-                      <label
-                        className="form-check-label inline-block text-sm font-medium text-gray-500"
-                        htmlFor="tipeLainnya"
-                      >
-                        Lain-lain
-                      </label>
+                    <div className="flex gap-x-16">
+                      {/* Toko */}
+                      <div>
+                        <div className="form-check form-check-inline mr-3">
+                          <input
+                            onChange={(e) => setTipePengiriman(e.target.value)}
+                            className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="radio"
+                            name="tipetoko"
+                            id="tipeToko"
+                            value="toko"
+                            disabled={form.customer === "" ? true : false}
+                          />
+                          <label
+                            className="form-check-label inline-block text-sm font-medium text-gray-500"
+                            htmlFor="tipeToko"
+                          >
+                            Toko
+                          </label>
+                        </div>
+                        <div className="form-check form-check-inline mr-3">
+                          <input
+                            onChange={(e) => setTipePengiriman(e.target.value)}
+                            className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="radio"
+                            name="tipetoko"
+                            id="tipePO"
+                            value="po"
+                            disabled={form.customer === "" ? true : false}
+                          />
+                          <label
+                            className="form-check-label inline-block text-sm font-medium text-gray-500"
+                            htmlFor="tipePO"
+                          >
+                            PO
+                          </label>
+                        </div>
+                        <div className="form-check form-check-inline mr-3">
+                          <input
+                            onChange={(e) => setTipePengiriman(e.target.value)}
+                            className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="radio"
+                            name="tipetoko"
+                            id="tipeLainnya"
+                            value="lain-lain"
+                            disabled={form.customer === "" ? true : false}
+                          />
+                          <label
+                            className="form-check-label inline-block text-sm font-medium text-gray-500"
+                            htmlFor="tipeLainnya"
+                          >
+                            Lain-lain
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Gudang */}
+                      <div>
+                        {/* Gudang options */}
+                          <label
+                            htmlFor="gudang"
+                            className="block text-sm font-medium text-gray-700"
+                          >
+                            Gudang
+                          </label>
+                          <div className="flex align-items-center gap-x-4">
+                            <div>
+                              <input type="radio" id="gudangCustom" name="gudang" checked={form?.gudang === "custom"} value="custom" onChange={onInputChange} />
+                              <label htmlFor="gudangCustom" className="ml-2">Custom</label>
+                            </div>
+                            <div>
+                              <input type="radio" id="gudangStok" name="gudang" checked={form?.gudang === "stok"} value="stok" onChange={onInputChange} />
+                              <label htmlFor="gudangStok" className="ml-2">Stok</label>
+                            </div>
+                          </div>
+                      </div>
                     </div>
                   </div>
 
