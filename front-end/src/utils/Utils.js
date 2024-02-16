@@ -38,7 +38,6 @@ export const serverImagePath = () => {
   if (process.env.NODE_ENV !== "production") {
     return "http://localhost:4000";
   } else {
-    // return "https://transmetalroof.com:5000";
-    return "http://localhost:4000";
+    return "https://transmetalroof.com:5000";
   }
 };
