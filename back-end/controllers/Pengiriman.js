@@ -457,6 +457,7 @@ exports.downloadData = async (req, res) => {
     data.push({
       createdAt: item.createdAt,
       suratJalan: item.suratJalan || "",
+      status: item.status || "",
       customers: item.customers?.customer,
       tonase: item.tonase || "",
       pengangkutan: item.pengangkutans?.pengangkutan || "",
@@ -488,6 +489,11 @@ exports.downloadData = async (req, res) => {
     {
       header: "Surat Jalan",
       key: "suratJalan",
+      width: "10",
+    },
+    {
+      header: "Status",
+      key: "status",
       width: "10",
     },
     {
