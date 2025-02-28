@@ -100,15 +100,22 @@ function ListPengiriman() {
       {
         Header: "SuratJalan",
         accessor: "suratJalan",
-        Cell: (data) => (
-          <a
-            href={`/listpengiriman/detailpengiriman/${data?.row?.original?.id}`}
-            className="hover:text-blue-700 font-semibold hover:text-lg"
-          >
-            {" "}
-            {data?.row?.original?.suratJalan}{" "}
-          </a>
-        ),
+        Cell: (data) => {
+          const gradingData = getGradingData(getTerkirimDay(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim ? data?.row?.original?.tanggalKirim : moment().format("YYYY-MM-DD HH:mm:ss")))
+          return (
+            <a
+              href={`/listpengiriman/detailpengiriman/${data?.row?.original?.id}`}
+              className="hover:text-blue-700 font-semibold hover:text-lg flex items-center gap-1"
+            >
+              {gradingData?.gradeValue >= 3 && (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-red-600 -ml-8">
+                  <path fillRule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clipRule="evenodd" />
+                </svg>
+              )}
+              {data?.row?.original?.suratJalan}{" "}
+            </a>
+          )
+        },
       },
       {
         Header: "Status",
@@ -155,7 +162,8 @@ function ListPengiriman() {
           Cell: (data) => {
           const gradingData = getGradingData(getTerkirimDay(data?.row?.original?.tanggalOrder, data?.row?.original?.tanggalKirim ? data?.row?.original?.tanggalKirim : moment().format("YYYY-MM-DD HH:mm:ss")));
           return (
-            <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} font-semibold w-24 block`}>
+            <span className={`${data?.row?.original?.exclude ? "text-orange-500" : ""} flex items-center gap-1 font-semibold w-24`}>
+
               {data?.row?.original?.exclude
                 ? "Excluded"
                 : gradingData == "-" ? "Expired" : gradingData?.gradeName
