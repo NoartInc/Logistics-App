@@ -9,12 +9,18 @@ const {
   TeliPengiriman,
   Produksi,
   sequelize,
-  Grading
+  Grading,
+  PengirimanIssue,
 } = require("../models");
 const excelJS = require("exceljs");
 const { Op, Sequelize } = require("sequelize");
 const moment = require("moment");
-const { getImage, progressDuration, getGradingData, getTerkirimDay } = require("../utils/helper");
+const {
+  getImage,
+  progressDuration,
+  getGradingData,
+  getTerkirimDay,
+} = require("../utils/helper");
 const logging = require("../utils/logging");
 
 const dataAssoc = [
@@ -54,6 +60,16 @@ const dataAssoc = [
     as: "produksi_by",
     attributes: ["fullName"],
     // required: true,
+  },
+  {
+    model: PengirimanIssue,
+    as: "issue_produksi",
+    attributes: ["issueName", "issueType"],
+  },
+  {
+    model: PengirimanIssue,
+    as: "issue_logistic",
+    attributes: ["issueName", "issueType"],
   },
   // PR Relasi
   // {
@@ -101,12 +117,14 @@ exports.findAllPengiriman = async (req, res) => {
       orderby = "id",
       orderdir = "desc",
       search = "",
-      filters: requestFilters = null
+      filters: requestFilters = null,
     } = req.query;
 
     const filters = JSON.parse(requestFilters);
     const offset = (page - 1) * limit;
-    const startDate = moment().subtract(120, "days").format("YYYY-MM-DD HH:mm:ss");
+    const startDate = moment()
+      .subtract(120, "days")
+      .format("YYYY-MM-DD HH:mm:ss");
     const endDate = moment().format("YYYY-MM-DD HH:mm:ss");
     let formatedDateSearch = "";
     if (search.match(/\//gi)) {
@@ -132,9 +150,9 @@ exports.findAllPengiriman = async (req, res) => {
       conditions = {
         ...conditions,
         tanggalOrder: {
-          [Op.like]: `%${formatedDateSearch}%`
-        }
-      }
+          [Op.like]: `%${formatedDateSearch}%`,
+        },
+      };
     }
 
     // filter data
@@ -142,38 +160,49 @@ exports.findAllPengiriman = async (req, res) => {
       if (filters?.status || filters?.status !== "") {
         conditions = {
           ...conditions,
-          status: filters?.status
-        }
+          status: filters?.status,
+        };
       }
 
-      if ((filters?.tanggalOrderStart && filters?.tanggalOrderEnd) || (filters?.tanggalOrderStart !== "" && filters?.tanggalOrderEnd !== "")) {
+      if (
+        (filters?.tanggalOrderStart && filters?.tanggalOrderEnd) ||
+        (filters?.tanggalOrderStart !== "" && filters?.tanggalOrderEnd !== "")
+      ) {
         conditions = {
           ...conditions,
           tanggalOrder: {
-            [Op.lte]: moment(`${filters?.tanggalOrderEnd} 23:59:59`).format("YYYY-MM-DD HH:mm:ss"),
-            [Op.gte]: moment(`${filters?.tanggalOrderStart} 00:00:00`).format("YYYY-MM-DD HH:mm:ss"),
-          }
-        }
+            [Op.lte]: moment(`${filters?.tanggalOrderEnd} 23:59:59`).format(
+              "YYYY-MM-DD HH:mm:ss"
+            ),
+            [Op.gte]: moment(`${filters?.tanggalOrderStart} 00:00:00`).format(
+              "YYYY-MM-DD HH:mm:ss"
+            ),
+          },
+        };
       }
 
       if (filters?.progressTime || filters?.progressTime?.length) {
         const progressTimeOptions = filters?.progressTime;
         let groupedProgressTime = [];
-        progressTimeOptions.forEach(progressTime => {
-          const startRange = (progressTime - 1) * 24
+        progressTimeOptions.forEach((progressTime) => {
+          const startRange = (progressTime - 1) * 24;
           const endRange = progressTime * 24;
           groupedProgressTime.push({
             [Op.and]: [
-              Sequelize.literal(`TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) >= ${startRange}`),
-              Sequelize.literal(`TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) < ${endRange}`),
-            ]
+              Sequelize.literal(
+                `TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) >= ${startRange}`
+              ),
+              Sequelize.literal(
+                `TIMESTAMPDIFF(HOUR, tanggalOrder, IFNULL(tanggalKirim, NOW())) < ${endRange}`
+              ),
+            ],
           });
         });
         if (groupedProgressTime.length) {
           conditions = {
             ...conditions,
             [Op.or]: groupedProgressTime,
-          }
+          };
         }
       }
     }
@@ -272,23 +301,28 @@ exports.updateInformasi = async (req, res) => {
   try {
     const { fullName } = req.user;
     const { id } = req.params;
-    const { informasi } = req.body;
+    const { productionIssue, logisticIssue } = req.body;
     await Pengiriman.update(
       {
-        informasi: informasi
+        productionIssue,
+        logisticIssue,
       },
       {
-        where: { id: id }
+        where: { id: id },
       }
     );
-    logging(fullName, "Update Informasi", "Melakukan Update Informasi Pengiriman ke sistem");
+    logging(
+      fullName,
+      "Update Informasi",
+      "Melakukan Update Informasi Isu Pengiriman ke sistem"
+    );
     res.json({
-      message: "Berhasil mengubah informasi pengiriman"
+      message: "Berhasil mengubah informasi isu pengiriman",
     });
   } catch (error) {
     res.status(500).json({ message: err.message });
   }
-}
+};
 
 exports.updateExclude = async (req, res) => {
   try {
@@ -297,26 +331,37 @@ exports.updateExclude = async (req, res) => {
     const { exclude } = req.body;
     await Pengiriman.update(
       {
-        exclude: exclude
+        exclude: exclude,
       },
       {
-        where: { id: id}
+        where: { id: id },
       }
     );
-    logging(fullName, "Update exclude pengiriman", `Mengganti exclude pengiriman menjadi ${exclude}, ke sistem`);
+    logging(
+      fullName,
+      "Update exclude pengiriman",
+      `Mengganti exclude pengiriman menjadi ${exclude}, ke sistem`
+    );
     res.json({
-      message: "Berhasil mengubah exclude pengiriman"
+      message: "Berhasil mengubah exclude pengiriman",
     });
   } catch (error) {
     res.status(500).json({ message: err.message });
   }
-}
+};
 
 exports.updatePengiriman = async (req, res) => {
   try {
     const { id: userId = 0 } = req.user; // userId
     const { id } = req.params; // pengirimanId
-    const { note, status, teli = null, driver, kendaraan, produksiId } = req.body; // note
+    const {
+      note,
+      status,
+      teli = null,
+      driver,
+      kendaraan,
+      produksiId,
+    } = req.body; // note
     const { fullName } = req.user;
     const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     let filename = null;
@@ -325,16 +370,16 @@ exports.updatePengiriman = async (req, res) => {
     }
 
     // update status di tabel Pengiriman
-    // Disini saya tinggal ambah driver: driver, kendaraan: kendaraan kah ? 
+    // Disini saya tinggal ambah driver: driver, kendaraan: kendaraan kah ?
     // iyap
     // pastikan nama field di table'nya ini ya ?
     await Pengiriman.update(
       {
         status: status,
-        driver: driver, 
+        driver: driver,
         kendaraan: kendaraan,
         produksiId: produksiId,
-        tanggalKirim: status === "terkirim" ? currentTime : null
+        tanggalKirim: status === "terkirim" ? currentTime : null,
       },
       {
         where: { id: id },
@@ -388,12 +433,12 @@ exports.updateData = async (req, res) => {
     // oke sesuaikan aja
     const { id: userId = 0, fullName } = req.user; // userId, butuh ini buat logg ? butuh mas oke
     const { id } = req.params; // pengirimanId
-    const { driver, kendaraan } = req.body; 
+    const { driver, kendaraan } = req.body;
 
     await Pengiriman.update(
-      { 
-        driver: driver, 
-        kendaraan: kendaraan
+      {
+        driver: driver,
+        kendaraan: kendaraan,
       },
       {
         where: { id: id },
@@ -404,7 +449,7 @@ exports.updateData = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: err.message });
   }
-}
+};
 
 exports.deletePengiriman = async (req, res) => {
   try {
@@ -425,7 +470,11 @@ exports.deleteAllPengiriman = async (req, res) => {
     await Pengiriman.destroy({
       truncate: true,
     });
-    logging(fullName, "Delete All Data", "Melakukan Delete All Pengiriman ke sistem");
+    logging(
+      fullName,
+      "Delete All Data",
+      "Melakukan Delete All Pengiriman ke sistem"
+    );
     res.json({ message: "Pengiriman All Deleted successfully" });
   } catch (err) {
     res.json({ message: err.message });
@@ -449,11 +498,21 @@ exports.downloadData = async (req, res) => {
   let data = [];
 
   const gradings = await Grading.findAll();
-  
+
   pengiriman.forEach((item) => {
-    const telis = item?.history.flatMap(entry => entry.teli).find(item => item.teliPerson !== null);
-    const teliPersons = telis ? telis.teliPerson.fullName : '';
-    const gradingData = getGradingData(gradings, getTerkirimDay(item?.tanggalOrder, item?.tanggalKirim ? item?.tanggalKirim : moment().format("YYYY-MM-DD HH:mm:ss")));
+    const telis = item?.history
+      .flatMap((entry) => entry.teli)
+      .find((item) => item.teliPerson !== null);
+    const teliPersons = telis ? telis.teliPerson.fullName : "";
+    const gradingData = getGradingData(
+      gradings,
+      getTerkirimDay(
+        item?.tanggalOrder,
+        item?.tanggalKirim
+          ? item?.tanggalKirim
+          : moment().format("YYYY-MM-DD HH:mm:ss")
+      )
+    );
     data.push({
       createdAt: item.createdAt,
       suratJalan: item.suratJalan || "",
@@ -470,15 +529,25 @@ exports.downloadData = async (req, res) => {
       teliPerson: teliPersons,
       note: item.note || "",
       updatedAt: item.updatedAt,
-      informasi: item?.informasi || "",
-      tanggalOrder: item?.tanggalOrder ? moment(item?.tanggalOrder).format("DD/MM/YYYY HH:mm") : "-",
-      tanggalKirim: item?.tanggalKirim ? moment(item?.tanggalKirim).format("DD/MM/YYYY HH:mm") : "-",
+      // informasi: item?.informasi || "",
+      issue_produksi: item.issue_produksi?.issueName,
+      issue_logistic: item.issue_logistic?.issueName,
+      tanggalOrder: item?.tanggalOrder
+        ? moment(item?.tanggalOrder).format("DD/MM/YYYY HH:mm")
+        : "-",
+      tanggalKirim: item?.tanggalKirim
+        ? moment(item?.tanggalKirim).format("DD/MM/YYYY HH:mm")
+        : "-",
       // progressTime: item?.tanggalOrder || item?.tanggalKirim ? progressDuration(item?.tanggalOrder, item?.tanggalKirim ? item?.tanggalKirim : "now") : "-",
-      progressTime: item?.exclude ? "Exclude" : gradingData == "-" ? "Expired" : `${gradingData?.gradeName} ${gradingData?.gradePoin == "0" ? "(Expired)" : ""}`,
+      progressTime: item?.exclude
+        ? "Exclude"
+        : gradingData == "-"
+        ? "Expired"
+        : `${gradingData?.gradeName} ${
+            gradingData?.gradePoin == "0" ? "(Expired)" : ""
+          }`,
     });
   });
-
-  
 
   const workbook = new excelJS.Workbook(); // Create a new workbook
   const worksheet = workbook.addWorksheet("List Pengiriman"); // New Worksheet
@@ -546,9 +615,19 @@ exports.downloadData = async (req, res) => {
       key: "note",
       width: "10",
     },
+    // {
+    //   header: "Informasi",
+    //   key: "informasi",
+    //   width: "20",
+    // },
     {
-      header: "Informasi",
-      key: "informasi",
+      header: "Isu Produksi",
+      key: "issue_produksi",
+      width: "20",
+    },
+    {
+      header: "Isu Logistik",
+      key: "issue_logistic",
       width: "20",
     },
     {
@@ -580,7 +659,7 @@ exports.downloadData = async (req, res) => {
       header: "UpdatedAt",
       key: "updatedAt",
       width: "14",
-    }
+    },
   ];
 
   worksheet.addRows(data);
@@ -594,7 +673,7 @@ exports.downloadData = async (req, res) => {
     "Content-Type",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
   );
-  
+
   return await workbook.xlsx
     .writeFile(`${path}/List-Pengiriman.xlsx`)
     .then((data) => {

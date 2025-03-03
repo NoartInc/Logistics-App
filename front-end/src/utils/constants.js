@@ -38,7 +38,14 @@ export const userData = localStorage.getItem("userData")
 export const ROLES_MANAGEMENTS = {
   // Menu
   dashboard_menu: {
-    allowedRoles: ["administrator", "manager", "CBO", "logistics", "telemarketing", "produksi"],
+    allowedRoles: [
+      "administrator",
+      "manager",
+      "CBO",
+      "logistics",
+      "telemarketing",
+      "produksi",
+    ],
   },
   pengiriman_menu: {
     allowedRoles: [
@@ -50,13 +57,21 @@ export const ROLES_MANAGEMENTS = {
       "CBO",
       "teli",
       "telemarketing",
-      "produksi"
+      "produksi",
     ],
   },
   user_menu: { allowedRoles: ["administrator"] },
   berita_menu: { allowedRoles: ["administrator", "manager"] },
   utility_menu: {
-    allowedRoles: ["administrator", "manager", "logistics", "CBO", "teli", "telemarketing", "produksi"],
+    allowedRoles: [
+      "administrator",
+      "manager",
+      "logistics",
+      "CBO",
+      "teli",
+      "telemarketing",
+      "produksi",
+    ],
   },
 
   // Child Menu
@@ -64,7 +79,7 @@ export const ROLES_MANAGEMENTS = {
     allowedRoles: ["administrator", "logistics"],
   },
   exclude_pengiriman: {
-    allowedRoles: ["administrator", "manager"]
+    allowedRoles: ["administrator", "manager"],
   },
   list_pengiriman: {
     allowedRoles: [
@@ -76,14 +91,20 @@ export const ROLES_MANAGEMENTS = {
       "CBO",
       "driver",
       "telemarketing",
-      "produksi"
+      "produksi",
     ],
   },
   master_kendaraan: {
     allowedRoles: ["administrator", "manager", "logistics"],
   },
   master_customer: {
-    allowedRoles: ["administrator", "manager", "CBO", "telemarketing", "logistics"],
+    allowedRoles: [
+      "administrator",
+      "manager",
+      "CBO",
+      "telemarketing",
+      "logistics",
+    ],
   },
   master_teli: {
     allowedRoles: ["administrator", "manager", "teli"],
@@ -95,11 +116,21 @@ export const ROLES_MANAGEMENTS = {
     allowedRoles: ["administrator", "manager", "produksi"],
   },
   master_grading: {
-    allowedRoles: ["administrator", "manager"]
+    allowedRoles: ["administrator", "manager"],
+  },
+  master_pengiriman_issue: {
+    allowedRoles: ["administrator", "manager"],
   },
   // Actions
   update_pengiriman: {
-    allowedRoles: ["administrator", "manager", "logistics", "teli", "driver", "produksi"],
+    allowedRoles: [
+      "administrator",
+      "manager",
+      "logistics",
+      "teli",
+      "driver",
+      "produksi",
+    ],
     allowedStatus_administrator: [
       "diproses",
       "dimuat",
@@ -123,16 +154,10 @@ export const ROLES_MANAGEMENTS = {
       "dikirim",
       "pending",
     ],
-    allowedStatus_teli: [
-      "diproses", 
-      "dimuat",
-      "dicetak",
-      "dikirim",
-      "pending",
-    ],
+    allowedStatus_teli: ["diproses", "dimuat", "dicetak", "dikirim", "pending"],
     // disini allowedStatus ada
     allowedStatus_produksi: [
-      "diproses", 
+      "diproses",
       "dimuat",
       "dicetak",
       "dikirim",
@@ -162,7 +187,7 @@ export const ROLES_MANAGEMENTS = {
     allowedRoles: ["administrator", "logistics"],
     // disini allowedstatus gak ada
     // makanya dibaca => gak boleh akses
-    // soalnya operand'nya && 
+    // soalnya operand'nya &&
     allowedStatus_administrator: [
       "diproses",
       "dimuat",

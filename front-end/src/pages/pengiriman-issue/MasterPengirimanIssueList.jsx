@@ -2,15 +2,15 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SettingIcon from '../../icons/SettingIcon';
 import ActionButton from '../../components/ActionButton';
-import { deleteGrading, editGrading, retrieveGrading } from '../../store/actions/grading-action';
+import { deleteIssue, editIssue, retrieveIssue } from '../../store/actions/pengiriman-issue-action';
 
-function MasterGradingList() {
+function MasterPengirimanIssueList() {
     const dispatch = useDispatch();
-    const gradings = useSelector(state => state?.gradings?.list);
+    const issues = useSelector(state => state?.issues?.list);
 
     const onDelete = (id) => {
         if (window.confirm("Yakin akan menghapus data ini ?")) {
-            dispatch(deleteGrading(id))
+            dispatch(deleteIssue(id))
                 .then(result => {
                     window.alert(result?.message);
                 })
@@ -21,33 +21,31 @@ function MasterGradingList() {
     }
 
     const onEdit = (id) => {
-        dispatch(editGrading(id));
+        dispatch(editIssue(id));
     }
 
     useEffect(() => {
-        dispatch(retrieveGrading());
+        dispatch(retrieveIssue());
     }, []);
 
     return (
         <div className="w-full">
-            {gradings && gradings?.length ? (
+            {issues && issues?.length ? (
                 <table className="table-auto w-full">
                     <thead>
                         <tr className="border-b border-b-gray-200">
+                            <th className="text-left text-sm p-2">Tipe</th>
                             <th className="text-left text-sm p-2">Nama</th>
-                            <th className="text-left text-sm p-2">Hari</th>
-                            <th className="text-left text-sm p-2">Poin</th>
                             <th className="w-16 p-2">
                                 <SettingIcon />
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {gradings?.map(item => (
+                        {issues?.map(item => (
                             <tr key={item?.id}>
-                                <td className="text-left text-sm p-2">{item?.gradeName}</td>
-                                <td className="text-left text-sm p-2">{item?.gradeValue}</td>
-                                <td className="text-left text-sm p-2">{item?.gradePoin}</td>
+                                <td className="text-left text-sm p-2">{item?.issueType}</td>
+                                <td className="text-left text-sm p-2">{item?.issueName}</td>
                                 <td className="p-2">
                                     <div className="flex justify-center items-center gap-2">
                                         <ActionButton type="delete" onClick={() => onDelete(item?.id)} />
@@ -60,11 +58,11 @@ function MasterGradingList() {
                 </table>
             ) : (
                 <div className="p-3 flex justify-center items-center rounded-lg border border-gray-200 py-12">
-                    <h4>Belum ada data grading</h4>
+                    <h4>Belum ada data issue</h4>
                 </div>
             )}
         </div>
     )
 }
 
-export default MasterGradingList
+export default MasterPengirimanIssueList

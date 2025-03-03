@@ -22,6 +22,7 @@ const MasterPengangkutan = lazy(() =>
   import("./pages/utillity/MasterPengangkutan")
 );
 const MasterGrading = lazy(() => import("./pages/grading/MasterGrading"));
+const MasterPengirimanIssue = lazy(() => import("./pages/pengiriman-issue/MasterPengirimanIssue"));
 const Summary = lazy(() => import("./pages/utillity/Summary"));
 const LoginForm = loadable(() => import("./pages/login/LoginForm"));
 const DetailPengiriman = lazy(() =>
@@ -57,6 +58,7 @@ function App() {
           <Route path="masterpengangkutan" element={<MasterPengangkutan />} />
           <Route path="summary" element={<Summary />} />
           <Route path="master-grading" element={<MasterGrading />} />
+          <Route path="master-pengiriman-issue" element={<MasterPengirimanIssue />} />
           <Route
             path="listpengiriman/detailpengiriman/:id"
             element={<DetailPengiriman />}

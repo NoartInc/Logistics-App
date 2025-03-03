@@ -31,6 +31,7 @@ var pengangkutanRouter = require("./routes/pengangkutan");
 var pengirimanRouter = require("./routes/pengiriman");
 var authRouter = require("./routes/auth");
 var gradingRouter = require("./routes/grading");
+var pengirimanIssue = require("./routes/pengiriman-issue");
 const { Master } = require("./models");
 
 app.use("/", indexRouter);
@@ -42,6 +43,7 @@ app.use("/customer", customerRouter);
 app.use("/pengangkutan", pengangkutanRouter);
 app.use("/pengiriman", pengirimanRouter);
 app.use("/grading", gradingRouter);
+app.use("/pengiriman-issue", pengirimanIssue);
 app.use("/auth", authRouter);
 
 const formatDate = (date) => {

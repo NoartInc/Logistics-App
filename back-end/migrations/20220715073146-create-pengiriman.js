@@ -1,57 +1,71 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Pengirimans', {
+    await queryInterface.createTable("Pengirimans", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       customer: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       suratJalan: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       pengangkutan: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       address: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       tonase: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DOUBLE,
       },
       driver: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       kendaraan: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       sales: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       user: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       status: {
-        type: Sequelize.ENUM('diproses', 'dimuat', 'termuat', 'dikirim', 'terkirim', 'pending', 'cancel'),
+        type: Sequelize.ENUM(
+          "diproses",
+          "dimuat",
+          "termuat",
+          "dikirim",
+          "terkirim",
+          "pending",
+          "cancel"
+        ),
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       note: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+      },
+      productionIssue: {
+        type: Sequelize.INTEGER,
+      },
+      logisticIssue: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

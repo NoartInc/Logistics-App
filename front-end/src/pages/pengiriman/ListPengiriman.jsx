@@ -9,6 +9,7 @@ import { ROLES_MANAGEMENTS, userData } from "../../utils/constants";
 import moment from "moment";
 import CheckboxInput from "../../components/CheckboxInput";
 import { retrieveGrading } from "../../store/actions/grading-action";
+import { retrieveIssue } from "../../store/actions/pengiriman-issue-action";
 
 function ListPengiriman() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function ListPengiriman() {
   useEffect(() => {
     dispatch(retrievePengiriman());
     dispatch(retrieveGrading());
+    dispatch(retrieveIssue());
   }, []);
 
   const removePengiriman = (id) => {
@@ -248,6 +250,7 @@ function ListPengiriman() {
   }
 
 
+  // return JSON.stringify({ pengirimans });
   return <PengirimanTableContent columns={columns} data={pengirimans} />
 }
 

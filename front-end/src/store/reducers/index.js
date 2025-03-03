@@ -4,6 +4,7 @@ import kendaraans from "./kendaraan-reducer";
 import customers from "./customer-reducer";
 import telis from "./teli-reducer";
 import gradings from "./grading-reducer";
+import pengirimanIssues from "./pengiriman-issue-reducer";
 import produksis from "./produksi-reducer";
 import pengangkutans from "./pengangkutan-reducer";
 import pengirimans from "./pengiriman-reducer";
@@ -21,5 +22,5 @@ export default combineReducers({
   pengangkutans,
   pengirimans,
   authReducer,
-  gradings
+  issues: pengirimanIssues,
 });
