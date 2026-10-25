@@ -1,18 +1,21 @@
 var express = require("express");
 var router = express.Router();
 var authentication = require("../middleware/authorization");
-var path = require("path");
 var multer = require("multer");
-var { getImage } = require("../utils/helper");
-var storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.resolve("public/images"));
-  },
-  filename: (req, file, cb) => {
-    cb(null, getImage(req, file));
-  },
+var compressImage = require("../middleware/compressImage");
+var fs = require("fs");
+var os = require("os");
+var path = require("path");
+const tmpDir = path.join(os.tmpdir(), "upload_tmp");
+if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+
+var upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => cb(null, tmpDir),
+    filename: (req, file, cb) => cb(null, `${Date.now()}_${file.originalname}`)
+  }),
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB
 });
-var upload = multer({ storage: storage });
 
 const {
   findAllPengiriman,
@@ -38,6 +41,7 @@ router.post(
   "/:id/update",
   authentication,
   upload.single("image"),
+  compressImage,
   updatePengiriman
 );
 // karena simple update, paket put aja
